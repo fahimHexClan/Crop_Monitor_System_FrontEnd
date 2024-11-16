@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Shadow Crop Monitoring System</title>
+
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('Asserts/Crop1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            margin: 0;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            background-color: #1a1a2e; /* Dark professional blue for sidebar */
+            padding-top: 20px;
+            z-index: 2;
+            color: #fff;
+            backdrop-filter: blur(10px);
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4); /* Adding depth to the sidebar */
+        }
+
+        .sidebar a {
+            color: #ffffff;
+            padding: 15px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border-radius: 8px;
+            margin: 5px 15px; /* Adding margin for a clean layout */
+        }
+
+        .sidebar a i {
+            margin-right: 10px; /* Space between icon and text */
+            font-size: 1.2rem;
+        }
+
+        .sidebar a:hover {
+            background-color: #162447; /* Slightly different shade for hover */
+            color: #66bb6a;
+        }
+
+        .sidebar .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            color: #66bb6a;
+            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content {
+            margin-left: 260px;
+            padding-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .header-subtitle {
+            font-size: 1.2rem;
+            color: #d3d3d3;
+            text-align: center;
+        }
+
+        .widget {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            color: #fff;
+            backdrop-filter: blur(15px);
+            transition: transform 0.3s ease;
+        }
+
+        .widget:hover {
+            transform: scale(1.05);
+        }
+
+        .widget h4 {
+            font-size: 1.3rem;
+            color: #ffffff;
+            margin-bottom: 15px;
+        }
+
+        .widget p {
+            font-size: 1.1rem;
+            color: #d3d3d3;
+        }
+
+        .card-body {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: #ffffff;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+        }
+
+        .footer {
+            background-color: #1a1a2e;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 30px;
+        }
+
+        .row-flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .col-md-3,
+        .col-md-6,
+        .col-md-12 {
+            margin-bottom: 30px;
+        }
+
+        /* Media Query for Mobile View */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar a {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="navbar-brand text-center">Green Shadow</div>
+    <a href="index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+    <a href="fields.html"><i class="fas fa-seedling"></i>Fields</a>
+    <a href="crops.html"><i class="fas fa-leaf"></i>Crops</a>
+    <a href="staff.html"><i class="fas fa-users"></i>Staff</a>
+    <a href="vehicles.html"><i class="fas fa-tractor"></i>Vehicles</a>
+    <a href="equipment.html"><i class="fas fa-tools"></i>Equipment</a>
+    <a href="MonitorLogs.html"><i class="fas fa-clipboard-list"></i>Monitoring Logs</a>
+    <a href="LogInPage.html"><i class="fas fa-sign-out-alt"></i>Logout</a>
+</div>
+
+<!-- Main Content -->
+<div class="main-content container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="header-title">Crop Monitoring Dashboard</h2>
+            <p class="header-subtitle">Manage your fields, crops, staff, vehicles, and equipment efficiently.</p>
+
+            <!-- Dashboard Widgets and Charts (sideways layout) -->
+            <div class="row-flex">
+                <!-- Fields Widget -->
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h4>Fields</h4>
+                        <p id="fieldsStatus">Loading...</p>
+                    </div>
+                </div>
+
+                <!-- Crops Widget -->
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h4>Crops</h4>
+                        <p id="cropsStatus">Loading...</p>
+                    </div>
+                </div>
+
+                <!-- Staff Widget -->
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h4>Staff</h4>
+                        <p id="staffStatus">Loading...</p>
+                    </div>
+                </div>
+
+                <!-- Vehicles Widget -->
+                <div class="col-md-3">
+                    <div class="widget">
+                        <h4>Vehicles</h4>
+                        <p id="vehiclesStatus">Loading...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Charts (side-by-side layout) -->
+            <div class="row-flex">
+                <!-- Chart for Crop Stats -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Crop Growth Stats</h5>
+                            <canvas id="cropGrowthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart for Staff Workload -->
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Staff Workload</h5>
+                            <canvas id="staffWorkloadChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
+</footer>
+
+<!-- Scripts -->
+<script>
+    $(document).ready(function () {
+        // Example data for widgets (to be fetched dynamically later)
+        const fields = "10 Fields Active";
+        const crops = "20 Crops Planted";
+        const staff = "15 Staff Working";
+        const vehicles = "8 Vehicles Operational";
+
+        $('#fieldsStatus').text(fields);
+        $('#cropsStatus').text(crops);
+        $('#staffStatus').text(staff);
+        $('#vehiclesStatus').text(vehicles);
+
+        // Crop Growth Chart
+        var ctx1 = document.getElementById('cropGrowthChart').getContext('2d');
+        var cropGrowthChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Crop A', 'Crop B', 'Crop C', 'Crop D'],
+                datasets: [{
+                    label: 'Growth Percentage',
+                    data: [75, 60, 90, 80],
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Staff Workload Chart
+        var ctx2 = document.getElementById('staffWorkloadChart').getContext('2d');
+        var staffWorkloadChart = new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                labels: ['Task A', 'Task B', 'Task C', 'Task D'],
+                datasets: [{
+                    data: [40, 30, 20, 10],
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

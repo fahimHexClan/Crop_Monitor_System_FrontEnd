@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Shadow Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: url('Asserts/Crop1.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.2); /* Reduced opacity for a more subtle effect */
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 450px; /* Increase to match the signup page width */
+            padding: 50px; /* Increase padding to add height */
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(15px);
+            text-align: center;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+        }
+
+        .auth-title {
+            font-weight: bold;
+            font-size: 2.5rem; /* Increased font size for better visual balance */
+            margin-bottom: 40px; /* Increase to add more spacing between title and form */
+            color: #fff;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 30px; /* Increase margin to add more vertical space between fields */
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #fff;
+            margin-bottom: 5px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            color: #66bb6a;
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+
+        .form-control {
+            width: 100%;
+            border: 2px solid #66bb6a;
+            border-radius: 10px;
+            padding: 10px; /* Slightly increase padding for better height */
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            color: #fff;
+        }
+
+        .form-control::placeholder {
+            color: #ddd;
+        }
+
+        .form-control:focus {
+            border-color: #43a047;
+            box-shadow: 0 0 10px rgba(102, 187, 106, 0.7);
+            outline: none;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(to right, #66bb6a, #43a047);
+            border: none;
+            padding: 15px; /* Increased padding to add button height */
+            font-size: 1.2rem; /* Adjusted to match signup button size */
+            color: #fff;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #43a047, #66bb6a);
+            transform: scale(1.05);
+        }
+
+        .switch-auth {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            margin-top: 25px; /* Increase margin to give more space below the button */
+            display: inline-block;
+            transition: color 0.3s;
+        }
+
+        .switch-auth:hover {
+            color: #66bb6a;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container" id="login-container">
+    <h2 class="auth-title">Green Shadow Login</h2>
+    <form id="login-form">
+        <!-- Username Field -->
+        <div class="form-group mb-4">
+            <label for="loginUsername" class="form-label">
+                <i class="fas fa-user input-icon"></i>Username
+            </label>
+            <input type="text" class="form-control" id="loginUsername" placeholder="Enter your username" required>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group mb-4">
+            <label for="loginPassword" class="form-label">
+                <i class="fas fa-lock input-icon"></i>Password
+            </label>
+            <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+
+        <!-- Login Button -->
+        <!-- Login Button -->
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <a href="SignupPage.html" class="switch-auth" id="show-signup">Don't have an account? Sign up here</a>
+</div>
+
+</body>
+
+</html>
