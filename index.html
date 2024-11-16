@@ -43,12 +43,35 @@
             bottom: 0;
             left: 0;
             width: 250px;
-            background-color: #1a1a2e; /* Dark professional blue for sidebar */
+            background-color: #1a1a2e;
             padding-top: 20px;
             z-index: 2;
             color: #fff;
             backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4); /* Adding depth to the sidebar */
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
+            transition: width 0.4s ease, transform 0.4s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .sidebar .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #66bb6a;
+            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            padding: 0 10px;
+        }
+
+        .toggle-sidebar {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #66bb6a;
+            text-align: justify;
+            margin: 10px auto;
         }
 
         .sidebar a {
@@ -60,47 +83,56 @@
             font-size: 1.1rem;
             transition: background-color 0.3s ease, color 0.3s ease;
             border-radius: 8px;
-            margin: 5px 15px; /* Adding margin for a clean layout */
+            margin: 5px 15px;
         }
 
         .sidebar a i {
-            margin-right: 10px; /* Space between icon and text */
+            margin-right: 10px;
             font-size: 1.2rem;
         }
 
         .sidebar a:hover {
-            background-color: #162447; /* Slightly different shade for hover */
+            background-color: #162447;
             color: #66bb6a;
         }
 
-        .sidebar .navbar-brand {
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        .sidebar.collapsed .navbar-brand {
+            display: none;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        .sidebar.collapsed a span {
+            display: none;
         }
 
         .main-content {
-            margin-left: 260px;
-            padding-top: 20px;
             position: relative;
             z-index: 2;
+            padding: 30px;
+            margin-left: 250px;
+            transition: margin-left 0.4s ease;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: 70px;
         }
 
         .header-title {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: bold;
             color: #ffffff;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .header-subtitle {
             font-size: 1.2rem;
             color: #d3d3d3;
             text-align: center;
+            margin-bottom: 40px;
         }
 
         .widget {
@@ -151,9 +183,8 @@
             justify-content: space-between;
         }
 
-        .col-md-3,
-        .col-md-6,
-        .col-md-12 {
+        .col-md-4,
+        .col-md-6 {
             margin-bottom: 30px;
         }
 
@@ -177,62 +208,83 @@
 </head>
 
 <body>
+
 <!-- Sidebar -->
-<div class="sidebar">
-    <div class="navbar-brand text-center">Green Shadow</div>
-    <a href="index.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
-    <a href="fields.html"><i class="fas fa-seedling"></i>Fields</a>
-    <a href="crops.html"><i class="fas fa-leaf"></i>Crops</a>
-    <a href="staff.html"><i class="fas fa-users"></i>Staff</a>
-    <a href="vehicles.html"><i class="fas fa-tractor"></i>Vehicles</a>
-    <a href="equipment.html"><i class="fas fa-tools"></i>Equipment</a>
-    <a href="MonitorLogs.html"><i class="fas fa-clipboard-list"></i>Monitoring Logs</a>
-    <a href="LogInPage.html"><i class="fas fa-sign-out-alt"></i>Logout</a>
+<div class="sidebar" id="sidebar">
+    <div class="navbar-brand">
+        <span>Green Shadow</span>
+    </div>
+    <!-- Toggle Sidebar Button -->
+    <div class="toggle-sidebar" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </div>
+    <a href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+    <a href="fields.html"><i class="fas fa-seedling"></i><span>Fields</span></a>
+    <a href="crops.html"><i class="fas fa-leaf"></i><span>Crops</span></a>
+    <a href="staff.html"><i class="fas fa-users"></i><span>Staff</span></a>
+    <a href="vehicles.html"><i class="fas fa-tractor"></i><span>Vehicles</span></a>
+    <a href="equipment.html"><i class="fas fa-tools"></i><span>Equipment</span></a>
+    <a href="MonitorLogs.html"><i class="fas fa-clipboard-list"></i><span>Monitoring Logs</span></a>
+    <a href="LogInPage.html"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
 </div>
 
 <!-- Main Content -->
-<div class="main-content container">
+<div class="main-content container" id="mainContent">
     <div class="row">
         <div class="col-md-12">
             <h2 class="header-title">Crop Monitoring Dashboard</h2>
             <p class="header-subtitle">Manage your fields, crops, staff, vehicles, and equipment efficiently.</p>
 
-            <!-- Dashboard Widgets and Charts (sideways layout) -->
+            <!-- Dashboard Widgets and Charts -->
             <div class="row-flex">
-                <!-- Fields Widget -->
-                <div class="col-md-3">
+                <!-- Widgets Row 1 -->
+                <div class="col-md-4">
                     <div class="widget">
                         <h4>Fields</h4>
-                        <p id="fieldsStatus">Loading...</p>
+                        <p id="fieldsStatus">10 Fields Active</p>
                     </div>
                 </div>
 
-                <!-- Crops Widget -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="widget">
                         <h4>Crops</h4>
-                        <p id="cropsStatus">Loading...</p>
+                        <p id="cropsStatus">20 Crops Planted</p>
                     </div>
                 </div>
 
-                <!-- Staff Widget -->
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="widget">
                         <h4>Staff</h4>
-                        <p id="staffStatus">Loading...</p>
-                    </div>
-                </div>
-
-                <!-- Vehicles Widget -->
-                <div class="col-md-3">
-                    <div class="widget">
-                        <h4>Vehicles</h4>
-                        <p id="vehiclesStatus">Loading...</p>
+                        <p id="staffStatus">15 Staff Working</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Dashboard Charts (side-by-side layout) -->
+            <!-- Widgets Row 2 -->
+            <div class="row-flex">
+                <div class="col-md-4">
+                    <div class="widget">
+                        <h4>Vehicles</h4>
+                        <p id="vehiclesStatus">8 Vehicles Operational</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="widget">
+                        <h4>Equipment</h4>
+                        <p id="equipmentStatus">30 Equipment Available</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="widget">
+                        <h4>Monitoring Logs</h4>
+                        <p id="monitoringStatus">12 Logs Recorded</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Charts -->
             <div class="row-flex">
                 <!-- Chart for Crop Stats -->
                 <div class="col-md-6">
@@ -244,12 +296,12 @@
                     </div>
                 </div>
 
-                <!-- Chart for Staff Workload -->
+                <!-- Chart for Equipment Status -->
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5>Staff Workload</h5>
-                            <canvas id="staffWorkloadChart"></canvas>
+                            <h5>Equipment Usage</h5>
+                            <canvas id="equipmentChart"></canvas>
                         </div>
                     </div>
                 </div>
@@ -266,16 +318,11 @@
 <!-- Scripts -->
 <script>
     $(document).ready(function () {
-        // Example data for widgets (to be fetched dynamically later)
-        const fields = "10 Fields Active";
-        const crops = "20 Crops Planted";
-        const staff = "15 Staff Working";
-        const vehicles = "8 Vehicles Operational";
-
-        $('#fieldsStatus').text(fields);
-        $('#cropsStatus').text(crops);
-        $('#staffStatus').text(staff);
-        $('#vehiclesStatus').text(vehicles);
+        // Sidebar Toggle
+        $('#toggleSidebar').click(function () {
+            $('#sidebar').toggleClass('collapsed');
+            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
+        });
 
         // Crop Growth Chart
         var ctx1 = document.getElementById('cropGrowthChart').getContext('2d');
@@ -304,15 +351,15 @@
             }
         });
 
-        // Staff Workload Chart
-        var ctx2 = document.getElementById('staffWorkloadChart').getContext('2d');
-        var staffWorkloadChart = new Chart(ctx2, {
+        // Equipment Chart
+        var ctx2 = document.getElementById('equipmentChart').getContext('2d');
+        var equipmentChart = new Chart(ctx2, {
             type: 'pie',
             data: {
-                labels: ['Task A', 'Task B', 'Task C', 'Task D'],
+                labels: ['Available', 'In Use', 'Out of Service'],
                 datasets: [{
-                    data: [40, 30, 20, 10],
-                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0'],
+                    data: [70, 20, 10],
+                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
                     borderWidth: 1
                 }]
             },
