@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Green_Shadow_Crop_Monitoring_System_Final_Complete.iml" filepath="$PROJECT_DIR$/.idea/Green_Shadow_Crop_Monitoring_System_Final_Complete.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Green_Shadow_Crop_Monitoring_System_FrontEnd.iml" filepath="$PROJECT_DIR$/.idea/Green_Shadow_Crop_Monitoring_System_FrontEnd.iml" />
     </modules>
   </component>
 </project>

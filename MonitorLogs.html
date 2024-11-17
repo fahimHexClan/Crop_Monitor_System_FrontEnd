@@ -4,10 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoring Log Management</title>
+    <title>Green Shadow Crop Monitoring System - Monitoring Logs</title>
+
+    <!-- Bootstrap 4 CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
@@ -32,7 +37,6 @@
             z-index: 1;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             position: fixed;
             top: 0;
@@ -45,6 +49,32 @@
             color: #fff;
             backdrop-filter: blur(10px);
             box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
+            transition: width 0.4s ease, transform 0.4s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .navbar-brand-container {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            margin-bottom: 40px;
+        }
+
+        .toggle-sidebar {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #66bb6a;
+            margin-right: 10px; /* Adds space between toggle and brand name */
+        }
+
+        .navbar-brand {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #66bb6a;
+            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .sidebar a {
@@ -69,141 +99,99 @@
             color: #66bb6a;
         }
 
-        .sidebar .navbar-brand {
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        .sidebar.collapsed .navbar-brand {
+            display: none;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        .sidebar.collapsed a span {
+            display: none;
         }
 
         .main-content {
-            margin-left: 260px;
-            padding-top: 20px;
             position: relative;
             z-index: 2;
+            padding: 30px;
+            margin-left: 250px;
+            transition: margin-left 0.4s ease;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: 70px;
         }
 
         .header-title {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: bold;
             color: #ffffff;
             text-align: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .header-subtitle {
             font-size: 1.2rem;
             color: #d3d3d3;
             text-align: center;
+            margin-bottom: 40px;
         }
 
-        /* Table Styling */
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
+        .widget {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+            border-radius: 16px;
+            padding: 20px;
+            color: #fff;
+            backdrop-filter: blur(15px);
+            transition: transform 0.3s ease;
         }
 
-        .table {
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
+        .widget:hover {
+            transform: scale(1.05);
         }
 
-        .table th,
-        .table td {
-            padding: 15px;
-            vertical-align: middle;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table thead th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f9f9;
-        }
-
-        .table-striped tbody tr:hover {
-            background-color: #e8f0fe;
-        }
-
-        /* Modal Styling */
-        .modal-content {
-            border-radius: 10px;
-            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .form-control {
-            border: 1.5px solid #007bff;
-            padding: 10px;
-        }
-
-        .form-control::placeholder {
-            font-style: italic;
-            color: #6c757d;
-        }
-
-        .form-control:focus {
-            border-color: #0056b3;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-        }
-
-        /* Buttons */
-        .btn-outline-primary {
-            color: #007bff;
-            border-color: #007bff;
-            transition: all 0.3s ease;
-            border-radius: 25px;
-        }
-
-        .btn-outline-primary:hover {
-            background-color: #007bff;
+        .widget h4 {
+            font-size: 1.3rem;
             color: #ffffff;
+            margin-bottom: 15px;
         }
 
-        .btn-outline-danger {
-            color: #dc3545;
-            border-color: #dc3545;
-            transition: all 0.3s ease;
-            border-radius: 25px;
+        .widget p {
+            font-size: 1.1rem;
+            color: #d3d3d3;
         }
 
-        .btn-outline-danger:hover {
-            background-color: #dc3545;
-            color: #ffffff;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            border: none;
-        }
-
-        /* Footer */
         .footer {
             background-color: #1a1a2e;
             color: #ffffff;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 50px;
+            padding: 10px 0;
+            margin-top: 30px;
         }
 
-        .add-button {
+        .row-flex {
             display: flex;
-            justify-content: center;
-            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        /* Media Query for Mobile View */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .sidebar a {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -211,155 +199,68 @@
 <body>
 
 <!-- Sidebar -->
-<div class="sidebar">
-    <div class="navbar-brand">Green Shadow</div>
-    <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-    <a href="fields.html"><i class="fas fa-seedling"></i> Fields</a>
-    <a href="crops.html"><i class="fas fa-leaf"></i> Crops</a>
-    <a href="staff.html"><i class="fas fa-users"></i> Staff</a>
-    <a href="vehicles.html"><i class="fas fa-tractor"></i> Vehicles</a>
-    <a href="equipment.html"><i class="fas fa-tools"></i> Equipment</a>
-    <a href="MonitorLogs.html"><i class="fas fa-clipboard-list"></i> Monitoring Logs</a>
-    <a href="LogInPage.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+<div class="sidebar" id="sidebar">
+    <!-- Navbar Brand Container -->
+    <div class="navbar-brand-container">
+        <span class="navbar-brand">Green Shadow</span>
+
+        <div class="toggle-sidebar" id="toggleSidebar">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+    <a href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+    <a href="fields.html"><i class="fas fa-seedling"></i><span>Fields</span></a>
+    <a href="crops.html"><i class="fas fa-leaf"></i><span>Crops</span></a>
+    <a href="staff.html"><i class="fas fa-users"></i><span>Staff</span></a>
+    <a href="vehicles.html"><i class="fas fa-tractor"></i><span>Vehicles</span></a>
+    <a href="equipment.html"><i class="fas fa-tools"></i><span>Equipment</span></a>
+    <a href="MonitorLogs.html"><i class="fas fa-clipboard-list"></i><span>Monitoring Logs</span></a>
+    <a href="LogInPage.html"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
 </div>
 
 <!-- Main Content -->
-<div class="main-content">
-    <div class="container">
-        <h2 class="header-title">Monitoring Log Management</h2>
-        <p class="header-subtitle">Records and tracks crop-related observations and activities.</p>
+<div class="main-content container" id="mainContent">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="header-title">Monitoring Logs</h2>
+            <p class="header-subtitle">Here you can review all the logs for crop and equipment monitoring.</p>
 
-        <!-- Monitoring Log Table -->
-        <div class="table-container mt-4">
-            <table class="table table-striped table-hover align-middle">
-                <thead>
-                <tr>
-                    <th>Log Code</th>
-                    <th>Log Date</th>
-                    <th>Log Details</th>
-                    <th>Observed Image</th>
-                    <th>Relevant Field</th>
-                    <th>Relevant Crop</th>
-                    <th>Relevant Staff</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!-- Example Data Row -->
-                <tr>
-                    <td>LOG-001</td>
-                    <td>2024-11-15</td>
-                    <td>Observed healthy growth</td>
-                    <td><img src="observed_image1.jpg" alt="Observation Image" style="width: 50px; height: 50px;"></td>
-                    <td>North Field</td>
-                    <td>Wheat</td>
-                    <td>John Doe</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>LOG-002</td>
-                    <td>2024-11-16</td>
-                    <td>Signs of pest infestation</td>
-                    <td><img src="observed_image2.jpg" alt="Observation Image" style="width: 50px; height: 50px;"></td>
-                    <td>South Field</td>
-                    <td>Barley</td>
-                    <td>Jane Smith</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- Add New Log Button -->
-        <div class="add-button">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addLogModal"><i class="fas fa-plus-circle"></i> Add New Log</button>
-        </div>
-
-        <!-- Modal for Adding New Log -->
-        <div class="modal fade" id="addLogModal" tabindex="-1" aria-labelledby="addLogModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addLogModalLabel">Add New Monitoring Log</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="container-fluid">
-                                <!-- Form Fields -->
-                                <div class="row g-3">
-                                    <!-- Log Code -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="logCode" class="form-label">Log Code</label>
-                                            <input type="text" class="form-control" id="logCode" placeholder="Enter log code (e.g., LOG-001)">
-                                        </div>
-                                    </div>
-                                    <!-- Log Date -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="logDate" class="form-label">Log Date</label>
-                                            <input type="date" class="form-control" id="logDate">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <!-- Log Details -->
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="logDetails" class="form-label">Log Details / Observation</label>
-                                            <textarea class="form-control" id="logDetails" rows="3" placeholder="Enter observation details"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <!-- Observed Image -->
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="observedImage" class="form-label">Observed Image</label>
-                                            <input type="file" class="form-control" id="observedImage">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <!-- Relevant Field -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="relevantField" class="form-label">Relevant Field</label>
-                                            <input type="text" class="form-control" id="relevantField" placeholder="Enter relevant field">
-                                        </div>
-                                    </div>
-                                    <!-- Relevant Crop -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="relevantCrop" class="form-label">Relevant Crop</label>
-                                            <input type="text" class="form-control" id="relevantCrop" placeholder="Enter relevant crop">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <!-- Relevant Staff -->
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="relevantStaff" class="form-label">Relevant Staff Members</label>
-                                            <input type="text" class="form-control" id="relevantStaff" placeholder="Enter relevant staff members">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Save Log</button>
-                    </div>
-                </div>
+            <!-- Example Table for Monitoring Logs -->
+            <div class="table-responsive">
+                <table class="table table-dark table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Date</th>
+                        <th>Log Type</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2024-11-15</td>
+                        <td>Crop Growth</td>
+                        <td>Crop A showed a significant growth increase of 20%.</td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>2024-11-14</td>
+                        <td>Equipment Maintenance</td>
+                        <td>Tractor #3 had a minor maintenance check.</td>
+                        <td>Completed</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>2024-11-13</td>
+                        <td>Weather Alert</td>
+                        <td>Heavy rain warning for Field #4.</td>
+                        <td>Attention Needed</td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -370,6 +271,16 @@
     <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
 </footer>
 
+<!-- Scripts -->
+<script>
+    $(document).ready(function () {
+        // Sidebar Toggle
+        $('#toggleSidebar').click(function () {
+            $('#sidebar').toggleClass('collapsed');
+            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
+        });
+    });
+</script>
 </body>
 
 </html>

@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,7 +35,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1;
         }
 
@@ -43,8 +45,8 @@
             bottom: 0;
             left: 0;
             width: 250px;
-            background-color: #1a1a2e;
-            padding-top: 20px;
+            background-color: #1a233a;
+            padding-top: 30px;
             z-index: 2;
             color: #fff;
             backdrop-filter: blur(10px);
@@ -59,15 +61,18 @@
         .navbar-brand-container {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 0 20px;
             margin-bottom: 40px;
+            transition: opacity 0.3s ease;
         }
 
         .toggle-sidebar {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             cursor: pointer;
             color: #66bb6a;
-            margin-right: 10px; /* Adds space between toggle and brand name */
+            margin-left: 5px;
+
         }
 
         .navbar-brand {
@@ -75,60 +80,57 @@
             font-weight: bold;
             color: #66bb6a;
             text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+
         }
 
         .sidebar a {
             color: #ffffff;
-            padding: 15px 20px;
+            padding: 17px 22px;
             text-decoration: none;
             display: flex;
             align-items: center;
             font-size: 1.1rem;
             transition: background-color 0.3s ease, color 0.3s ease;
             border-radius: 8px;
-            margin: 5px 15px;
         }
 
         .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
+            margin-right: 1px;
+            font-size: 1rem;
         }
 
         .sidebar a:hover {
-            background-color: #162447;
+            background-color: #F1F1F1;
             color: #66bb6a;
-        }
-
-        .sidebar.collapsed .navbar-brand {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
         }
 
         .sidebar.collapsed a span {
             display: none;
         }
-
-        .main-content {
-            position: relative;
-            z-index: 2;
-            padding: 30px;
-            margin-left: 250px;
-            transition: margin-left 0.4s ease;
+        .sidebar.collapsed a {
+            justify-content: center;
         }
 
-        .sidebar.collapsed ~ .main-content {
+
+        .main-content {
+            margin-left: 220px;
+            padding: 40px;
+            transition: margin-left 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-content.collapsed {
             margin-left: 70px;
         }
 
         .header-title {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: bold;
-            color: #ffffff;
+            color: #66bb6a;
             text-align: center;
             margin-bottom: 20px;
+            transition: opacity 0.3s ease;
         }
 
         .header-subtitle {
@@ -136,16 +138,19 @@
             color: #d3d3d3;
             text-align: center;
             margin-bottom: 40px;
+            transition: opacity 0.3s ease;
         }
 
         .widget {
             background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-radius: 16px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
             padding: 20px;
-            color: #fff;
-            backdrop-filter: blur(15px);
+            color: #ffffff;
+            margin-bottom: 20px;
             transition: transform 0.3s ease;
+            flex: 1 1 calc(30% - 20px);
+            min-width: 250px;
         }
 
         .widget:hover {
@@ -153,59 +158,43 @@
         }
 
         .widget h4 {
-            font-size: 1.3rem;
-            color: #ffffff;
-            margin-bottom: 15px;
+            font-size: 1.4rem;
+            color: #66bb6a;
+            margin-bottom: 10px;
         }
 
-        .widget p {
-            font-size: 1.1rem;
-            color: #d3d3d3;
+        .chart-container {
+            height: 350px;
+            flex: 1 1 45%;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            color: #ffffff;
         }
 
         .card-body {
             padding: 30px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
             color: #ffffff;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(15px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
         }
 
         .footer {
-            background-color: #1a1a2e;
+            background-color: #1a233a;
             color: #ffffff;
             text-align: center;
-            padding: 10px 0;
-            margin-top: 30px;
+            padding: 20px 0;
+            margin-top: 40px;
         }
 
         .row-flex {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .col-md-4,
-        .col-md-6 {
-            margin-bottom: 30px;
-        }
-
-        /* Media Query for Mobile View */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .sidebar a {
-                font-size: 1rem;
-            }
+            gap: 20px;
+            justify-content: space-evenly;
         }
     </style>
 </head>
@@ -214,10 +203,8 @@
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-    <!-- Navbar Brand Container -->
-    <div class="navbar-brand-container">
-        <span class="navbar-brand">Green Shadow</span>
-
+    <div class="navbar-brand-container" id="brandContainer">
+        <span class="navbar-brand" id="brandName">Green Shadow</span>
         <div class="toggle-sidebar" id="toggleSidebar">
             <i class="fas fa-bars"></i>
         </div>
@@ -233,80 +220,64 @@
 </div>
 
 <!-- Main Content -->
-<div class="main-content container" id="mainContent">
+<div class="main-content" id="mainContent">
     <div class="row">
         <div class="col-md-12">
-            <h2 class="header-title">Crop Monitoring Dashboard</h2>
-            <p class="header-subtitle">Manage your fields, crops, staff, vehicles, and equipment efficiently.</p>
+            <h2 class="header-title" id="headerTitle">Crop Monitoring Dashboard</h2>
+            <p class="header-subtitle" id="headerSubtitle">Manage your fields, crops, staff, vehicles, and equipment efficiently.</p>
 
-            <!-- Dashboard Widgets and Charts -->
+            <!-- Dashboard Widgets -->
             <div class="row-flex">
-                <!-- Widgets Row 1 -->
-                <div class="col-md-4">
-                    <div class="widget">
-                        <h4>Fields</h4>
-                        <p id="fieldsStatus">10 Fields Active</p>
-                    </div>
+                <div class="widget">
+                    <h4>Fields</h4>
+                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <p id="fieldsStatus">10 Fields Active</p>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="widget">
-                        <h4>Crops</h4>
-                        <p id="cropsStatus">20 Crops Planted</p>
-                    </div>
+                <div class="widget">
+                    <h4>Crops</h4>
+                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <p id="cropsStatus">20 Crops Planted</p>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="widget">
-                        <h4>Staff</h4>
-                        <p id="staffStatus">15 Staff Working</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Widgets Row 2 -->
-            <div class="row-flex">
-                <div class="col-md-4">
-                    <div class="widget">
-                        <h4>Vehicles</h4>
-                        <p id="vehiclesStatus">8 Vehicles Operational</p>
-                    </div>
+                <div class="widget">
+                    <h4>Staff</h4>
+                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <p id="staffStatus">15 Staff Working</p>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="widget">
-                        <h4>Equipment</h4>
-                        <p id="equipmentStatus">30 Equipment Available</p>
-                    </div>
+                <div class="widget">
+                    <h4>Vehicles</h4>
+                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <p id="vehiclesStatus">8 Vehicles Operational</p>
                 </div>
 
-                <div class="col-md-4">
-                    <div class="widget">
-                        <h4>Monitoring Logs</h4>
-                        <p id="monitoringStatus">12 Logs Recorded</p>
-                    </div>
+                <div class="widget">
+                    <h4>Equipment</h4>
+                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <p id="equipmentStatus">30 Equipment Available</p>
+                </div>
+
+                <div class="widget">
+                    <h4>Monitoring Logs</h4>
+                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <p id="monitoringStatus">12 Logs Recorded</p>
                 </div>
             </div>
 
             <!-- Dashboard Charts -->
             <div class="row-flex">
-                <!-- Chart for Crop Stats -->
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5>Crop Growth Stats</h5>
-                            <canvas id="cropGrowthChart"></canvas>
-                        </div>
+                <div class="card chart-container">
+                    <div class="card-body">
+                        <h5 style="color: #66bb6a;">Crop Growth Stats</h5>
+                        <canvas id="cropGrowthChart"></canvas>
                     </div>
                 </div>
 
-                <!-- Chart for Equipment Status -->
-                <div class="col-md-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5>Equipment Usage</h5>
-                            <canvas id="equipmentChart"></canvas>
-                        </div>
+                <div class="card chart-container">
+                    <div class="card-body">
+                        <h5 style="color: #66bb6a;">Equipment Usage</h5>
+                        <canvas id="equipmentChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -322,35 +293,64 @@
 <!-- Scripts -->
 <script>
     $(document).ready(function () {
-        // Sidebar Toggle
+        // Sidebar Toggle Logic
         $('#toggleSidebar').click(function () {
+            // Toggle Sidebar Class
             $('#sidebar').toggleClass('collapsed');
-            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
+            $('#mainContent').toggleClass('collapsed');
+
+            // Correctly Update the Icon Class for the Toggle Button
+            if ($('#sidebar').hasClass('collapsed')) {
+                $('#toggleSidebar i').removeClass('fa-bars').addClass('fa-times');
+                // Hide the "Green Shadow" text when sidebar is collapsed
+                $('#brandName').css('opacity', '0');
+                setTimeout(() => {
+                    $('#brandName').css('display', 'none');
+                }, 10); // Hide after the transition for a smooth effect
+            } else {
+                $('#toggleSidebar i').removeClass('fa-times').addClass('fa-bars');
+                // Show the "Green Shadow" text when sidebar is expanded
+                $('#brandName').css('display', 'block');
+                setTimeout(() => {
+                    $('#brandName').css('opacity', '1');
+                }, 10); // Show immediately after changing display
+            }
+
+            // Ensure the icon is always visible and updates consistently
+            $('#toggleSidebar').css('display', 'flex');
         });
+
+        // Ensure correct icon visibility and state on page load
+        if ($('#sidebar').hasClass('collapsed')) {
+            $('#toggleSidebar i').removeClass('fa-bars').addClass('fa-times');
+            $('#brandName').css('opacity', '0').css('display', 'none');
+        } else {
+            $('#toggleSidebar i').removeClass('fa-times').addClass('fa-bars');
+            $('#brandName').css('opacity', '1').css('display', 'block');
+        }
+
 
         // Crop Growth Chart
         var ctx1 = document.getElementById('cropGrowthChart').getContext('2d');
         var cropGrowthChart = new Chart(ctx1, {
-            type: 'bar',
+            type: 'line',
             data: {
                 labels: ['Crop A', 'Crop B', 'Crop C', 'Crop D'],
                 datasets: [{
                     label: 'Growth Percentage',
                     data: [75, 60, 90, 80],
-                    backgroundColor: 'rgba(75, 192, 192, 0.6)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
+                    backgroundColor: 'rgba(102, 187, 106, 0.2)',
+                    borderColor: 'rgba(102, 187, 106, 1)',
+                    borderWidth: 2
                 }]
             },
             options: {
                 responsive: true,
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            max: 100
-                        }
-                    }]
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
                 }
             }
         });
@@ -358,7 +358,7 @@
         // Equipment Chart
         var ctx2 = document.getElementById('equipmentChart').getContext('2d');
         var equipmentChart = new Chart(ctx2, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
                 labels: ['Available', 'In Use', 'Out of Service'],
                 datasets: [{

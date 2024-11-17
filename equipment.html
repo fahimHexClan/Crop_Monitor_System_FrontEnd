@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipment Management</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+
     <style>
         body {
             font-family: 'Roboto', sans-serif;
@@ -31,57 +32,91 @@
             z-index: 1;
         }
 
-        /* Sidebar Styling */
         .sidebar {
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
             width: 250px;
-            background-color: #1a1a2e; /* Dark professional blue for sidebar */
-            padding-top: 20px;
+            background-color: #1a1a2e;
+            padding-top: 30px;
             z-index: 2;
             color: #fff;
             backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4); /* Adding depth to the sidebar */
+            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
+            transition: width 0.4s ease, transform 0.4s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 60px;
+        }
+
+        .navbar-brand-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            margin-bottom: 50px;
+        }
+
+        .toggle-sidebar {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #66bb6a;
+            margin-left: 5px;
+        }
+
+        .navbar-brand {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #66bb6a;
+            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .sidebar a {
             color: #ffffff;
-            padding: 15px 20px;
+            padding: 17px 22px;
             text-decoration: none;
             display: flex;
             align-items: center;
             font-size: 1.1rem;
             transition: background-color 0.3s ease, color 0.3s ease;
             border-radius: 8px;
-            margin: 5px 15px; /* Adding margin for a clean layout */
+            margin: 5px 15px;
         }
 
         .sidebar a i {
-            margin-right: 10px; /* Space between icon and text */
+            margin-right: 10px;
             font-size: 1.2rem;
         }
 
         .sidebar a:hover {
-            background-color: #162447; /* Slightly different shade for hover */
+            background-color: #162447;
             color: #66bb6a;
         }
 
-        .sidebar .navbar-brand {
-            font-size: 1.8rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 30px;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        .sidebar.collapsed .navbar-brand {
+            display: none;
+        }
+
+        .sidebar.collapsed a {
+            justify-content: center;
+        }
+
+        .sidebar.collapsed a span {
+            display: none;
         }
 
         .main-content {
-            margin-left: 260px;
-            padding-top: 20px;
+            margin-left: 250px;
+            padding: 30px;
             position: relative;
             z-index: 2;
+            transition: margin-left 0.4s ease;
+        }
+
+        .sidebar.collapsed ~ .main-content {
+            margin-left: 70px;
         }
 
         .header-title {
@@ -98,7 +133,6 @@
             text-align: center;
         }
 
-        /* Table Styling */
         .table-container {
             max-width: 100%;
             overflow-x: auto;
@@ -134,7 +168,6 @@
             background-color: #e8f0fe;
         }
 
-        /* Modal Styling */
         .modal-content {
             border-radius: 10px;
             box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
@@ -150,52 +183,17 @@
             padding: 10px;
         }
 
-        .form-control::placeholder {
-            font-style: italic;
-            color: #6c757d;
-        }
-
-        .form-control:focus {
-            border-color: #0056b3;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-        }
-
-        /* Buttons */
-        .btn-outline-primary {
-            color: #007bff;
-            border-color: #007bff;
-            transition: all 0.3s ease;
-            border-radius: 25px;
-        }
-
-        .btn-outline-primary:hover {
-            background-color: #007bff;
-            color: #ffffff;
-        }
-
-        .btn-outline-danger {
-            color: #dc3545;
-            border-color: #dc3545;
-            transition: all 0.3s ease;
-            border-radius: 25px;
-        }
-
-        .btn-outline-danger:hover {
-            background-color: #dc3545;
-            color: #ffffff;
-        }
-
+        .btn-outline-primary,
+        .btn-outline-danger,
         .btn-success {
-            background-color: #28a745;
-            border: none;
+            border-radius: 25px;
         }
 
-        /* Footer */
         .footer {
             background-color: #1a1a2e;
             color: #ffffff;
-            padding: 20px 0;
             text-align: center;
+            padding: 20px 0;
             margin-top: 50px;
         }
 
@@ -210,20 +208,25 @@
 <body>
 
 <!-- Sidebar -->
-<div class="sidebar">
-    <div class="navbar-brand">Green Shadow</div>
-    <a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-    <a href="fields.html"><i class="fas fa-map-marked-alt"></i> Fields</a>
-    <a href="crops.html"><i class="fas fa-leaf"></i> Crops</a>
-    <a href="staff.html"><i class="fas fa-users"></i> Staff</a>
-    <a href="vehicles.html"><i class="fas fa-tractor"></i> Vehicles</a>
-    <a href="equipment.html"><i class="fas fa-tools"></i> Equipment</a>
-    <a href="MonitorLogs.html"><i class="fas fa-clipboard-list"></i> Monitoring Logs</a>
-    <a href="LogInPage.html"><i class="fas fa-sign-out-alt"></i> Logout</a>
+<div class="sidebar" id="sidebar">
+    <div class="navbar-brand-container">
+        <span class="navbar-brand">Green Shadow</span>
+        <div class="toggle-sidebar" id="toggleSidebar">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+    <a href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+    <a href="fields.html"><i class="fas fa-map-marked-alt"></i><span>Fields</span></a>
+    <a href="crops.html"><i class="fas fa-leaf"></i><span>Crops</span></a>
+    <a href="staff.html"><i class="fas fa-users"></i><span>Staff</span></a>
+    <a href="vehicles.html"><i class="fas fa-tractor"></i><span>Vehicles</span></a>
+    <a href="equipment.html"><i class="fas fa-tools"></i><span>Equipment</span></a>
+    <a href="MonitorLogs.html"><i class="fas fa-clipboard-list"></i><span>Monitoring Logs</span></a>
+    <a href="LogInPage.html"><i class="fas fa-sign-out-alt"></i><span>Logout</span></a>
 </div>
 
 <!-- Main Content -->
-<div class="main-content">
+<div class="main-content" id="mainContent">
     <div class="container">
         <h2 class="header-title">Equipment Management</h2>
         <p class="header-subtitle">Manage agricultural equipment used in various operations, including staff and field assignments.</p>
@@ -243,7 +246,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <!-- Example Data Row -->
                 <tr>
                     <td>EQ-001</td>
                     <td>Tractor</td>
@@ -288,16 +290,13 @@
                     <div class="modal-body">
                         <form>
                             <div class="container-fluid">
-                                <!-- Form Fields -->
                                 <div class="row g-3">
-                                    <!-- Equipment ID -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="equipmentId" class="form-label">Equipment ID</label>
                                             <input type="text" class="form-control" id="equipmentId" placeholder="Enter equipment ID (e.g., EQ-001)">
                                         </div>
                                     </div>
-                                    <!-- Name -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="equipmentName" class="form-label">Name</label>
@@ -306,7 +305,6 @@
                                     </div>
                                 </div>
                                 <div class="row g-3 mt-3">
-                                    <!-- Type -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="equipmentType" class="form-label">Type</label>
@@ -317,7 +315,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!-- Status -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="equipmentStatus" class="form-label">Status</label>
@@ -330,14 +327,12 @@
                                     </div>
                                 </div>
                                 <div class="row g-3 mt-3">
-                                    <!-- Assigned Staff -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="assignedStaff" class="form-label">Assigned Staff</label>
                                             <input type="text" class="form-control" id="assignedStaff" placeholder="Enter assigned staff or 'N/A'">
                                         </div>
                                     </div>
-                                    <!-- Assigned Field -->
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="assignedField" class="form-label">Assigned Field</label>
@@ -362,6 +357,18 @@
 <footer class="footer">
     <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
 </footer>
+
+<!-- Scripts -->
+<script>
+    $(document).ready(function () {
+        // Sidebar Toggle
+        $('#toggleSidebar').click(function () {
+            $('#sidebar').toggleClass('collapsed');
+            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
+            $('#mainContent').toggleClass('collapsed');
+        });
+    });
+</script>
 
 </body>
 
