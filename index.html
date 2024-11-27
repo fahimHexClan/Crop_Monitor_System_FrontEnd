@@ -20,23 +20,12 @@
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: url('Asserts/Crop1.jpg') no-repeat center center fixed;
+            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
             background-size: cover;
             position: relative;
             margin: 0;
             min-height: 100vh;
-            color: #fff;
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+            color: #333;
         }
 
         .sidebar {
@@ -49,7 +38,6 @@
             padding-top: 30px;
             z-index: 2;
             color: #fff;
-            backdrop-filter: blur(10px);
             box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
             transition: width 0.4s ease, transform 0.4s ease;
         }
@@ -63,7 +51,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 20px;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             transition: opacity 0.3s ease;
         }
 
@@ -72,7 +60,6 @@
             cursor: pointer;
             color: #66bb6a;
             margin-left: 5px;
-
         }
 
         .navbar-brand {
@@ -80,7 +67,6 @@
             font-weight: bold;
             color: #66bb6a;
             text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-
         }
 
         .sidebar a {
@@ -92,11 +78,12 @@
             font-size: 1.1rem;
             transition: background-color 0.3s ease, color 0.3s ease;
             border-radius: 8px;
+            margin: 5px 10px;
         }
 
         .sidebar a i {
-            margin-right: 1px;
-            font-size: 1rem;
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
 
         .sidebar a:hover {
@@ -107,13 +94,13 @@
         .sidebar.collapsed a span {
             display: none;
         }
+
         .sidebar.collapsed a {
             justify-content: center;
         }
 
-
         .main-content {
-            margin-left: 220px;
+            margin-left: 260px;
             padding: 40px;
             transition: margin-left 0.3s ease;
             position: relative;
@@ -121,36 +108,61 @@
         }
 
         .main-content.collapsed {
-            margin-left: 70px;
+            margin-left: 80px;
         }
 
-        .header-title {
-            font-size: 2.5rem;
+        .header-image {
+            background: url('Asserts/images/farm.jpg') no-repeat center center;
+            background-size: cover;
+            height: 250px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 2rem;
             font-weight: bold;
-            color: #66bb6a;
-            text-align: center;
-            margin-bottom: 20px;
-            transition: opacity 0.3s ease;
-        }
-
-        .header-subtitle {
-            font-size: 1.2rem;
-            color: #d3d3d3;
-            text-align: center;
-            margin-bottom: 40px;
-            transition: opacity 0.3s ease;
         }
 
         .widget {
             background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             padding: 20px;
-            color: #ffffff;
+            color: #333;
             margin-bottom: 20px;
             transition: transform 0.3s ease;
             flex: 1 1 calc(30% - 20px);
             min-width: 250px;
+            position: relative;
+        }
+
+        .widget img {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .widget:hover img {
+            opacity: 1;
+            transform: scale(1.05);
         }
 
         .widget:hover {
@@ -169,13 +181,13 @@
             margin-bottom: 20px;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             color: #ffffff;
         }
 
         .card-body {
             padding: 30px;
-            color: #ffffff;
+            color:#ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -200,7 +212,6 @@
 </head>
 
 <body>
-
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
     <div class="navbar-brand-container" id="brandContainer">
@@ -221,46 +232,49 @@
 
 <!-- Main Content -->
 <div class="main-content" id="mainContent">
+    <!-- Header Image -->
+    <div class="header-image">
+        <div class="header-overlay">Green Shadow Crop Monitoring Dashboard</div>
+    </div>
     <div class="row">
         <div class="col-md-12">
-            <h2 class="header-title" id="headerTitle">Crop Monitoring Dashboard</h2>
             <p class="header-subtitle" id="headerSubtitle">Manage your fields, crops, staff, vehicles, and equipment efficiently.</p>
 
             <!-- Dashboard Widgets -->
             <div class="row-flex">
                 <div class="widget">
                     <h4>Fields</h4>
-                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <img src="Asserts/icon-small.png" alt="Fields Icon">
                     <p id="fieldsStatus">10 Fields Active</p>
                 </div>
 
                 <div class="widget">
                     <h4>Crops</h4>
-                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <img src="Asserts/icon-small.png" alt="Crops Icon">
                     <p id="cropsStatus">20 Crops Planted</p>
                 </div>
 
                 <div class="widget">
                     <h4>Staff</h4>
-                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <img src="Asserts/icon-small.png" alt="Staff Icon">
                     <p id="staffStatus">15 Staff Working</p>
                 </div>
 
                 <div class="widget">
                     <h4>Vehicles</h4>
-                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <img src="Asserts/icon-small.png" alt="Vehicles Icon">
                     <p id="vehiclesStatus">8 Vehicles Operational</p>
                 </div>
 
                 <div class="widget">
                     <h4>Equipment</h4>
-                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <img src="Asserts/icon-small.png" alt="Equipment Icon">
                     <p id="equipmentStatus">30 Equipment Available</p>
                 </div>
 
                 <div class="widget">
                     <h4>Monitoring Logs</h4>
-                    <img src="Asserts/icon-small.png" alt="Icon Image" style="width: 50px; height: 50px; margin-bottom: 10px;">
+                    <img src="Asserts/icon-small.png" alt="Monitoring Logs Icon">
                     <p id="monitoringStatus">12 Logs Recorded</p>
                 </div>
             </div>
@@ -315,20 +329,7 @@
                     $('#brandName').css('opacity', '1');
                 }, 10); // Show immediately after changing display
             }
-
-            // Ensure the icon is always visible and updates consistently
-            $('#toggleSidebar').css('display', 'flex');
         });
-
-        // Ensure correct icon visibility and state on page load
-        if ($('#sidebar').hasClass('collapsed')) {
-            $('#toggleSidebar i').removeClass('fa-bars').addClass('fa-times');
-            $('#brandName').css('opacity', '0').css('display', 'none');
-        } else {
-            $('#toggleSidebar i').removeClass('fa-times').addClass('fa-bars');
-            $('#brandName').css('opacity', '1').css('display', 'block');
-        }
-
 
         // Crop Growth Chart
         var ctx1 = document.getElementById('cropGrowthChart').getContext('2d');

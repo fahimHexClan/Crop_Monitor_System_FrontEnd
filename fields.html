@@ -4,21 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equipment Management</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <title>Field Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
         body {
             font-family: 'Roboto', sans-serif;
-            background: url('Asserts/Crop1.jpg') no-repeat center center fixed;
+            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
             background-size: cover;
             position: relative;
             margin: 0;
             min-height: 100vh;
             color: #fff;
+            padding-bottom: 100px; /* To avoid overlap with footer */
         }
 
         body::before {
@@ -40,8 +39,8 @@
             width: 250px;
             background-color: #1a233a;
             padding-top: 30px;
-            z-index: 2;
-            color:  #fff;
+            z-index: 1000;
+            color: #fff;
             backdrop-filter: blur(10px);
             box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
             transition: width 0.4s ease, transform 0.4s ease;
@@ -58,7 +57,6 @@
             padding: 0 20px;
             margin-bottom: 50px;
             transition: opacity 0.3s ease;
-
         }
 
         .toggle-sidebar {
@@ -110,7 +108,7 @@
         }
 
         .main-content {
-            margin-left: 240px;
+            margin-left: 220px;
             padding: 30px;
             position: relative;
             z-index: 2;
@@ -127,7 +125,6 @@
             color: #66bb6a;
             text-align: center;
             margin-bottom: 10px;
-
         }
 
         .header-subtitle {
@@ -149,7 +146,6 @@
             box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
-
         }
 
         .table th,
@@ -165,32 +161,37 @@
             color: white;
             text-transform: uppercase;
         }
+
         .table tbody tr {
-            color: #1a1a2e; /* Default text color for rows */
+            color: #1a1a2e;
         }
 
         .table-striped tbody tr:nth-of-type(odd) {
-            background-color:  #f9f9f9;
+            background-color: #f9f9f9;
         }
 
         .table-striped tbody tr:hover {
             background-color: #e8f0fe;
-
         }
 
         .modal-content {
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #007bff;
+            color: #fff;
+            background-color: #333; /* Added background color to make text readable */
         }
 
         .form-control {
             border: 1.5px solid #007bff;
             padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .form-control::placeholder {
+            color: #bbb;
         }
 
         .btn-outline-primary,
@@ -203,34 +204,34 @@
             background-color: #1a233a;
             color: #ffffff;
             text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-        .main-content {
-            margin-bottom: 100px; /* Adds space at the bottom for the footer */
-        }
-        .add-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-        .modal-body .form-row {
-            margin-bottom: 1.7rem;
-        }
-
-        .modal-body .form-control {
+            padding: 10px 0;
+            margin-top: 50px;
             width: 100%;
-            margin-top: 5px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
         }
 
-        .modal-footer {
-            display: flex;
-            justify-content: space-between;
-
+        .modal {
+            z-index: 1055 !important; /* Ensure it’s above other elements */
         }
 
+        .form-container {
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            border-radius: 10px;
+        }
 
+        .form-label {
+            color: #66bb6a;
+            margin-bottom: 10px;
+        }
 
+        .preview-img {
+            max-width: 100px;
+            max-height: 100px;
+            margin-top: 10px;
+        }
     </style>
 </head>
 
@@ -258,7 +259,7 @@
 <div class="main-content" id="mainContent">
     <div class="container">
         <h2 class="header-title">Fields Management</h2>
-        <p class="header-subtitle">Manage  fields allocated for cultivation..</p>
+        <p class="header-subtitle">Manage fields allocated for cultivation.</p>
 
         <!-- Field Table -->
         <div class="table-container mt-4">
@@ -267,180 +268,173 @@
                 <tr>
                     <th>Field ID</th>
                     <th>Name</th>
-                    <th>FieldLocation</th>
-                    <th>ExtentSizeField</th>
-                    <th>CropId</th>
-                    <th>StaffId</th>
-                    <th>FieldImage1</th>
-                    <th>FieldImage2</th>
-                    <th>Action</th>
-]                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>F-001</td>
-                    <td>Tractor</td>
-                    <td>Mechanical</td>
-                    <td>Available</td>
-                    <td>John Doe</td>
-                    <td>John Doe</td>
-                    <td>North Field</td>
-                    <td>North Field</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                    </td>
+                    <th>Field Location</th>
+                    <th>Extent Size (acres)</th>
+                    <th>Crop ID</th>
+                    <th>Staff ID</th>
+                    <th>Field Image 1</th>
+                    <th>Field Image 2</th>
+                    <th>Actions</th>
                 </tr>
+                </thead>
+                <tbody id="fieldTableBody">
                 <tr>
-                    <td>EQ-002</td>
-                    <td>Water Pump</td>
-                    <td>Electrical</td>
-                    <td>Out of Service</td>
-                    <td>N/A</td>
-                    <td>N/A</td>
-                    <td>South Field</td>
-                    <td>South Field</td>
+                    <td>F001</td>
+                    <td>Field A</td>
+                    <td>Location A</td>
+                    <td>10</td>
+                    <td>C001</td>
+                    <td>S001</td>
+                    <td><img src="assets/field1.jpg" alt="Field Image 1" class="img-fluid" width="100"></td>
+                    <td><img src="assets/field2.jpg" alt="Field Image 2" class="img-fluid" width="100"></td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateFieldModal"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="container mt-5" >
-            <button class="btn btn-success" id="openModalButton" ><i class="fas fa-plus-circle"></i> Add New Equipment</button>
-        </div>
+        <!-- Add New Field Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addFieldModal">Add New Field</button>
+    </div>
+</div>
 
-        <div class="modal fade" id="addFieldModal" tabindex="-1" aria-labelledby="addFieldModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addFieldModalLabel">Add New Field</h5>
+<!-- Add Field Modal -->
+<div class="modal fade" id="addFieldModal" tabindex="-1" aria-labelledby="addFieldModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addFieldModalLabel">Add New Field</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addFieldForm">
+                    <div class="form-group">
+                        <label for="fieldName" class="form-label">Field Name</label>
+                        <input type="text" class="form-control" id="fieldName" name="fieldName" required placeholder="Enter field name">
                     </div>
-                    <div class="modal-body">
-                    <form>
-                        <div class="container-fluid">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="FieldId" class="form-label">Field ID</label>
-                                        <input type="text" class="form-control" id="FieldId" placeholder="Enter Field ID (e.g., F-001)">
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="FieldName" class="form-label">Name</label>
-                                        <input type="text" class="form-control" id="FieldName" placeholder="Enter Field name">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row g-3 mt-3">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="FieldLocation" class="form-label">Location</label>
-                                        <input type="text" class="form-control" id="FieldLocation" placeholder="Field Location">
-
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="ExtentSizeField" class="form-label">ExtentSizeField</label>
-                                            <input type="number" class="form-control" id="ExtentSizeField" placeholder="ExtentSizeField">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="CropId" class="form-label">Crop ID</label>
-                                            <select class="form-control" id="CropId" name="CropId">
-                                                <option value="">Select Crop ID</option>
-
-                                                <option value="1">Crop 1</option>
-                                                <option value="2">Crop 2</option>
-                                                <option value="3">Crop 3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="StaffId" class="form-label">Staff ID</label>
-                                            <select class="form-control" id="StaffId" name="StaffId">
-                                                <option value="">Select Staff ID</option>
-
-                                                <option value="1">Staff 1</option>
-                                                <option value="2">Staff 2</option>
-                                                <option value="3">Staff 3</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-3">
-                                    <div class="form-group">
-                                        <label for="CropImage1" class="form-label">Upload Crop Image 1</label>
-                                        <input type="file" class="form-control" id="CropImage1" accept="image/*" >
-                                    </div>
-                                </div>
-                                <div class="col-md-12 mt-3">
-                                    <div class="form-group">
-                                        <label for="CropImage2" class="form-label">Upload Crop Image 2</label>
-                                        <input type="file" class="form-control" id="CropImage2" accept="image/*" >
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                        </div>
-                    </form>
+                    <div class="form-group">
+                        <label for="fieldLocation" class="form-label">Field Location</label>
+                        <input type="text" class="form-control" id="fieldLocation" name="fieldLocation" required placeholder="Enter field location">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Save Equipment</button>
+                    <div class="form-group">
+                        <label for="extentSize" class="form-label">Extent Size (acres)</label>
+                        <input type="number" class="form-control" id="extentSize" name="extentSize" required placeholder="Enter size of the field in acres">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="cropId" class="form-label">Crop ID</label>
+                        <input type="text" class="form-control" id="cropId" name="cropId" required placeholder="Enter crop ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="staffId" class="form-label">Staff ID</label>
+                        <input type="text" class="form-control" id="staffId" name="staffId" required placeholder="Enter staff ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="fieldImage1" class="form-label">Field Image 1</label>
+                        <input type="file" class="form-control" id="fieldImage1" name="fieldImage1" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="fieldImage2" class="form-label">Field Image 2</label>
+                        <input type="file" class="form-control" id="fieldImage2" name="fieldImage2" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary w-100">Save Field</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
-</footer>
+<!-- Update Field Modal -->
+<div class="modal fade" id="updateFieldModal" tabindex="-1" aria-labelledby="updateFieldModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateFieldModalLabel">Update Field</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateFieldForm">
+                    <div class="form-group">
+                        <label for="updateFieldName" class="form-label">Field Name</label>
+                        <input type="text" class="form-control" id="updateFieldName" name="updateFieldName" required placeholder="Enter field name">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateFieldLocation" class="form-label">Field Location</label>
+                        <input type="text" class="form-control" id="updateFieldLocation" name="updateFieldLocation" required placeholder="Enter field location">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateExtentSize" class="form-label">Extent Size (acres)</label>
+                        <input type="number" class="form-control" id="updateExtentSize" name="updateExtentSize" required placeholder="Enter size of the field in acres">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateCropId" class="form-label">Crop ID</label>
+                        <input type="text" class="form-control" id="updateCropId" name="updateCropId" required placeholder="Enter crop ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateStaffId" class="form-label">Staff ID</label>
+                        <input type="text" class="form-control" id="updateStaffId" name="updateStaffId" required placeholder="Enter staff ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateFieldImage1" class="form-label">Field Image 1</label>
+                        <input type="file" class="form-control" id="updateFieldImage1" name="updateFieldImage1" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateFieldImage2" class="form-label">Field Image 2</label>
+                        <input type="file" class="form-control" id="updateFieldImage2" name="updateFieldImage2" accept="image/*">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary w-100">Update Field</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 <script>
-    $(document).ready(function () {
-        // Sidebar Toggle
-        $('#toggleSidebar').click(function () {
-            $('#sidebar').toggleClass('collapsed');
-            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
-            $('#mainContent').toggleClass('collapsed');
-        });
-        // Manually Trigger the Modal
-        $('#openModalButton').click(function () {
-            $('#addFieldModal').modal('show');
-            console.log("Add New Equipment button clicked. Modal should now be displayed.");
-        });
-
-        // Debugging to ensure modal appears
-        $('#addFieldModal').on('shown.bs.modal', function () {
-            console.log("Modal shown successfully.");
-        });
-
-        // Check for JavaScript errors in the console
-        console.log("JavaScript loaded correctly.");
+    // Sidebar toggle
+    document.getElementById('toggleSidebar').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
     });
 
+    // Handle form submission for adding field
+    document.getElementById('addFieldForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
+        let fieldName = document.getElementById('fieldName').value;
+        let fieldLocation = document.getElementById('fieldLocation').value;
+        let extentSize = document.getElementById('extentSize').value;
+        let cropId = document.getElementById('cropId').value;
+        let staffId = document.getElementById('staffId').value;
+
+        // Add the new field to the table
+        let tableBody = document.getElementById('fieldTableBody');
+        let newRow = tableBody.insertRow();
+
+        newRow.innerHTML = `
+            <td>F002</td>
+            <td>${fieldName}</td>
+            <td>${fieldLocation}</td>
+            <td>${extentSize}</td>
+            <td>${cropId}</td>
+            <td>${staffId}</td>
+            <td><img src="assets/field1.jpg" alt="Field Image 1" class="img-fluid" width="100"></td>
+            <td><img src="assets/field2.jpg" alt="Field Image 2" class="img-fluid" width="100"></td>
+            <td>
+                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateFieldModal"><i class="fas fa-edit"></i></button>
+                <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+            </td>
+        `;
+
+        // Clear the form
+        document.getElementById('addFieldForm').reset();
+        // Close the modal
+        var addModal = new bootstrap.Modal(document.getElementById('addFieldModal'));
+        addModal.hide();
+    });
 </script>
 
 </body>
-
 </html>
