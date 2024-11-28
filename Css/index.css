@@ -1,11 +1,12 @@
+/* Global Styles */
 body {
     font-family: 'Roboto', sans-serif;
-    background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
+    background: url('../Asserts/images/Crop1.jpg') no-repeat center center fixed;
     background-size: cover;
     position: relative;
     margin: 0;
     min-height: 100vh;
-    color: #333;
+    color:#f4f4f4; /*dashbord head eke paha thiyana head*/
 }
 
 .sidebar {
@@ -67,8 +68,8 @@ body {
 }
 
 .sidebar a:hover {
-    background-color: #F1F1F1;
-    color: #66bb6a;
+    background-color: #66bb6a;
+    color: #F1F1F1;
 }
 
 .sidebar.collapsed a span {
@@ -85,20 +86,38 @@ body {
     transition: margin-left 0.3s ease;
     position: relative;
     z-index: 2;
+    color: #f4f4f4;
 }
 
 .main-content.collapsed {
     margin-left: 80px;
 }
+.header-subtitle {
+    font-size: 1.2rem;
+    color: #dfe6e9; /* Light gray for subheading */
+    text-align: center;
+    margin-top: 10px;
+}
 
 .header-image {
-    background: url('Asserts/images/farm.jpg') no-repeat center center;
+    background: url('../Asserts/images/crop.jpg') no-repeat center center;
     background-size: cover;
     height: 250px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin-bottom: 30px;
     position: relative;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
+}/* Ensuring the background image covers the entire header section */
+.header-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2); /* Dark overlay for better text visibility */
+    border-radius: 15px;
+    z-index: 1;
 }
 
 .header-overlay {
@@ -108,16 +127,26 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.4);
-    color: #fff;
+    color: #ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    font-size: 2rem;
+    font-size: 2.8rem;
     font-weight: bold;
+    text-transform: uppercase; /* Makes the text all caps */
+    letter-spacing: 3px; /* Adds spacing between letters */
+    background-image: linear-gradient(45deg, #66bb6a, #2c3e50); /* Gradient background */
+    background-clip: text;
+    -webkit-background-clip: text; /* For Webkit browsers like Chrome */
+    animation: fadeIn 2s ease-in-out; /* Animation for fade-in effect */
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), 0px 0px 25px rgba(0, 0, 0, 0.4);
 }
 
 .widget {
+    /*
+    background: url('../Asserts/images/crop.jpg') no-repeat center center;
+    */
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -129,20 +158,33 @@ body {
     min-width: 250px;
     position: relative;
 }
+/* Widget Titles */
+.widget h4 {
+    font-size: 1.4rem;
+    color: #66bb6a; /* Green for emphasis */
+    margin-bottom: 10px;
+}
+/* Widget Content (Text) */
+.widget p {
+    font-size: 1.1rem;
+    color: #f4f4f4; /* Light color for content */
+}
 
 .widget img {
     position: absolute;
     top: 20px;
     right: 20px;
-    width: 40px;
-    height: 40px;
+    width: 70px;
+    height: 80px;
     opacity: 0.8;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .widget:hover img {
     opacity: 1;
-    transform: scale(1.05);
+    transform: scale(1.1);
 }
 
 .widget:hover {
@@ -153,6 +195,12 @@ body {
     font-size: 1.4rem;
     color: #66bb6a;
     margin-bottom: 10px;
+}
+.widget:hover h4 {
+    color: #f39c12; /* Golden color on hover */
+}
+.widget:hover p {
+    color: #f4f4f4; /* Light text remains the same on hover */
 }
 
 .chart-container {
@@ -167,13 +215,17 @@ body {
 
 .card-body {
     padding: 30px;
-    color: #ffffff;
+    color:#ffffff;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
 }
-
+/* Chart Titles */
+.card-body h5 {
+    font-size: 1.5rem;
+    color: #66bb6a; /* Consistent green color */
+}
 .footer {
     background-color: #1a233a;
     color: #ffffff;

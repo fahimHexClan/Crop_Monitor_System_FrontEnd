@@ -13,202 +13,12 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
+    <!-- External CSS -->
+    <link rel="stylesheet" href="Css/index.css">
+
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-            color: #333;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1a233a;
-            padding-top: 30px;
-            z-index: 2;
-            color: #fff;
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
-            transition: width 0.4s ease, transform 0.4s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .navbar-brand-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            margin-bottom: 50px;
-            transition: opacity 0.3s ease;
-        }
-
-        .toggle-sidebar {
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: #66bb6a;
-            margin-left: 5px;
-        }
-
-        .navbar-brand {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ffffff;
-            padding: 17px 22px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border-radius: 8px;
-            margin: 5px 10px;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover {
-            background-color: #F1F1F1;
-            color: #66bb6a;
-        }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
-        }
-
-        .main-content {
-            margin-left: 260px;
-            padding: 40px;
-            transition: margin-left 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .main-content.collapsed {
-            margin-left: 80px;
-        }
-
-        .header-image {
-            background: url('Asserts/images/farm.jpg') no-repeat center center;
-            background-size: cover;
-            height: 250px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            position: relative;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        .header-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .widget {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 20px;
-            color: #333;
-            margin-bottom: 20px;
-            transition: transform 0.3s ease;
-            flex: 1 1 calc(30% - 20px);
-            min-width: 250px;
-            position: relative;
-        }
-
-        .widget img {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
-        }
-
-        .widget:hover img {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-
-        .widget:hover {
-            transform: scale(1.05);
-        }
-
-        .widget h4 {
-            font-size: 1.4rem;
-            color: #66bb6a;
-            margin-bottom: 10px;
-        }
-
-        .chart-container {
-            height: 350px;
-            flex: 1 1 45%;
-            margin-bottom: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            color: #ffffff;
-        }
-
-        .card-body {
-            padding: 30px;
-            color:#ffffff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .footer {
-            background-color: #1a233a;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-
-        .row-flex {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: space-evenly;
-        }
-    </style>
 </head>
 
 <body>
@@ -244,37 +54,37 @@
             <div class="row-flex">
                 <div class="widget">
                     <h4>Fields</h4>
-                    <img src="Asserts/icon-small.png" alt="Fields Icon">
+                    <img src="Asserts/images/crop.jpg" alt="Fields Icon">
                     <p id="fieldsStatus">10 Fields Active</p>
                 </div>
 
                 <div class="widget">
                     <h4>Crops</h4>
-                    <img src="Asserts/icon-small.png" alt="Crops Icon">
+                    <img src="Asserts/images/farm.jpg" alt="Crops Icon">
                     <p id="cropsStatus">20 Crops Planted</p>
                 </div>
 
                 <div class="widget">
                     <h4>Staff</h4>
-                    <img src="Asserts/icon-small.png" alt="Staff Icon">
+                    <img src="Asserts/images/Crop1.jpg" alt="Staff Icon">
                     <p id="staffStatus">15 Staff Working</p>
                 </div>
 
                 <div class="widget">
                     <h4>Vehicles</h4>
-                    <img src="Asserts/icon-small.png" alt="Vehicles Icon">
+                    <img src="Asserts/images/Crop1.jpg" alt="Vehicles Icon">
                     <p id="vehiclesStatus">8 Vehicles Operational</p>
                 </div>
 
                 <div class="widget">
                     <h4>Equipment</h4>
-                    <img src="Asserts/icon-small.png" alt="Equipment Icon">
+                    <img src="Asserts/images/Crop1.jpg" alt="Equipment Icon">
                     <p id="equipmentStatus">30 Equipment Available</p>
                 </div>
 
                 <div class="widget">
                     <h4>Monitoring Logs</h4>
-                    <img src="Asserts/icon-small.png" alt="Monitoring Logs Icon">
+                    <img src="Asserts/images/farm.jpg" alt="Monitoring Logs Icon">
                     <p id="monitoringStatus">12 Logs Recorded</p>
                 </div>
             </div>
@@ -304,76 +114,8 @@
     <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
 </footer>
 
-<!-- Scripts -->
-<script>
-    $(document).ready(function () {
-        // Sidebar Toggle Logic
-        $('#toggleSidebar').click(function () {
-            // Toggle Sidebar Class
-            $('#sidebar').toggleClass('collapsed');
-            $('#mainContent').toggleClass('collapsed');
-
-            // Correctly Update the Icon Class for the Toggle Button
-            if ($('#sidebar').hasClass('collapsed')) {
-                $('#toggleSidebar i').removeClass('fa-bars').addClass('fa-times');
-                // Hide the "Green Shadow" text when sidebar is collapsed
-                $('#brandName').css('opacity', '0');
-                setTimeout(() => {
-                    $('#brandName').css('display', 'none');
-                }, 10); // Hide after the transition for a smooth effect
-            } else {
-                $('#toggleSidebar i').removeClass('fa-times').addClass('fa-bars');
-                // Show the "Green Shadow" text when sidebar is expanded
-                $('#brandName').css('display', 'block');
-                setTimeout(() => {
-                    $('#brandName').css('opacity', '1');
-                }, 10); // Show immediately after changing display
-            }
-        });
-
-        // Crop Growth Chart
-        var ctx1 = document.getElementById('cropGrowthChart').getContext('2d');
-        var cropGrowthChart = new Chart(ctx1, {
-            type: 'line',
-            data: {
-                labels: ['Crop A', 'Crop B', 'Crop C', 'Crop D'],
-                datasets: [{
-                    label: 'Growth Percentage',
-                    data: [75, 60, 90, 80],
-                    backgroundColor: 'rgba(102, 187, 106, 0.2)',
-                    borderColor: 'rgba(102, 187, 106, 1)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        max: 100
-                    }
-                }
-            }
-        });
-
-        // Equipment Chart
-        var ctx2 = document.getElementById('equipmentChart').getContext('2d');
-        var equipmentChart = new Chart(ctx2, {
-            type: 'doughnut',
-            data: {
-                labels: ['Available', 'In Use', 'Out of Service'],
-                datasets: [{
-                    data: [70, 20, 10],
-                    backgroundColor: ['#36A2EB', '#FF6384', '#FFCE56'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true
-            }
-        });
-    });
-</script>
+<!-- External JS -->
+<script src="Js/index.js"></script>
 </body>
 
 </html>
