@@ -7,232 +7,8 @@
     <title>Field Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="Css/fieldStyleSheet.css">
 
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-            color: #fff;
-            padding-bottom: 100px; /* To avoid overlap with footer */
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 1;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1a233a;
-            padding-top: 30px;
-            z-index: 1000;
-            color: #fff;
-            backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
-            transition: width 0.4s ease, transform 0.4s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .navbar-brand-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            margin-bottom: 50px;
-            transition: opacity 0.3s ease;
-        }
-
-        .toggle-sidebar {
-            font-size: 1.6rem;
-            cursor: pointer;
-            color: #66bb6a;
-            margin-left: 5px;
-        }
-
-        .navbar-brand {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ffffff;
-            padding: 17px 22px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border-radius: 8px;
-            margin: 5px 15px;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover {
-            background-color: #F1F1F1;
-            color: #66bb6a;
-        }
-
-        .sidebar.collapsed .navbar-brand {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
-        }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-        .main-content {
-            margin-left: 220px;
-            padding: 30px;
-            position: relative;
-            z-index: 2;
-            transition: margin-left 0.4s ease;
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 70px;
-        }
-
-        .header-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .header-subtitle {
-            font-size: 1.2rem;
-            color: #d3d3d3;
-            text-align: center;
-            margin-bottom: 40px;
-            transition: opacity 0.3s ease;
-        }
-
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table th,
-        .table td {
-            padding: 15px;
-            vertical-align: middle;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table thead th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .table tbody tr {
-            color: #1a1a2e;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f9f9;
-        }
-
-        .table-striped tbody tr:hover {
-            background-color: #e8f0fe;
-        }
-
-        .modal-content {
-            border-radius: 15px;
-            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-            color: #fff;
-            background-color: #333; /* Added background color to make text readable */
-        }
-
-        .form-control {
-            border: 1.5px solid #007bff;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 15px;
-            background-color: #333;
-            color: #fff;
-        }
-
-        .form-control::placeholder {
-            color: #bbb;
-        }
-
-        .btn-outline-primary,
-        .btn-outline-danger,
-        .btn-success {
-            border-radius: 25px;
-        }
-
-        .footer {
-            background-color: #1a233a;
-            color: #ffffff;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 50px;
-            width: 100%;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-        }
-
-        .modal {
-            z-index: 1055 !important; /* Ensure it’s above other elements */
-        }
-
-        .form-container {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 50px;
-            border-radius: 10px;
-        }
-
-        .form-label {
-            color: #66bb6a;
-            margin-bottom: 10px;
-        }
-
-        .preview-img {
-            max-width: 100px;
-            max-height: 100px;
-            margin-top: 10px;
-        }
-    </style>
 </head>
 
 <body>
@@ -267,26 +43,24 @@
                 <thead>
                 <tr>
                     <th>Field ID</th>
-                    <th>Name</th>
-                    <th>Field Location</th>
                     <th>Extent Size (acres)</th>
-                    <th>Crop ID</th>
-                    <th>Staff ID</th>
                     <th>Field Image 1</th>
                     <th>Field Image 2</th>
+                    <th>Name</th>
+                    <th>Field Location</th>
+                    <th>Log ID</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody id="fieldTableBody">
                 <tr>
                     <td>F001</td>
-                    <td>Field A</td>
-                    <td>Location A</td>
                     <td>10</td>
-                    <td>C001</td>
-                    <td>S001</td>
                     <td><img src="assets/field1.jpg" alt="Field Image 1" class="img-fluid" width="100"></td>
                     <td><img src="assets/field2.jpg" alt="Field Image 2" class="img-fluid" width="100"></td>
+                    <td>Field A</td>
+                    <td>Location A</td>
+                    <td>Log ID</td>
                     <td>
                         <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateFieldModal"><i class="fas fa-edit"></i></button>
                         <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
@@ -350,41 +124,47 @@
 <div class="modal fade" id="updateFieldModal" tabindex="-1" aria-labelledby="updateFieldModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="updateFieldModalLabel">Update Field</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="updateFieldForm">
-                    <div class="form-group">
+                    <div class="mb-3">
+                        <label for="updateFieldId" class="form-label">Field ID</label>
+                        <input type="text" class="form-control" id="updateFieldId" name="updateFieldId" required placeholder="Enter Field ID">
+
+                    </div>
+                    <div class="mb-3">
                         <label for="updateFieldName" class="form-label">Field Name</label>
                         <input type="text" class="form-control" id="updateFieldName" name="updateFieldName" required placeholder="Enter field name">
+
                     </div>
-                    <div class="form-group">
+
+                    <div class="mb-3">
                         <label for="updateFieldLocation" class="form-label">Field Location</label>
                         <input type="text" class="form-control" id="updateFieldLocation" name="updateFieldLocation" required placeholder="Enter field location">
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="updateExtentSize" class="form-label">Extent Size (acres)</label>
                         <input type="number" class="form-control" id="updateExtentSize" name="updateExtentSize" required placeholder="Enter size of the field in acres">
+
                     </div>
-                    <div class="form-group">
-                        <label for="updateCropId" class="form-label">Crop ID</label>
-                        <input type="text" class="form-control" id="updateCropId" name="updateCropId" required placeholder="Enter crop ID">
-                    </div>
-                    <div class="form-group">
-                        <label for="updateStaffId" class="form-label">Staff ID</label>
-                        <input type="text" class="form-control" id="updateStaffId" name="updateStaffId" required placeholder="Enter staff ID">
-                    </div>
-                    <div class="form-group">
+
+                    <div class="mb-3">
                         <label for="updateFieldImage1" class="form-label">Field Image 1</label>
                         <input type="file" class="form-control" id="updateFieldImage1" name="updateFieldImage1" accept="image/*">
                     </div>
-                    <div class="form-group">
+                    <div class="mb-3">
                         <label for="updateFieldImage2" class="form-label">Field Image 2</label>
                         <input type="file" class="form-control" id="updateFieldImage2" name="updateFieldImage2" accept="image/*">
                     </div>
-                    <button type="submit" class="btn btn-outline-primary w-100">Update Field</button>
+                    <div class="mb-3">
+                        <label for="updateLogId" class="form-label">Log ID</label>
+                        <input type="text" class="form-control" id="updateLogId" name="updateLogId" required placeholder="Enter log ID">
+
+                    </div>
+                    <button type="submit" class="btn btn-outline-success w-100">Update Field</button>
                 </form>
             </div>
         </div>
@@ -393,48 +173,8 @@
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script>
-    // Sidebar toggle
-    document.getElementById('toggleSidebar').addEventListener('click', function() {
-        document.getElementById('sidebar').classList.toggle('collapsed');
-    });
+<script src="Js/fieldScript.js"></script>
 
-    // Handle form submission for adding field
-    document.getElementById('addFieldForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        let fieldName = document.getElementById('fieldName').value;
-        let fieldLocation = document.getElementById('fieldLocation').value;
-        let extentSize = document.getElementById('extentSize').value;
-        let cropId = document.getElementById('cropId').value;
-        let staffId = document.getElementById('staffId').value;
-
-        // Add the new field to the table
-        let tableBody = document.getElementById('fieldTableBody');
-        let newRow = tableBody.insertRow();
-
-        newRow.innerHTML = `
-            <td>F002</td>
-            <td>${fieldName}</td>
-            <td>${fieldLocation}</td>
-            <td>${extentSize}</td>
-            <td>${cropId}</td>
-            <td>${staffId}</td>
-            <td><img src="assets/field1.jpg" alt="Field Image 1" class="img-fluid" width="100"></td>
-            <td><img src="assets/field2.jpg" alt="Field Image 2" class="img-fluid" width="100"></td>
-            <td>
-                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateFieldModal"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-
-        // Clear the form
-        document.getElementById('addFieldForm').reset();
-        // Close the modal
-        var addModal = new bootstrap.Modal(document.getElementById('addFieldModal'));
-        addModal.hide();
-    });
-</script>
 
 </body>
 </html>
