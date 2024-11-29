@@ -187,7 +187,8 @@ body::before {
     top: 20%;
     left: 45%;               /* Center the modal horizontally */
     transform: translate(-50%, -50%);  /* Adjust for exact centering */
-    max-height: 70vh;        /* Limits the modal height to 80% of the viewport height */
+    max-height: 70vh;/* Limits the modal height to 80% of the viewport height */
+    width: 80%;
     overflow-y: auto;        /* Allows scrolling inside the modal if needed */
     overflow-y: hidden;      /* Disable horizontal scrolling */
     margin: 0;
