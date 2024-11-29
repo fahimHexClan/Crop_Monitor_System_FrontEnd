@@ -7,6 +7,8 @@ body {
     min-height: 100vh;
     color: #f4f4f4;
     padding-bottom: 100px; /* To avoid overlap with footer */
+    overflow-x: hidden;
+
 }
 
 body::before {
@@ -181,6 +183,18 @@ body::before {
 .table-striped tbody tr:hover {
     background-color: #e0f7fa;
 }
+.modal-dialog {
+    position: fixed;         /* Fixes the modal's position relative to the viewport */
+    top: 20%;
+    left: 45%;               /* Center the modal horizontally */
+    transform: translate(-50%, -50%);  /* Adjust for exact centering */
+    max-height: 70vh;/* Limits the modal height to 80% of the viewport height */
+    width: 80%;
+    overflow-y: auto;        /* Allows scrolling inside the modal if needed */
+    overflow-y: hidden;      /* Disable horizontal scrolling */
+    margin: 0;
+
+}
 /*this for update*/
 .modal-content {
     border-radius: 10px;
@@ -192,21 +206,28 @@ body::before {
 }
 
 .modal-header {
-    background-color:  #007bff;  /* Green background for consistency */
-    color: #fff;
-    padding: 20px;
-    font-size: 1.2rem;
+    background-color: #19588f;
+    color: white;
+    padding: 15px;
+    font-size: 1.25rem;
     font-weight: bold;
     border-radius: 10px 10px 0 0;
     border-bottom: none;  /* Remove bottom border */
+    text-align: center;    /* Centers the header content */
 }
 .modal-title {
     font-size: 1.6rem;
     font-weight: 500;
 }
 .modal-body {
-    padding: 30px;
+    padding: 30px 40px;
     font-size: 1rem;
+    max-height: 65vh;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: 1fr; /* One column for form */
+    gap: 15px;
+    overflow-x: hidden;
 }
 
 /* Close Button in Header */
