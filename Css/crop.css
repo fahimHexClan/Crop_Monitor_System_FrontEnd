@@ -7,6 +7,7 @@ body {
     min-height: 100vh;
     color: #f4f4f4;
     padding-bottom: 100px; /* To avoid overlap with footer */
+    overflow-x: hidden;
 }
 
 body::before {
@@ -182,9 +183,15 @@ body::before {
     background-color: #e0f7fa;
 }
 .modal-dialog {
-    max-height: 70vh; /* Limits the modal height to 80% of the viewport height */
-    overflow-y: auto; /* Allows scrolling inside the modal if needed */
-    margin: 150px auto; /* Center the modal with a margin */
+    position: fixed;         /* Fixes the modal's position relative to the viewport */
+    top: 20%;
+    left: 45%;               /* Center the modal horizontally */
+    transform: translate(-50%, -50%);  /* Adjust for exact centering */
+    max-height: 70vh;        /* Limits the modal height to 80% of the viewport height */
+    overflow-y: auto;        /* Allows scrolling inside the modal if needed */
+    overflow-y: hidden;      /* Disable horizontal scrolling */
+    margin: 0;
+
 }
 
 /*this for update*/
@@ -218,6 +225,7 @@ body::before {
     display: grid;
     grid-template-columns: 1fr; /* One column for form */
     gap: 15px;
+    overflow-x: hidden;
 }
 
 /* Close Button in Header */
@@ -303,7 +311,6 @@ body::before {
     color: white;
     border: 2px solid #d32f2f;
 }
-
 /* Success Button */
 .btn-success {
     background-color: #19588f;
@@ -362,6 +369,7 @@ body::before {
     bottom: 0;
     left: 0;
 }
+
 /* Modal Footer */
 .modal-footer {
     background-color: #f9f9f9;
@@ -371,7 +379,6 @@ body::before {
     justify-content: flex-end;
     gap: 15px;
 }
-
 /* Button in Modal Footer */
 .modal-footer button {
     border-radius: 25px;
@@ -433,6 +440,7 @@ body::before {
 .table tbody tr:hover {
     background-color: #f5f5f5;  /* Light gray hover effect */
 }
+
 /* Container Padding for Better Layout */
 .container {
     padding: 30px;
