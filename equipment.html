@@ -5,204 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipment Management</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="Css/equipment.css">
 
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-            color: #fff;
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1a1a2e;
-            padding-top: 30px;
-            z-index: 2;
-            color: #fff;
-            backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
-            transition: width 0.4s ease, transform 0.4s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .navbar-brand-container {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            margin-bottom: 50px;
-        }
-
-        .toggle-sidebar {
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #66bb6a;
-            margin-left: 5px;
-        }
-
-        .navbar-brand {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ffffff;
-            padding: 17px 22px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border-radius: 8px;
-            margin: 5px 15px;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover {
-            background-color: #162447;
-            color: #66bb6a;
-        }
-
-        .sidebar.collapsed .navbar-brand {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
-        }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-        .main-content {
-            margin-left: 250px;
-            padding: 30px;
-            position: relative;
-            z-index: 2;
-            transition: margin-left 0.4s ease;
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 70px;
-        }
-
-        .header-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .header-subtitle {
-            font-size: 1.2rem;
-            color: #d3d3d3;
-            text-align: center;
-        }
-
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table th,
-        .table td {
-            padding: 15px;
-            vertical-align: middle;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table thead th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f9f9;
-        }
-
-        .table-striped tbody tr:hover {
-            background-color: #e8f0fe;
-        }
-
-        .modal-content {
-            border-radius: 10px;
-            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .form-control {
-            border: 1.5px solid #007bff;
-            padding: 10px;
-        }
-
-        .btn-outline-primary,
-        .btn-outline-danger,
-        .btn-success {
-            border-radius: 25px;
-        }
-
-        .footer {
-            background-color: #1a1a2e;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 50px;
-        }
-
-        .add-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -229,147 +35,183 @@
 <div class="main-content" id="mainContent">
     <div class="container">
         <h2 class="header-title">Equipment Management</h2>
-        <p class="header-subtitle">Manage agricultural equipment used in various operations, including staff and field assignments.</p>
-
+        <p class="header-subtitle">Manages agricultural equipment used in various operations.</p>
+        <!-- Add New Field Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEquipmentModal"> <i class="fas fa-plus-circle me-2"></i>Add New Equipment</button>
+        <br>
         <!-- Equipment Table -->
         <div class="table-container mt-4">
             <table class="table table-striped table-hover align-middle">
                 <thead>
+
                 <tr>
                     <th>Equipment ID</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Assigned Staff</th>
-                    <th>Assigned Field</th>
+                    <th>Equipment Name</th>
+                    <th>Equipment Status</th>
+                    <th>Equipment Type</th>
+                    <th>Field ID</th>
+                    <th>Staff ID</th>
                     <th>Actions</th>
+
+
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="EquipmentTableBody">
                 <tr>
-                    <td>EQ-001</td>
-                    <td>Tractor</td>
-                    <td>Mechanical</td>
-                    <td>Available</td>
-                    <td>John Doe</td>
-                    <td>North Field</td>
+                    <td>E001</td>
+                    <td>Dozers</td>
+                    <td>Avilable</td>
+                    <td>New</td>
+                    <td>F001</td>
+                    <td>S001</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>EQ-002</td>
-                    <td>Water Pump</td>
-                    <td>Electrical</td>
-                    <td>Out of Service</td>
-                    <td>N/A</td>
-                    <td>South Field</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateEquipmentModal"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Add New Equipment Button -->
-        <div class="add-button">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addEquipmentModal"><i class="fas fa-plus-circle"></i> Add New Equipment</button>
-        </div>
+    </div>
+</div>
 
-        <!-- Modal for Adding New Equipment -->
-        <div class="modal fade" id="addEquipmentModal" tabindex="-1" aria-labelledby="addEquipmentModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addEquipmentModalLabel">Add New Equipment</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Add Equipment Modal -->
+<div class="modal fade" id="addEquipmentModal" tabindex="-1" aria-labelledby="addEquipmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEquipmentModalLabel">Add New Equipment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addEquipmentForm">
+                    <div class="form-group">
+                        <label for="EquipmentId" class="form-label">Equipment ID</label>
+                        <input type="text" class="form-control" id="EquipmentId" name="EquipmentID" required
+                               placeholder="Enter Equipment ID">
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="container-fluid">
-                                <div class="row g-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="equipmentId" class="form-label">Equipment ID</label>
-                                            <input type="text" class="form-control" id="equipmentId" placeholder="Enter equipment ID (e.g., EQ-001)">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="equipmentName" class="form-label">Name</label>
-                                            <input type="text" class="form-control" id="equipmentName" placeholder="Enter equipment name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="equipmentType" class="form-label">Type</label>
-                                            <select class="form-control" id="equipmentType">
-                                                <option value="" disabled selected>Select type</option>
-                                                <option value="Mechanical">Mechanical</option>
-                                                <option value="Electrical">Electrical</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="equipmentStatus" class="form-label">Status</label>
-                                            <select class="form-control" id="equipmentStatus">
-                                                <option value="" disabled selected>Select status</option>
-                                                <option value="Available">Available</option>
-                                                <option value="Out of Service">Out of Service</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row g-3 mt-3">
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="assignedStaff" class="form-label">Assigned Staff</label>
-                                            <input type="text" class="form-control" id="assignedStaff" placeholder="Enter assigned staff or 'N/A'">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="assignedField" class="form-label">Assigned Field</label>
-                                            <input type="text" class="form-control" id="assignedField" placeholder="Enter assigned field or 'N/A'">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="EquipmentName" class="form-label">Equipment Name</label>
+                        <input type="text" class="form-control" id="EquipmentName" name="EquipmentName" required
+                               placeholder="Enter Equipment Name">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Save Equipment</button>
+                    <div class="form-group">
+                        <label for="EquipmentStatus" class="form-label"> Equipment Status</label>
+                        <select class="form-control" id="EquipmentStatus" name="EquipmentStatus" required>
+                            <option value="" disabled selected>Select EquipmentStatus </option>
+                            <option value="Available">Available</option>
+                            <option value="In Use">In Use</option>
+                            <option value="Maintenance">Maintenance</option>
+                        </select>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="EquipmentType" class="form-label">Equipment Type</label>
+                        <select class="form-control" id="EquipmentType" name="EquipmentType" required>
+                            <option value="" disabled selected>Select Equipment Type</option>
+                            <option value="Heavy">Heavy</option>
+                            <option value="Light">Light</option>
+                            <option value="Specialized">Specialized</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="FieldId" class="form-label">Field ID</label>
+                        <select class="form-control" id="FieldId" name="FieldId" required>
+                            <option value="" disabled selected>Select Field ID</option>
+                            <option value="F001">F001</option>
+                            <option value="F002">F002</option>
+                            <option value="F003">F003</option>
+                            <option value="F004">F004</option>
+                            <!-- Add other log IDs as needed -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="StaffId" class="form-label">Staff ID</label>
+                        <select class="form-control" id="StaffId" name="StaffId1" required>
+                            <option value="" disabled selected>Select Staff ID</option>
+                            <option value="S001">S001</option>
+                            <option value="S002">S002</option>
+                            <option value="S003">S003</option>
+                            <option value="S004">S004</option>
+                            <!-- Add other log IDs as needed -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success w-100">Save Equipment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- Update Equipment Modal -->
+<div class="modal fade" id="updateEquipmentModal" tabindex="-1" aria-labelledby="updateEquipmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateEquipmentModalLabel">Update Equipment</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateEquipmentForm">
+                    <div class="form-group">
+                        <label for="UpdateEquipmentId" class="form-label">Equipment ID</label>
+                        <input type="text" class="form-control" id="UpdateEquipmentId" name="UpdateEquipmentId" required placeholder="Enter Equipment ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateEquipmentName" class="form-label">Equipment Name</label>
+                        <input type="text" class="form-control" id="UpdateEquipmentName" name="UpdateEquipmentName" required placeholder="Enter Equipment Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateEquipmentStatus" class="form-label">Equipment Status</label>
+                        <select class="form-control" id="UpdateEquipmentStatus" name="UpdateEquipmentStatus" required>
+                            <option value="" disabled selected>Select Equipment Status</option>
+                            <option value="ACTIVE">ACTIVE</option>
+                            <option value="INACTIVE">INACTIVE</option>
+                            <option value="UNDER_MAINTENANCE">UNDER MAINTENANCE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateEquipmentType" class="form-label">Equipment Type</label>
+                        <select class="form-control" id="UpdateEquipmentType" name="UpdateEquipmentType" required>
+                            <option value="" disabled selected>Select Equipment Type</option>
+                            <option value="HEAVY">HEAVY</option>
+                            <option value="LIGHT">LIGHT</option>
+                            <option value="HAND_TOOL">HAND TOOL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateFieldId" class="form-label">Field ID</label>
+                        <select class="form-control" id="UpdateFieldId" name="UpdateFieldId" required>
+                            <option value="" disabled selected>Select Field ID</option>
+                            <option value="F001">F001</option>
+                            <option value="F002">F002</option>
+                            <option value="F003">F003</option>
+                            <option value="F004">F004</option>
+                            <!-- Add other field IDs as needed -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateStaffId" class="form-label">Staff ID</label>
+                        <select class="form-control" id="UpdateStaffId" name="UpdateStaffId" required>
+                            <option value="" disabled selected>Select Staff ID</option>
+                            <option value="S001">S001</option>
+                            <option value="S002">S002</option>
+                            <option value="S003">S003</option>
+                            <option value="S004">S004</option>
+                            <!-- Add other staff IDs as needed -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success w-100">Update Equipment</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
-</footer>
 
 <!-- Scripts -->
-<script>
-    $(document).ready(function () {
-        // Sidebar Toggle
-        $('#toggleSidebar').click(function () {
-            $('#sidebar').toggleClass('collapsed');
-            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
-            $('#mainContent').toggleClass('collapsed');
-        });
-    });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="Js/equipment.js"></script>
+
 
 </body>
-
 </html>
