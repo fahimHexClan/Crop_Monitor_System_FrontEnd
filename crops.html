@@ -4,204 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crops Management</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Field Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="Css/crop.css">
 
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-            color: #fff;
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1a1a2e;
-            padding-top: 20px;
-            z-index: 2;
-            color: #fff;
-            backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
-            transition: width 0.4s ease, transform 0.4s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .navbar-brand-container {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            margin-bottom: 40px;
-        }
-
-        .toggle-sidebar {
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #66bb6a;
-            margin-right: 10px;
-        }
-
-        .navbar-brand {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ffffff;
-            padding: 15px 20px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border-radius: 8px;
-            margin: 5px 15px;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover {
-            background-color: #162447;
-            color: #66bb6a;
-        }
-
-        .sidebar.collapsed .navbar-brand {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
-        }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-        .main-content {
-            position: relative;
-            z-index: 2;
-            padding: 30px;
-            margin-left: 250px;
-            transition: margin-left 0.4s ease;
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 70px;
-        }
-
-        .header-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .header-subtitle {
-            font-size: 1.2rem;
-            color: #d3d3d3;
-            text-align: center;
-        }
-
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table th,
-        .table td {
-            padding: 15px;
-            vertical-align: middle;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table thead th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f9f9;
-        }
-
-        .table-striped tbody tr:hover {
-            background-color: #e8f0fe;
-        }
-
-        .modal-content {
-            border-radius: 10px;
-            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .form-control {
-            border: 1.5px solid #007bff;
-            padding: 10px;
-        }
-
-        .btn-outline-primary,
-        .btn-outline-danger,
-        .btn-success {
-            border-radius: 25px;
-        }
-
-        .footer {
-            background-color: #1a1a2e;
-            color: #ffffff;
-            text-align: center;
-            padding: 20px 0;
-            margin-top: 50px;
-        }
-
-        .add-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -215,7 +22,7 @@
         </div>
     </div>
     <a href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
-    <a href="fields.html"><i class="fas fa-seedling"></i><span>Fields</span></a>
+    <a href="fields.html"><i class="fas fa-map-marked-alt"></i><span>Fields</span></a>
     <a href="crops.html"><i class="fas fa-leaf"></i><span>Crops</span></a>
     <a href="staff.html"><i class="fas fa-users"></i><span>Staff</span></a>
     <a href="vehicles.html"><i class="fas fa-tractor"></i><span>Vehicles</span></a>
@@ -225,143 +32,225 @@
 </div>
 
 <!-- Main Content -->
-<div class="main-content container">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="header-title">Crops Management</h2>
-            <p class="header-subtitle">Manage crop details including crop type, growth stage, total extent, and field observations.</p>
+<div class="main-content" id="mainContent">
+    <div class="container">
+        <h2 class="header-title">Crops Management</h2>
+        <p class="header-subtitle">Handles information related to crop types and growth stages.</p>
+        <!-- Add New Field Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCropModal">Add New Crop</button>
+        <br>
+        <!-- Field Table -->
+        <div class="table-container mt-4">
+            <table class="table table-striped table-hover align-middle">
+                <thead>
 
-            <!-- Crops Table -->
-            <div class="table-container mt-4">
-                <table class="table table-striped table-hover align-middle">
-                    <thead>
-                    <tr>
-                        <th>Crop Code</th>
-                        <th>Common Name</th>
-                        <th>Scientific Name</th>
-                        <th>Category</th>
-                        <th>Season</th>
-                        <th>Field</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>CRP-001</td>
-                        <td>Wheat</td>
-                        <td>Triticum aestivum</td>
-                        <td>Cereal</td>
-                        <td>Winter</td>
-                        <td>North Field</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>CRP-002</td>
-                        <td>Barley</td>
-                        <td>Hordeum vulgare</td>
-                        <td>Cereal</td>
-                        <td>Spring</td>
-                        <td>South Field</td>
-                        <td>
-                            <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <tr>
+                    <th>Crop ID</th>
+                    <th>Crop Category</th>
+                    <th>Common Name</th>
+                    <th>Crop Image</th>
+                    <th>Scientific Name</th>
+                    <th>Season</th>
+                    <th>Field ID</th>
+                    <th>Log Id</th>
+                    <th>Actions</th>
+
+
+                </tr>
+                </thead>
+                <tbody id="CropTableBody">
+                <tr>
+                    <td>C001</td>
+                    <td>Veg</td>
+                    <td>Carrot</td>
+                    <td><img src="assets/field1.jpg" alt="Crop Image 1" class="img-fluid" width="100"></td>
+                    <td>GOWWAA</td>
+                    <td>Winter</td>
+                    <td>F001</td>
+                    <td>L001</td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateCropModal"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- Add Crop Modal -->
+<div class="modal fade" id="addCropModal" tabindex="-1" aria-labelledby="addCropModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addCropModalLabel">Add New Field</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-
-            <!-- Add New Crop Button -->
-            <div class="add-button">
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addCropModal"><i class="fas fa-plus-circle"></i> Add New Crop</button>
-            </div>
-
-            <!-- Modal for Adding New Crop -->
-            <div class="modal fade" id="addCropModal" tabindex="-1" aria-labelledby="addCropModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addCropModalLabel">Add New Crop</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="container-fluid">
-                                    <div class="row g-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="cropCode" class="form-label">Crop Code</label>
-                                                <input type="text" class="form-control" id="cropCode" placeholder="Enter unique crop code (e.g., CRP-001)">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="commonName" class="form-label">Common Name</label>
-                                                <input type="text" class="form-control" id="commonName" placeholder="Enter common name">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row g-3 mt-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="scientificName" class="form-label">Scientific Name</label>
-                                                <input type="text" class="form-control" id="scientificName" placeholder="Enter scientific name">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="category" class="form-label">Category</label>
-                                                <input type="text" class="form-control" id="category" placeholder="Enter category (e.g., Cereal)">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row g-3 mt-3">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="season" class="form-label">Season</label>
-                                                <input type="text" class="form-control" id="season" placeholder="Enter crop season">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label for="field" class="form-label">Field</label>
-                                                <input type="text" class="form-control" id="field" placeholder="Enter field details">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-success">Save Crop</button>
-                        </div>
+            <div class="modal-body">
+                <form id="addCropForm">
+                    <div class="form-group">
+                        <label for="CropId" class="form-label">Crop ID</label>
+                        <input type="text" class="form-control" id="CropId" name="CropId" required
+                               placeholder="Enter Crop ID">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="CropCategory" class="form-label">Crop Category</label>
+                        <select class="form-control" id="CropCategory" name="CropCategory" required>
+                            <option value="" disabled selected>Select Crop Category</option>
+                            <option value="Vegetables">Vegetables</option>
+                            <option value="Fruits">Fruits</option>
+                            <option value="Cereals">Cereals</option>
+                            <option value="Legumes">Legumes</option>
+                            <option value="Tubers">Tubers</option>
+                            <!-- Add other categories as needed -->
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ScientificName" class="form-label">Common Name</label>
+                        <input type="text" class="form-control" id="ScientificName" name="CommonName" required
+                               placeholder="Enter Common Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="CropImage" class="form-label">Crop Image</label>
+                        <input type="file" class="form-control" id="CropImage" name="CropImage" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="ScientificName" class="form-label">Scientific Name</label>
+                        <input type="text" class="form-control" id="CropScientificName" name="CommonName" required
+                               placeholder="Enter Scientific Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="Season" class="form-label">Season</label>
+                        <select class="form-control" id="Season" name="Season" required>
+                            <option value="" disabled selected>Select Season</option>
+                            <option value="Spring">Spring</option>
+                            <option value="Summer">Summer</option>
+                            <option value="Autumn">Autumn</option>
+                            <option value="Winter">Winter</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="FieldId" class="form-label">Field ID</label>
+                        <select class="form-control" id="FieldId" name="FieldId" required>
+                            <option value="" disabled selected>Select Field ID</option>
+                            <option value="FIELD01">FIELD01</option>
+                            <option value="FIELD02">FIELD02</option>
+                            <option value="FIELD03">FIELD03</option>
+                            <option value="FIELD04">FIELD04</option>
+                            <!-- Add other field IDs as needed -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="LogId" class="form-label">Log ID</label>
+                        <select class="form-control" id="LogId" name="LogId" required>
+                            <option value="" disabled selected>Select Log ID</option>
+                            <option value="LOG123">LOG123</option>
+                            <option value="LOG124">LOG124</option>
+                            <option value="LOG125">LOG125</option>
+                            <option value="LOG126">LOG126</option>
+                            <!-- Add other log IDs as needed -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success w-100">Save Field</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
-</footer>
+<!-- Update Crop Modal -->
+<div class="modal fade" id="updateCropModal" tabindex="-1" aria-labelledby="updateFieldModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="updateFieldModalLabel">Update Crop</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateCropForm">
+                    <div class="mb-3">
+                        <label for="updateCropId" class="form-label">Crop ID</label>
+                        <input type="text" class="form-control" id="updateCropId" name="updateCropId" required
+                               placeholder="Enter Crop ID">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateCropCategory" class="form-label">Crop Category</label>
+                        <select class="form-control" id="updateCropCategory" name="updateCropCategory" required>
+                            <option value="" disabled selected>Select Crop Category</option>
+                            <option value="Vegetables">Vegetables</option>
+                            <option value="Fruits">Fruits</option>
+                            <option value="Cereals">Cereals</option>
+                            <option value="Legumes">Legumes</option>
+                            <option value="Tubers">Tubers</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateCommonName" class="form-label">Common Name</label>
+                        <input type="text" class="form-control" id="updateCommonName" name="updateCommonName" required
+                               placeholder="Enter Common Name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateCropImage" class="form-label">Crop Image</label>
+                        <input type="file" class="form-control" id="updateCropImage" name="updateCropImage"
+                               accept="image/*">
+                    </div>
+                    <div class="mb-3">
+                        <label for="updateScientificName" class="form-label">Scientific Name</label>
+                        <input type="text" class="form-control" id="updateScientificName" name="updateScientificName"
+                               required placeholder="Enter Scientific Name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateSeason" class="form-label">Season</label>
+                        <select class="form-control" id="updateSeason" name="updateSeason" required>
+                            <option value="" disabled selected>Select Season</option>
+                            <option value="Spring">Spring</option>
+                            <option value="Summer">Summer</option>
+                            <option value="Autumn">Autumn</option>
+                            <option value="Winter">Winter</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateFieldId" class="form-label">Field ID</label>
+                        <select class="form-control" id="updateFieldId" name="updateFieldId" required>
+                            <option value="" disabled selected>Select Field ID</option>
+                            <option value="LOG123">F123</option>
+                            <option value="LOG124">F124</option>
+                            <option value="LOG125">F125</option>
+                            <option value="LOG126">F126</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="updateLogId" class="form-label">Log ID</label>
+                        <select class="form-control" id="updateLogId" name="updateLogId" required>
+                            <option value="" disabled selected>Select Log ID</option>
+                            <option value="LOG123">LOG123</option>
+                            <option value="LOG124">LOG124</option>
+                            <option value="LOG125">LOG125</option>
+                            <option value="LOG126">LOG126</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-success w-100">Update Crop</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Scripts -->
-<script>
-    $(document).ready(function () {
-        // Sidebar Toggle
-        $('#toggleSidebar').click(function () {
-            $('#sidebar').toggleClass('collapsed');
-            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
-        });
-    });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="Js/crop.js"></script>
+
 
 </body>
-
 </html>
