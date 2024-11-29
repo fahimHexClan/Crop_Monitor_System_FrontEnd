@@ -206,13 +206,15 @@ body::before {
 }
 
 .modal-header {
-    background-color:  #007bff;  /* Green background for consistency */
-    color: #fff;
+    background-color: #19588f;
+    color: white;
     padding: 15px;
     font-size: 1.25rem;
     font-weight: bold;
     border-radius: 10px 10px 0 0;
     border-bottom: none;  /* Remove bottom border */
+    text-align: center;    /* Centers the header content */
+
 }
 .modal-title {
     font-size: 1.6rem;
