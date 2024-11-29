@@ -36,18 +36,21 @@
     <div class="container">
         <h2 class="header-title">Fields Management</h2>
         <p class="header-subtitle">Manage fields allocated for cultivation.</p>
-
+        <!-- Add New Field Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addFieldModal">Add New Field</button>
+        <br>
         <!-- Field Table -->
         <div class="table-container mt-4">
             <table class="table table-striped table-hover align-middle">
                 <thead>
+
                 <tr>
                     <th>Field ID</th>
+                    <th>Name</th>
+                    <th>Field Location</th>
                     <th>Extent Size (acres)</th>
                     <th>Field Image 1</th>
                     <th>Field Image 2</th>
-                    <th>Name</th>
-                    <th>Field Location</th>
                     <th>Log ID</th>
                     <th>Actions</th>
                 </tr>
@@ -55,12 +58,12 @@
                 <tbody id="fieldTableBody">
                 <tr>
                     <td>F001</td>
+                    <td>Field A</td>
+                    <td>Location A</td>
                     <td>10</td>
                     <td><img src="assets/field1.jpg" alt="Field Image 1" class="img-fluid" width="100"></td>
                     <td><img src="assets/field2.jpg" alt="Field Image 2" class="img-fluid" width="100"></td>
-                    <td>Field A</td>
-                    <td>Location A</td>
-                    <td>Log ID</td>
+                    <td>L001</td>
                     <td>
                         <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateFieldModal"><i class="fas fa-edit"></i></button>
                         <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
@@ -70,8 +73,6 @@
             </table>
         </div>
 
-        <!-- Add New Field Button -->
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addFieldModal">Add New Field</button>
     </div>
 </div>
 
@@ -86,6 +87,10 @@
             <div class="modal-body">
                 <form id="addFieldForm">
                     <div class="form-group">
+                        <label for="fieldId" class="form-label">Field ID</label>
+                        <input type="text" class="form-control" id="fieldId" name="fieldId" required placeholder="Enter Field ID">
+                    </div>
+                    <div class="form-group">
                         <label for="fieldName" class="form-label">Field Name</label>
                         <input type="text" class="form-control" id="fieldName" name="fieldName" required placeholder="Enter field name">
                     </div>
@@ -97,14 +102,7 @@
                         <label for="extentSize" class="form-label">Extent Size (acres)</label>
                         <input type="number" class="form-control" id="extentSize" name="extentSize" required placeholder="Enter size of the field in acres">
                     </div>
-                    <div class="form-group">
-                        <label for="cropId" class="form-label">Crop ID</label>
-                        <input type="text" class="form-control" id="cropId" name="cropId" required placeholder="Enter crop ID">
-                    </div>
-                    <div class="form-group">
-                        <label for="staffId" class="form-label">Staff ID</label>
-                        <input type="text" class="form-control" id="staffId" name="staffId" required placeholder="Enter staff ID">
-                    </div>
+
                     <div class="form-group">
                         <label for="fieldImage1" class="form-label">Field Image 1</label>
                         <input type="file" class="form-control" id="fieldImage1" name="fieldImage1" accept="image/*">
@@ -113,7 +111,12 @@
                         <label for="fieldImage2" class="form-label">Field Image 2</label>
                         <input type="file" class="form-control" id="fieldImage2" name="fieldImage2" accept="image/*">
                     </div>
-                    <button type="submit" class="btn btn-outline-primary w-100">Save Field</button>
+                    <div class="form-group">
+                        <label for="LogId" class="form-label">Log ID</label>
+                        <input type="text" class="form-control" id="LogId" name="LogId" required placeholder="Enter Log ID">
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-success w-100">Save Field</button>
                 </form>
             </div>
         </div>
@@ -124,7 +127,7 @@
 <div class="modal fade" id="updateFieldModal" tabindex="-1" aria-labelledby="updateFieldModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header bg-success text-white">
+            <div class="modal-header text-white">
                 <h5 class="modal-title" id="updateFieldModalLabel">Update Field</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
