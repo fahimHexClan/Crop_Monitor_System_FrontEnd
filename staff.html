@@ -4,209 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Management</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Field Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="Css/staff.css">
 
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-            color: #fff;
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1a1a2e;
-            padding-top: 20px;
-            z-index: 2;
-            color: #fff;
-            backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
-            transition: width 0.4s ease, transform 0.4s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .navbar-brand-container {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            margin-bottom: 40px;
-        }
-
-        .toggle-sidebar {
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #66bb6a;
-            margin-right: 10px; /* Adds space between toggle and brand name */
-        }
-
-        .navbar-brand {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ffffff;
-            padding: 15px 20px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border-radius: 8px;
-            margin: 5px 15px;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover {
-            background-color: #162447;
-            color: #66bb6a;
-        }
-
-        .sidebar.collapsed .navbar-brand {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
-        }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-        .main-content {
-            position: relative;
-            z-index: 2;
-            padding: 30px;
-            margin-left: 250px;
-            transition: margin-left 0.4s ease;
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 70px;
-        }
-
-        .header-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header-subtitle {
-            font-size: 1.2rem;
-            color: #d3d3d3;
-            text-align: center;
-        }
-
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table th,
-        .table td {
-            padding: 15px;
-            vertical-align: middle;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table thead th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f9f9;
-        }
-
-        .table-striped tbody tr:hover {
-            background-color: #e8f0fe;
-        }
-
-        .modal-content {
-            border-radius: 10px;
-            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .form-control {
-            border: 1.5px solid #007bff;
-            padding: 10px;
-        }
-
-        .form-control:focus {
-            border-color: #0056b3;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-        }
-
-        .btn-outline-primary,
-        .btn-outline-danger,
-        .btn-success {
-            border-radius: 25px;
-        }
-
-        .footer {
-            background-color: #1a1a2e;
-            color: #ffffff;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 30px;
-        }
-
-        .add-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -220,7 +22,7 @@
         </div>
     </div>
     <a href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
-    <a href="fields.html"><i class="fas fa-seedling"></i><span>Fields</span></a>
+    <a href="fields.html"><i class="fas fa-map-marked-alt"></i><span>Fields</span></a>
     <a href="crops.html"><i class="fas fa-leaf"></i><span>Crops</span></a>
     <a href="staff.html"><i class="fas fa-users"></i><span>Staff</span></a>
     <a href="vehicles.html"><i class="fas fa-tractor"></i><span>Vehicles</span></a>
@@ -233,136 +35,326 @@
 <div class="main-content" id="mainContent">
     <div class="container">
         <h2 class="header-title">Staff Management</h2>
-        <p class="header-subtitle">Manage details of all staff members including personal info, contact details, and field/vehicle allocations.</p>
-
-        <!-- Staff Table -->
+        <p class="header-subtitle">Manages human resources and their assignments.</p>
+        <!-- Add New Field Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStaffModal"> <i class="fas fa-plus-circle me-2"></i>Add New Staff</button>
+        <br>
+        <!-- Field Table -->
         <div class="table-container mt-4">
             <table class="table table-striped table-hover align-middle">
                 <thead>
+
                 <tr>
-                    <th>Staff ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
+                    <th>Staff_ID</th>
+                    <th>Staff_FirstName</th>
+                    <th>Staff_LastName</th>
+                    <th> Address_1</th>
+                    <th> Address_2</th>
+                    <th> Address_3</th>
+                    <th> Address_4</th>
+                    <th> Address_5</th>
+                    <th>Contact_Number</th>
                     <th>Designation</th>
+                    <th>Date_Of_Birth</th>
+                    <th>Email_Address</th>
                     <th>Gender</th>
-                    <th>Joined Date</th>
-                    <th>DOB</th>
-                    <th>Address</th>
-                    <th>Contact No.</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Allocated Fields</th>
-                    <th>Allocated Vehicles</th>
+                    <th>Join_Date</th>
+                    <th>Staff_Role</th>
+                    <th>Log_Id</th>
                     <th>Actions</th>
+
+
                 </tr>
                 </thead>
-                <tbody>
-                <!-- Example Data Row -->
+                <tbody id="StaffTableBody">
                 <tr>
-                    <td>STF-001</td>
+                    <td>S001</td>
                     <td>John</td>
-                    <td>Doe</td>
-                    <td>Supervisor</td>
+                    <td>Daniel</td>
+                    <td>Badulla</td>
+                    <td>Haliela</td>
+                    <td>Ketawala</td>
+                    <td>Kandegedara</td>
+                    <td>Town</td>
+                    <td>0742312343</td>
+                    <td>Manager</td>
+                    <td>2004-01-23</td>
+                    <td>John@gmail.com</td>
                     <td>Male</td>
-                    <td>2023-06-15</td>
-                    <td>1990-04-22</td>
-                    <td>Building 12, Elm Street, Springfield, IL, 62704</td>
-                    <td>+1234567890</td>
-                    <td>john.doe@example.com</td>
-                    <td>Supervisor</td>
-                    <td>North Field</td>
-                    <td>N/A</td>
+                    <td>2024-01-23</td>
+                    <td>Manager</td>
+                    <td>L001</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>STF-002</td>
-                    <td>Jane</td>
-                    <td>Smith</td>
-                    <td>Field Worker</td>
-                    <td>Female</td>
-                    <td>2023-07-01</td>
-                    <td>1992-11-05</td>
-                    <td>Building 5, Oak Lane, Metropolis, NY, 10001</td>
-                    <td>+0987654321</td>
-                    <td>jane.smith@example.com</td>
-                    <td>Field Worker</td>
-                    <td>South Field</td>
-                    <td>Vehicle 001</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateStaffModal"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Add New Staff Button -->
-        <div class="add-button">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addStaffModal"><i class="fas fa-plus-circle"></i> Add New Staff</button>
-        </div>
+    </div>
+</div>
 
-        <!-- Modal for Adding New Staff -->
-        <div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addStaffModalLabel">Add New Staff</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Add Staff Modal -->
+<div class="modal fade" id="addStaffModal" tabindex="-1" aria-labelledby="addStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addStaffModalLabel">Add New Staff</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addStaffForm">
+                    <div class="form-group">
+                        <label for="StaffId" class="form-label">Staff ID</label>
+                        <input type="text" class="form-control" id="StaffId" name="StaffId" required
+                               placeholder="Enter Staff ID">
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="container-fluid">
-                                <!-- Form Fields -->
-                                <div class="row g-3">
-                                    <!-- Staff ID -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="staffId" class="form-label">Staff ID</label>
-                                            <input type="text" class="form-control" id="staffId" placeholder="Enter staff ID (e.g., STF-001)">
-                                        </div>
-                                    </div>
-                                    <!-- First Name -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="firstName" class="form-label">First Name</label>
-                                            <input type="text" class="form-control" id="firstName" placeholder="Enter first name">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- More fields can be added as necessary -->
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="S_FirstName" class="form-label">Staff FirstName</label>
+                        <input type="text" class="form-control" id="S_FirstName" name="S_FirstName" required
+                               placeholder="Enter Staff FirstName">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Save Staff</button>
+                    <div class="form-group">
+                        <label for="S_LastName" class="form-label">Staff LastName</label>
+                        <input type="text" class="form-control" id="S_LastName" name="S_LastName" required
+                               placeholder="Enter Staff LastName">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="Address_1" class="form-label">Staff Address Line 1</label>
+                        <input type="text" class="form-control" id="Address_1" name="Address_1" required placeholder="Enter Address Line 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="Address_2" class="form-label">Staff Address Line 2</label>
+                        <input type="text" class="form-control" id="Address_2" name="Address_2" placeholder="Enter Address Line 2">
+                    </div>
+                    <div class="form-group">
+                        <label for="Address_3" class="form-label">Staff Address Line 3</label>
+                        <input type="text" class="form-control" id="Address_3" name="Address_3" placeholder="Enter Address Line 3">
+                    </div>
+                    <div class="form-group">
+                        <label for="Address_4" class="form-label">Staff Address Line 4</label>
+                        <input type="text" class="form-control" id="Address_4" name="Address_4" placeholder="Enter Address Line 4">
+                    </div>
+                    <div class="form-group">
+                        <label for="Address_5" class="form-label">Staff Address Line 5</label>
+                        <input type="text" class="form-control" id="Address_5" name="Address_5" placeholder="Enter Address Line 5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Contact_Number" class="form-label">Staff Contact Number</label>
+                        <input type="text" class="form-control" id="Contact_Number" name="Contact_Number" required
+                               placeholder="Enter Staff Contact Number" pattern="\d{10}" title="Please enter a 10-digit contact number">
+                    </div>
+                    <div class="form-group">
+                        <label for="Staff_Designation" class="form-label">Staff Designation</label>
+                        <select class="form-control" id="Staff_Designation" name="Staff_Designation" required>
+                            <option value="" disabled selected>Select Staff Designation</option>
+                            <option value="MANAGER">MANAGER</option>
+                            <option value="SUPERVISOR">SUPERVISOR</option>
+                            <option value="WORKER">WORKER</option>
+                            <option value="USER">USER</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Date_Of_Birth" class="form-label">Date Of Birth</label>
+                        <input type="date" class="form-control" id="Date_Of_Birth" name="Date_Of_Birth" required
+                               placeholder="Enter Date Of Birth">
+                    </div>
+                    <div class="form-group">
+                        <label for="Email_Address" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="Email_Address" name="Email_Address" required
+                               placeholder="Enter Email Address">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Gender" class="form-label">Gender</label>
+                        <select class="form-control" id="Gender" name="Gender" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="MALE">MALE</option>
+                            <option value="FEMALE">FEMALE</option>
+                            <option value="OTHER">OTHER</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Join_Date" class="form-label">Join Date</label>
+                        <input type="date" class="form-control" id="Join_Date" name="Join_Date" required
+                               placeholder="Enter Join Date">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Staff_Role" class="form-label">Staff Role</label>
+                        <select class="form-control" id="Staff_Role" name="Staff_Role" required>
+                            <option value="" disabled selected>Select Staff Role</option>
+                            <option value="ADMIN">ADMIN</option>
+                            <option value="USER">USER</option>
+                            <option value="MANAGER">MANAGER</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="LogId" class="form-label">Log ID</label>
+                        <select class="form-control" id="LogId" name="LogId" required>
+                            <option value="" disabled selected>Select Log ID</option>
+                            <option value="LOG123">LOG123</option>
+                            <option value="LOG124">LOG124</option>
+                            <option value="LOG125">LOG125</option>
+                            <option value="LOG126">LOG126</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success w-100">Save Staff</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
-</footer>
+<<!-- Update Staff Modal -->
+<div class="modal fade" id="updateStaffModal" tabindex="-1" aria-labelledby="updateStaffModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-white">
+                <h5 class="modal-title" id="updateStaffModalLabel">Update Staff Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateStaffForm">
+                    <!-- Staff ID -->
+                    <div class="form-group">
+                        <label for="updateStaffId" class="form-label">Staff ID</label>
+                        <input type="text" class="form-control" id="updateStaffId" name="updateStaffId" required
+                               placeholder="Enter Staff ID">
+                    </div>
+
+                    <!-- First Name -->
+                    <div class="form-group">
+                        <label for="updateFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="updateFirstName" name="updateFirstName" required
+                               placeholder="Enter First Name">
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="form-group">
+                        <label for="updateLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="updateLastName" name="updateLastName" required
+                               placeholder="Enter Last Name">
+                    </div>
+
+                    <!-- Address Fields -->
+                    <div class="form-group">
+                        <label for="updateAddress1" class="form-label">Address Line 1</label>
+                        <input type="text" class="form-control" id="updateAddress1" name="updateAddress1" required
+                               placeholder="Enter Address Line 1">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateAddress2" class="form-label">Address Line 2</label>
+                        <input type="text" class="form-control" id="updateAddress2" name="updateAddress2"
+                               placeholder="Enter Address Line 2">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateAddress3" class="form-label">Address Line 3</label>
+                        <input type="text" class="form-control" id="updateAddress3" name="updateAddress3"
+                               placeholder="Enter Address Line 3">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateAddress4" class="form-label">Address Line 4</label>
+                        <input type="text" class="form-control" id="updateAddress4" name="updateAddress4"
+                               placeholder="Enter Address Line 4">
+                    </div>
+                    <div class="form-group">
+                        <label for="updateAddress5" class="form-label">Address Line 5</label>
+                        <input type="text" class="form-control" id="updateAddress5" name="updateAddress5"
+                               placeholder="Enter Address Line 5">
+                    </div>
+
+                    <!-- Contact Number -->
+                    <div class="form-group">
+                        <label for="updateContactNumber" class="form-label">Contact Number</label>
+                        <input type="text" class="form-control" id="updateContactNumber" name="updateContactNumber"
+                               required placeholder="Enter Contact Number" pattern="\d{10}" title="Please enter a 10-digit contact number">
+                    </div>
+
+                    <!-- Designation -->
+                    <div class="form-group">
+                        <label for="updateStaffDesignation" class="form-label">Designation</label>
+                        <select class="form-control" id="updateStaffDesignation" name="updateStaffDesignation" required>
+                            <option value="" disabled selected>Select Designation</option>
+                            <option value="MANAGER">Manager</option>
+                            <option value="SUPERVISOR">Supervisor</option>
+                            <option value="WORKER">Worker</option>
+                            <option value="USER">User</option>
+                        </select>
+                    </div>
+
+                    <!-- Date of Birth -->
+                    <div class="form-group">
+                        <label for="updateDateOfBirth" class="form-label">Date of Birth</label>
+                        <input type="date" class="form-control" id="updateDateOfBirth" name="updateDateOfBirth" required
+                               placeholder="Enter Date of Birth">
+                    </div>
+
+                    <!-- Email -->
+                    <div class="form-group">
+                        <label for="updateEmail" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="updateEmail" name="updateEmail" required
+                               placeholder="Enter Email Address">
+                    </div>
+
+                    <!-- Gender -->
+                    <div class="form-group">
+                        <label for="updateGender" class="form-label">Gender</label>
+                        <select class="form-control" id="updateGender" name="updateGender" required>
+                            <option value="" disabled selected>Select Gender</option>
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+                    </div>
+
+                    <!-- Join Date -->
+                    <div class="form-group">
+                        <label for="updateJoinDate" class="form-label">Join Date</label>
+                        <input type="date" class="form-control" id="updateJoinDate" name="updateJoinDate" required
+                               placeholder="Enter Join Date">
+                    </div>
+
+                    <!-- Staff Role -->
+                    <div class="form-group">
+                        <label for="updateStaffRole" class="form-label">Role</label>
+                        <select class="form-control" id="updateStaffRole" name="updateStaffRole" required>
+                            <option value="" disabled selected>Select Role</option>
+                            <option value="ADMIN">Admin</option>
+                            <option value="USER">User</option>
+                            <option value="MANAGER">Manager</option>
+                        </select>
+                    </div>
+
+                    <!-- Log ID -->
+                    <div class="form-group">
+                        <label for="updateLogId" class="form-label">Log ID</label>
+                        <select class="form-control" id="updateLogId" name="updateLogId" required>
+                            <option value="" disabled selected>Select Log ID</option>
+                            <option value="LOG123">LOG123</option>
+                            <option value="LOG124">LOG124</option>
+                            <option value="LOG125">LOG125</option>
+                            <option value="LOG126">LOG126</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-success w-100">Update Staff</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Scripts -->
-<script>
-    $(document).ready(function () {
-        // Sidebar Toggle
-        $('#toggleSidebar').click(function () {
-            $('#sidebar').toggleClass('collapsed');
-            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
-        });
-    });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="Js/staff.js"></script>
+
 
 </body>
-
 </html>
