@@ -5,208 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Management</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="Css/vehicle.css">
 
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-            color: #fff;
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1a1a2e;
-            padding-top: 20px;
-            z-index: 2;
-            color: #fff;
-            backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
-            transition: width 0.4s ease, transform 0.4s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .navbar-brand-container {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            margin-bottom: 40px;
-        }
-
-        .toggle-sidebar {
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #66bb6a;
-            margin-right: 10px;
-        }
-
-        .navbar-brand {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ffffff;
-            padding: 15px 20px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border-radius: 8px;
-            margin: 5px 15px;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover {
-            background-color: #162447;
-            color: #66bb6a;
-        }
-
-        .sidebar.collapsed .navbar-brand {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
-        }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-        .main-content {
-            margin-left: 260px;
-            padding-top: 20px;
-            position: relative;
-            z-index: 2;
-            transition: margin-left 0.4s ease;
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 70px;
-        }
-
-        .header-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .header-subtitle {
-            font-size: 1.2rem;
-            color: #d3d3d3;
-            text-align: center;
-        }
-
-        .table-container {
-            max-width: 100%;
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            background-color: #ffffff;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table th,
-        .table td {
-            padding: 15px;
-            vertical-align: middle;
-            text-align: center;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .table thead th {
-            background-color: #007bff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .table-striped tbody tr:nth-of-type(odd) {
-            background-color: #f9f9f9;
-        }
-
-        .table-striped tbody tr:hover {
-            background-color: #e8f0fe;
-        }
-
-        .modal-content {
-            border-radius: 10px;
-            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .form-group label {
-            font-weight: bold;
-            color: #007bff;
-        }
-
-        .form-control {
-            border: 1.5px solid #007bff;
-            padding: 10px;
-        }
-
-        .form-control:focus {
-            border-color: #0056b3;
-            box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
-        }
-
-        .btn-outline-primary,
-        .btn-outline-danger,
-        .btn-success {
-            border-radius: 25px;
-        }
-
-        .footer {
-            background-color: #1a1a2e;
-            color: #ffffff;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 50px;
-        }
-
-        .add-button {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
-        }
-    </style>
 </head>
 
 <body>
@@ -220,7 +22,7 @@
         </div>
     </div>
     <a href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
-    <a href="fields.html"><i class="fas fa-seedling"></i><span>Fields</span></a>
+    <a href="fields.html"><i class="fas fa-map-marked-alt"></i><span>Fields</span></a>
     <a href="crops.html"><i class="fas fa-leaf"></i><span>Crops</span></a>
     <a href="staff.html"><i class="fas fa-users"></i><span>Staff</span></a>
     <a href="vehicles.html"><i class="fas fa-tractor"></i><span>Vehicles</span></a>
@@ -233,118 +35,208 @@
 <div class="main-content" id="mainContent">
     <div class="container">
         <h2 class="header-title">Vehicle Management</h2>
-        <p class="header-subtitle">Manage vehicles assigned to staff for monitoring and supporting agricultural operations.</p>
-
-        <!-- Vehicles Table -->
+        <p class="header-subtitle">Oversees vehicle management and allocations for staff and operations.</p>
+        <!-- Add New Field Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addVehicleModal"> <i class="fas fa-plus-circle me-2"></i>Add New Vehicle</button>
+        <br>
+        <!-- Field Table -->
         <div class="table-container mt-4">
             <table class="table table-striped table-hover align-middle">
                 <thead>
+
                 <tr>
-                    <th>Vehicle Code</th>
-                    <th>License Plate Number</th>
-                    <th>Category</th>
+                    <th>Vehicle ID</th>
+                    <th>Vehicle Category</th>
                     <th>Fuel Type</th>
-                    <th>Status</th>
-                    <th>Assigned Staff</th>
-                    <th>Remarks</th>
+                    <th>License Plate Number</th>
+                    <th>Vehicle Remarks</th>
+                    <th>Vehicle Status</th>
+                    <th>Staff ID</th>
                     <th>Actions</th>
+
+
                 </tr>
                 </thead>
-                <tbody>
-                <!-- Example Data Row -->
+                <tbody id="VehicleTableBody">
                 <tr>
-                    <td>VH-001</td>
-                    <td>AB1234</td>
-                    <td>Van</td>
-                    <td>Diesel</td>
-                    <td>Available</td>
-                    <td>John Doe (Driver)</td>
-                    <td>Routine Maintenance Pending</td>
+                    <td>V001</td>
+                    <td>Tructor</td>
+                    <td>Disel</td>
+                    <td>ABC-1223</td>
+                    <td>New</td>
+                    <td>Service</td>
+                    <td>S001</td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>VH-002</td>
-                    <td>XY9876</td>
-                    <td>Tractor</td>
-                    <td>Petrol</td>
-                    <td>Out of Service</td>
-                    <td>Jane Smith (Assistant)</td>
-                    <td>N/A</td>
-                    <td>
-                        <button class="btn btn-sm btn-outline-primary me-2"><i class="fas fa-edit"></i> Edit</button>
-                        <button class="btn btn-sm btn-outline-danger"><i class="fas fa-trash-alt"></i> Delete</button>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateVehicleModal"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Add New Vehicle Button -->
-        <div class="add-button">
-            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addVehicleModal"><i class="fas fa-plus-circle"></i> Add New Vehicle</button>
-        </div>
+    </div>
+</div>
 
-        <!-- Modal for Adding New Vehicle -->
-        <div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addVehicleModalLabel">Add New Vehicle</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<!-- Add Vehicle Modal -->
+<div class="modal fade" id="addVehicleModal" tabindex="-1" aria-labelledby="addVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addVehicleModalLabel">Add New Vehicle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addVehicleForm">
+                    <div class="form-group">
+                        <label for="VehicleId" class="form-label">Vehicle ID</label>
+                        <input type="text" class="form-control" id="VehicleId" name="VehicleID" required
+                               placeholder="Enter Vehicle ID">
                     </div>
-                    <div class="modal-body">
-                        <form>
-                            <div class="container-fluid">
-                                <!-- Form Fields -->
-                                <div class="row g-3">
-                                    <!-- Vehicle Code -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="vehicleCode" class="form-label">Vehicle Code</label>
-                                            <input type="text" class="form-control" id="vehicleCode" placeholder="Enter vehicle code (e.g., VH-001)">
-                                        </div>
-                                    </div>
-                                    <!-- License Plate Number -->
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="licensePlate" class="form-label">License Plate Number</label>
-                                            <input type="text" class="form-control" id="licensePlate" placeholder="Enter license plate number">
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- More fields can be added as necessary -->
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="VehicleCategory" class="form-label">Vehicle Category</label>
+                        <select class="form-control" id="VehicleCategory" name="VehicleCategory" required>
+                            <option value="" disabled selected>Select Vehicle Category</option>
+                            <option value="TRUCK">TRUCK</option>
+                            <option value="TRACTOR">TRACTOR</option>
+                            <option value="MOTORBIKE">MOTORBIKE</option>
+                            <option value="LORRY">LORRY</option>
+                        </select>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-success">Save Vehicle</button>
+                    <div class="form-group">
+                        <label for="FuelType" class="form-label">Fuel Type</label>
+                        <select class="form-control" id="FuelType" name="FuelType" required>
+                            <option value="" disabled selected>Select Fuel Type</option>
+                            <option value="DIESEL">DIESEL</option>
+                            <option value="PETROL">PETROL</option>
+                        </select>
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label for="LicensePlateNumber" class="form-label">License Plate Number</label>
+                        <input type="text" class="form-control" id="LicensePlateNumber" name="LicensePlateNumber" required
+                               placeholder="Enter License Plate Number"
+                               pattern="[A-Za-z]{3}-\d{3}"
+                               title="License Plate Number should follow the format: ABC-001 (3 letters, a hyphen, followed by 3 digits)">
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleRemarks" class="form-label">Vehicle Remarks</label>
+                        <select class="form-control" id="VehicleRemarks" name="VehicleRemarks" required>
+                            <option value="" disabled selected>Select Vehicle Remarks</option>
+                            <option value="OLD">OLD</option>
+                            <option value="NEW">NEW</option>
+                            <option value="DAMAGED">DAMAGED</option>
+                            <option value="USED">USED</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="VehicleStatus" class="form-label">Vehicle Status</label>
+                        <select class="form-control" id="VehicleStatus" name="VehicleStatus" required>
+                            <option value="" disabled selected>Select Vehicle Status</option>
+                            <option value="AVAILABLE">AVAILABLE</option>
+                            <option value="UNDER_MAINTENANCE">UNDER_MAINTENANCE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="StaffId" class="form-label">Staff ID</label>
+                        <select class="form-control" id="StaffId" name="StaffId1" required>
+                            <option value="" disabled selected>Select Staff ID</option>
+                            <option value="LOG123">S001</option>
+                            <option value="LOG124">S002</option>
+                            <option value="LOG125">S003</option>
+                            <option value="LOG126">S004</option>
+                            <!-- Add other log IDs as needed -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success w-100">Save Vehicle</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Update Vehicle Modal -->
+<div class="modal fade" id="updateVehicleModal" tabindex="-1" aria-labelledby="updateVehicleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateVehicleModalLabel">Update Vehicle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateVehicleForm">
+                    <div class="form-group">
+                        <label for="UpdateVehicleId" class="form-label">Vehicle ID</label>
+                        <input type="text" class="form-control" id="UpdateVehicleId" name="UpdateVehicleId" required
+                               placeholder="Enter Vehicle ID" >
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateVehicleCategory" class="form-label">Vehicle Category</label>
+                        <select class="form-control" id="UpdateVehicleCategory" name="UpdateVehicleCategory" required>
+                            <option value="" disabled selected>Select Vehicle Category</option>
+                            <option value="TRUCK">TRUCK</option>
+                            <option value="TRACTOR">TRACTOR</option>
+                            <option value="MOTORBIKE">MOTORBIKE</option>
+                            <option value="LORRY">LORRY</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateFuelType" class="form-label">Fuel Type</label>
+                        <select class="form-control" id="UpdateFuelType" name="UpdateFuelType" required>
+                            <option value="" disabled selected>Select Fuel Type</option>
+                            <option value="DIESEL">DIESEL</option>
+                            <option value="PETROL">PETROL</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UpdateLicensePlateNumber" class="form-label">License Plate Number</label>
+                        <input type="text" class="form-control" id="UpdateLicensePlateNumber" name="UpdateLicensePlateNumber" required
+                               placeholder="Enter License Plate Number"
+                               pattern="[A-Za-z]{3}-\d{3}"
+                               title="License Plate Number should follow the format: ABC-001 (3 letters, a hyphen, followed by 3 digits)">
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateVehicleRemarks" class="form-label">Vehicle Remarks</label>
+                        <select class="form-control" id="UpdateVehicleRemarks" name="UpdateVehicleRemarks" required>
+                            <option value="" disabled selected>Select Vehicle Remarks</option>
+                            <option value="OLD">OLD</option>
+                            <option value="NEW">NEW</option>
+                            <option value="DAMAGED">DAMAGED</option>
+                            <option value="USED">USED</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateVehicleStatus" class="form-label">Vehicle Status</label>
+                        <select class="form-control" id="UpdateVehicleStatus" name="UpdateVehicleStatus" required>
+                            <option value="" disabled selected>Select Vehicle Status</option>
+                            <option value="AVAILABLE">AVAILABLE</option>
+                            <option value="UNDER_MAINTENANCE">UNDER_MAINTENANCE</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateStaffId" class="form-label">Staff ID</label>
+                        <select class="form-control" id="UpdateStaffId" name="UpdateStaffId" required>
+                            <option value="" disabled selected>Select Staff ID</option>
+                            <option value="LOG123">S001</option>
+                            <option value="LOG124">S002</option>
+                            <option value="LOG125">S003</option>
+                            <option value="LOG126">S004</option>
+                            <!-- Add other log IDs as needed -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-outline-success w-100">Update Vehicle</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
-</footer>
 
 <!-- Scripts -->
-<script>
-    $(document).ready(function () {
-        // Sidebar Toggle
-        $('#toggleSidebar').click(function () {
-            $('#sidebar').toggleClass('collapsed');
-            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
-        });
-    });
-</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="Js/vehicle.js"></script>
+
 
 </body>
-
 </html>
