@@ -18,14 +18,61 @@
 <div class="container" id="signup-container">
     <h2 class="auth-title">Green Shadow Signup</h2>
     <form id="signup-form">
-        <!-- Username Field -->
-        <div class="form-group">
-            <label for="signupUsername" class="form-label">
-                <i class="fas fa-user input-icon"></i>Username
+
+        <!-- Profile Image Field -->
+        <div class="form-group text-center">
+            <label for="profileImage" class="form-label">
+                <i class="fas fa-image input-icon"></i>Profile Image
             </label>
             <div class="form-wrapper">
-                <input type="text" class="form-control" id="signupUsername" placeholder="Enter your username"
-                       required>
+                <input type="file" class="form-control" id="profileImage" accept="image/*" required>
+            </div>
+        </div>
+
+        <!-- User ID Field -->
+        <div class="form-group">
+            <label for="signupUserID" class="form-label">
+                <i class="fas fa-id-badge input-icon"></i>User ID
+            </label>
+            <div class="form-wrapper">
+                <input type="text" class="form-control" id="signupUserID" placeholder="Enter your User ID" required>
+            </div>
+        </div>
+
+
+
+        <!-- First Name Field -->
+        <div class="form-group">
+            <label for="signupFirstName" class="form-label">
+                <i class="fas fa-user input-icon"></i>First Name
+            </label>
+            <div class="form-wrapper">
+                <input type="text" class="form-control" id="signupFirstName" placeholder="Enter your first name" required>
+            </div>
+        </div>
+
+        <!-- Last Name Field -->
+        <div class="form-group">
+            <label for="signupLastName" class="form-label">
+                <i class="fas fa-user input-icon"></i>Last Name
+            </label>
+            <div class="form-wrapper">
+                <input type="text" class="form-control" id="signupLastName" placeholder="Enter your last name" required>
+            </div>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="form-group">
+            <label for="signupRole" class="form-label">
+                <i class="fas fa-user-tag input-icon"></i>Role
+            </label>
+            <div class="form-wrapper">
+                <select class="form-control" id="signupRole" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="MANAGER">Manager</option>
+                    <option value="ADMINISTRATIVE">Administrative</option>
+                    <option value="SCIENTIST">Scientist</option>
+                </select>
             </div>
         </div>
 
@@ -50,32 +97,8 @@
             </div>
         </div>
 
-        <!-- Confirm Password Field -->
-        <div class="form-group">
-            <label for="confirmPassword" class="form-label">
-                <i class="fas fa-lock input-icon"></i>Confirm Password
-            </label>
-            <div class="form-wrapper">
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm your password"
-                       required>
-            </div>
-        </div>
 
-        <!-- Role Selection -->
-        <div class="form-group">
-            <label for="signupRole" class="form-label">
-                <i class="fas fa-user-tag input-icon"></i>Role
-            </label>
-            <div class="form-wrapper">
-                <select class="form-control" id="signupRole" required>
-                    <option value="" disabled selected>Select your role</option>
-                    <option value="MANAGER">Manager (Full Access)</option>
-                    <option value="ADMINISTRATIVE">Administrative (Limited Access)</option>
-                    <option value="SCIENTIST">Scientist (Limited Access)</option>
-                    <option value="OTHER">Other</option>
-                </select>
-            </div>
-        </div>
+
 
         <!-- Signup Button -->
         <button type="submit" class="btn btn-primary">Sign Up</button>
@@ -83,6 +106,8 @@
     <a href="LogInPage.html" class="switch-auth" id="show-login">Already have an account? Login here</a>
 </div>
 
+
+<script src="Js/SignUpPage.js"></script>
 
 </body>
 

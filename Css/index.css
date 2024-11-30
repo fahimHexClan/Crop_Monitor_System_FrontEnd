@@ -15,12 +15,14 @@ body {
     bottom: 0;
     left: 0;
     width: 250px;
-    background-color: #1a233a;
+    background-color:rgba(26, 35, 58, 0.9);
     padding-top: 30px;
-    z-index: 2;
+    z-index: 1000;
     color: #fff;
+    backdrop-filter: blur(8px);
     box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
     transition: width 0.4s ease, transform 0.4s ease;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .sidebar.collapsed {
@@ -69,29 +71,29 @@ body {
 
 .sidebar a:hover {
     background-color: #66bb6a;
-    color: #F1F1F1;
+    color: #fff;
 }
-
+.sidebar.collapsed .navbar-brand {
+    display: none;
+}
+.sidebar.collapsed a {
+    justify-content: center;
+}
 .sidebar.collapsed a span {
     display: none;
 }
 
-.sidebar.collapsed a {
-    justify-content: center;
-}
-
 .main-content {
-    margin-left: 260px;
-    padding: 40px;
-    transition: margin-left 0.3s ease;
+    margin-left: 235px;
+    padding: 30px;
     position: relative;
     z-index: 2;
-    color: #f4f4f4;
+    transition: margin-left 0.4s ease;
+}
+.sidebar.collapsed ~ .main-content {
+    margin-left: 70px;
 }
 
-.main-content.collapsed {
-    margin-left: 80px;
-}
 .header-subtitle {
     font-size: 1.2rem;
     color: #dfe6e9; /* Light gray for subheading */
@@ -102,7 +104,7 @@ body {
 .header-image {
     background: url('../Asserts/images/crop.jpg') no-repeat center center;
     background-size: cover;
-    height: 250px;
+    height: 200px;
     border-radius: 15px;
     margin-bottom: 30px;
     position: relative;
@@ -197,7 +199,7 @@ body {
     margin-bottom: 10px;
 }
 .widget:hover h4 {
-    color: #f39c12; /* Golden color on hover */
+    color: #f4f4f4; /* Golden color on hover */
 }
 .widget:hover p {
     color: #f4f4f4; /* Light text remains the same on hover */

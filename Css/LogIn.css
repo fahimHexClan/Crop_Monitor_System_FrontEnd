@@ -17,38 +17,37 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.2); /* Reduced opacity for a more subtle effect */
     z-index: 1;
 }
 
 .container {
-    max-width: 1000px;
-    padding: 40px;
+    max-width: 450px; /* Increase to match the signup page width */
+    padding: 50px; /* Increase padding to add height */
     background: rgba(255, 255, 255, 0.1);
     border-radius: 16px;
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(15px);
     text-align: center;
     color: #fff;
     position: relative;
     z-index: 2;
-    height: auto;
 }
 
 .auth-title {
     font-weight: bold;
-    font-size: 2.5rem;
+    font-size: 2.5rem; /* Increased font size for better visual balance */
+    margin-bottom: 40px; /* Increase to add more spacing between title and form */
     color: #fff;
-    margin-bottom: 25px;
 }
 
 .form-group {
     text-align: left;
-    margin-bottom: 18px;
+    margin-bottom: 30px; /* Increase margin to add more vertical space between fields */
 }
 
 .form-label {
-    font-weight: 380;
+    font-weight: 500;
     color: #fff;
     margin-bottom: 5px;
     display: inline-flex;
@@ -61,24 +60,14 @@ body::before {
     font-size: 1.3rem;
 }
 
-.form-wrapper {
-    display: flex;
-    align-items: center;
-    border: 2px solid #66bb6a;
-    border-radius: 10px;
-    padding: 4px 8px;
-    background: rgba(255, 255, 255, 0.1);
-}
-
 .form-control {
     width: 100%;
-    border: none;
+    border: 2px solid #66bb6a;
     border-radius: 10px;
-    padding: 7px;
+    padding: 10px; /* Slightly increase padding for better height */
     transition: all 0.3s ease;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.2);
     color: #fff;
-    outline: none;
 }
 
 .form-control::placeholder {
@@ -86,15 +75,17 @@ body::before {
 }
 
 .form-control:focus {
+    border-color: #43a047;
     box-shadow: 0 0 10px rgba(102, 187, 106, 0.7);
+    outline: none;
 }
 
 .btn-primary {
     width: 100%;
     background: linear-gradient(to right, #66bb6a, #43a047);
     border: none;
-    padding: 15px;
-    font-size: 1.2rem;
+    padding: 15px; /* Increased padding to add button height */
+    font-size: 1.2rem; /* Adjusted to match signup button size */
     color: #fff;
     border-radius: 30px;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -109,17 +100,11 @@ body::before {
     color: #fff;
     text-decoration: none;
     font-size: 1rem;
-    margin-top: 20px;
+    margin-top: 25px; /* Increase margin to give more space below the button */
     display: inline-block;
     transition: color 0.3s;
 }
 
 .switch-auth:hover {
     color: #66bb6a;
-}
-#signupRole {
-    background-color:transparent ;
-}
-#signupRole:focus {
-    background-color: #504e4e;
 }

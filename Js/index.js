@@ -1,27 +1,11 @@
-$(document).ready(function () {
-    // Sidebar Toggle Logic
-    $('#toggleSidebar').click(function () {
-        // Toggle Sidebar Class
-        $('#sidebar').toggleClass('collapsed');
-        $('#mainContent').toggleClass('collapsed');
 
-        // Correctly Update the Icon Class for the Toggle Button
-        if ($('#sidebar').hasClass('collapsed')) {
-            $('#toggleSidebar i').removeClass('fa-bars').addClass('fa-times');
-            // Hide the "Green Shadow" text when sidebar is collapsed
-            $('#brandName').css('opacity', '0');
-            setTimeout(() => {
-                $('#brandName').css('display', 'none');
-            }, 10); // Hide after the transition for a smooth effect
-        } else {
-            $('#toggleSidebar i').removeClass('fa-times').addClass('fa-bars');
-            // Show the "Green Shadow" text when sidebar is expanded
-            $('#brandName').css('display', 'block');
-            setTimeout(() => {
-                $('#brandName').css('opacity', '1');
-            }, 10); // Show immediately after changing display
-        }
+    // Sidebar Toggle Logic
+    // Sidebar toggle
+    document.getElementById('toggleSidebar').addEventListener('click', function() {
+        document.getElementById('sidebar').classList.toggle('collapsed');
     });
+
+
 
     // Crop Growth Chart
     var ctx1 = document.getElementById('cropGrowthChart').getContext('2d');
@@ -64,4 +48,3 @@ $(document).ready(function () {
             responsive: true
         }
     });
-});
