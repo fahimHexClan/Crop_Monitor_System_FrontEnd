@@ -4,212 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Green Shadow Crop Monitoring System - Monitoring Logs</title>
-
-    <!-- Bootstrap 4 CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- Font Awesome Icons -->
+    <title>Equipment Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" href="Css/equipment.css">
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: url('Asserts/images/Crop1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            margin: 0;
-            min-height: 100vh;
-            color: #fff;
-        }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-
-        .sidebar {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            width: 250px;
-            background-color: #1a1a2e;
-            padding-top: 20px;
-            z-index: 2;
-            color: #fff;
-            backdrop-filter: blur(10px);
-            box-shadow: 3px 0 10px rgba(0, 0, 0, 0.4);
-            transition: width 0.4s ease, transform 0.4s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 60px;
-        }
-
-        .navbar-brand-container {
-            display: flex;
-            align-items: center;
-            padding: 0 20px;
-            margin-bottom: 40px;
-        }
-
-        .toggle-sidebar {
-            font-size: 1.8rem;
-            cursor: pointer;
-            color: #66bb6a;
-            margin-right: 10px; /* Adds space between toggle and brand name */
-        }
-
-        .navbar-brand {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #66bb6a;
-            text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-
-        .sidebar a {
-            color: #ffffff;
-            padding: 15px 20px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 1.1rem;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            border-radius: 8px;
-            margin: 5px 15px;
-        }
-
-        .sidebar a i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .sidebar a:hover {
-            background-color: #162447;
-            color: #66bb6a;
-        }
-
-        .sidebar.collapsed .navbar-brand {
-            display: none;
-        }
-
-        .sidebar.collapsed a {
-            justify-content: center;
-        }
-
-        .sidebar.collapsed a span {
-            display: none;
-        }
-
-        .main-content {
-            position: relative;
-            z-index: 2;
-            padding: 30px;
-            margin-left: 250px;
-            transition: margin-left 0.4s ease;
-        }
-
-        .sidebar.collapsed ~ .main-content {
-            margin-left: 70px;
-        }
-
-        .header-title {
-            font-size: 2.8rem;
-            font-weight: bold;
-            color: #ffffff;
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .header-subtitle {
-            font-size: 1.2rem;
-            color: #d3d3d3;
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .widget {
-            background: rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            border-radius: 16px;
-            padding: 20px;
-            color: #fff;
-            backdrop-filter: blur(15px);
-            transition: transform 0.3s ease;
-        }
-
-        .widget:hover {
-            transform: scale(1.05);
-        }
-
-        .widget h4 {
-            font-size: 1.3rem;
-            color: #ffffff;
-            margin-bottom: 15px;
-        }
-
-        .widget p {
-            font-size: 1.1rem;
-            color: #d3d3d3;
-        }
-
-        .footer {
-            background-color: #1a1a2e;
-            color: #ffffff;
-            text-align: center;
-            padding: 10px 0;
-            margin-top: 30px;
-        }
-
-        .row-flex {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        /* Media Query for Mobile View */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: relative;
-            }
-
-            .main-content {
-                margin-left: 0;
-            }
-
-            .sidebar a {
-                font-size: 1rem;
-            }
-        }
-    </style>
 </head>
 
 <body>
 
 <!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-    <!-- Navbar Brand Container -->
     <div class="navbar-brand-container">
         <span class="navbar-brand">Green Shadow</span>
-
         <div class="toggle-sidebar" id="toggleSidebar">
             <i class="fas fa-bars"></i>
         </div>
     </div>
     <a href="index.html"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
-    <a href="fields.html"><i class="fas fa-seedling"></i><span>Fields</span></a>
+    <a href="fields.html"><i class="fas fa-map-marked-alt"></i><span>Fields</span></a>
     <a href="crops.html"><i class="fas fa-leaf"></i><span>Crops</span></a>
     <a href="staff.html"><i class="fas fa-users"></i><span>Staff</span></a>
     <a href="vehicles.html"><i class="fas fa-tractor"></i><span>Vehicles</span></a>
@@ -219,68 +32,129 @@
 </div>
 
 <!-- Main Content -->
-<div class="main-content container" id="mainContent">
-    <div class="row">
-        <div class="col-md-12">
-            <h2 class="header-title">Monitoring Logs</h2>
-            <p class="header-subtitle">Here you can review all the logs for crop and equipment monitoring.</p>
+<div class="main-content" id="mainContent">
+    <div class="container">
+        <h2 class="header-title">Monitoring Management</h2>
+        <p class="header-subtitle">Manages agricultural equipment used in various operations.</p>
+        <!-- Add New Field Button -->
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMonitoringModal"> <i class="fas fa-plus-circle me-2"></i>Add New MonitoringLog</button>
+        <br>
+        <!-- Equipment Table -->
+        <div class="table-container mt-4">
+            <table class="table table-striped table-hover align-middle">
+                <thead>
 
-            <!-- Example Table for Monitoring Logs -->
-            <div class="table-responsive">
-                <table class="table table-dark table-hover">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Log Type</th>
-                        <th>Description</th>
-                        <th>Status</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2024-11-15</td>
-                        <td>Crop Growth</td>
-                        <td>Crop A showed a significant growth increase of 20%.</td>
-                        <td>Normal</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>2024-11-14</td>
-                        <td>Equipment Maintenance</td>
-                        <td>Tractor #3 had a minor maintenance check.</td>
-                        <td>Completed</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>2024-11-13</td>
-                        <td>Weather Alert</td>
-                        <td>Heavy rain warning for Field #4.</td>
-                        <td>Attention Needed</td>
-                    </tr>
-                    </tbody>
-                </table>
+                <tr>
+                    <th>Log ID</th>
+                    <th>Monitoring Date</th>
+                    <th>Monitoring Log Details</th>
+                    <th>Monitoring Image</th>
+                    <th>Actions</th>
+
+
+                </tr>
+                </thead>
+                <tbody id="EquipmentTableBody">
+                <tr>
+                    <td>L001</td>
+                    <td>2024-12-10</td>
+                    <td>Avilable</td>
+                    <td><img src="assets/field1.jpg" alt="MoniterLog Image" class="img-fluid" width="100"></td>
+                    <td>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#updateMonitoringModal"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<!-- Add Equipment Modal -->
+<div class="modal fade" id="addMonitoringModal" tabindex="-1" aria-labelledby="addMonitoringModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addMonitoringModalLabel">Add New Monitoring</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addMoniterLogForm">
+                    <div class="form-group">
+                        <label for="LogId" class="form-label">MoniterLog ID</label>
+                        <input type="text" class="form-control" id="LogId" name="LogId" required
+                               placeholder="Enter MoniterLog ID">
+                    </div>
+                    <div class="form-group">
+                        <label for="MonitoringDate" class="form-label">Monitoring Date</label>
+                        <input type="date" class="form-control" id="MonitoringDate" name="MonitoringDate" required
+                               placeholder="Enter Date Of Birth">
+                    </div>
+                    <div class="form-group">
+                        <label for="MonitoringDetail" class="form-label">Monitoring Detail</label>
+                        <input type="text" class="form-control" id="MonitoringDetail" name="MonitoringDetail" required
+                               placeholder="Enter Monitoring Detail">
+                    </div>
+                    <div class="form-group">
+                        <label for="MonitoringImage" class="form-label">Monitoring Image</label>
+                        <input type="file" class="form-control" id="MonitoringImage" name="MonitoringImage" accept="image/*">
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-success w-100">Save Monitoring Details</button>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer">
-    <p>&copy; 2024 Green Shadow (Pvt) Ltd. All Rights Reserved.</p>
-</footer>
+
+<!-- Update Equipment Modal -->
+<div class="modal fade" id="updateMonitoringModal" tabindex="-1" aria-labelledby="updateMonitoringModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updateMonitoringModalLabel">Update Monitoring</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="updateEquipmentForm">
+
+                    <div class="form-group">
+                        <label for="UpdateLogId" class="form-label">MoniterLog ID</label>
+                        <input type="text" class="form-control" id="UpdateLogId" name="UpdateLogId" required
+                               placeholder="Enter MoniterLog ID">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="UpdateMonitoringDate" class="form-label">Monitoring Date</label>
+                        <input type="date" class="form-control" id="UpdateMonitoringDate" name="UpdateMonitoringDate" required
+                               placeholder="Enter Date Of Birth">
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateMonitoringDetail" class="form-label">Monitoring Detail</label>
+                        <input type="text" class="form-control" id="UpdateMonitoringDetail" name="UpdateMonitoringDetail" required
+                               placeholder="Enter Monitoring Detail">
+                    </div>
+                    <div class="form-group">
+                        <label for="UpdateMonitoringImage" class="form-label">Monitoring Image</label>
+                        <input type="file" class="form-control" id="UpdateMonitoringImage" name="UpdateMonitoringImage" accept="image/*">
+                    </div>
+
+                    <button type="submit" class="btn btn-outline-success w-100">Update Monitoring</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- Scripts -->
-<script>
-    $(document).ready(function () {
-        // Sidebar Toggle
-        $('#toggleSidebar').click(function () {
-            $('#sidebar').toggleClass('collapsed');
-            $('#toggleSidebar i').toggleClass('fa-bars fa-times');
-        });
-    });
-</script>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="Js/equipment.js"></script>
 
+
+</body>
 </html>
