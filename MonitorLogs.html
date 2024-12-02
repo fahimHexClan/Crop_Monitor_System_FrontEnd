@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="Css/monitorLog.css">
 
+    <!-- Adding jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -37,43 +39,40 @@
         <h2 class="header-title">Monitoring Management</h2>
         <p class="header-subtitle">Manages agricultural equipment used in various operations.</p>
         <!-- Add New Field Button -->
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMonitoringModal"> <i class="fas fa-plus-circle me-2"></i>Add New MonitoringLog</button>
+        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addMonitoringModal">
+            <i class="fas fa-plus-circle me-2"></i>Add New MonitoringLog
+        </button>
         <br>
         <!-- Equipment Table -->
         <div class="table-container mt-4">
             <table class="table table-striped table-hover align-middle">
                 <thead>
-
                 <tr>
                     <th>Log ID</th>
                     <th>Monitoring Date</th>
                     <th>Monitoring Log Details</th>
                     <th>Monitoring Image</th>
                     <th>Actions</th>
-
-
                 </tr>
                 </thead>
-                <tbody id="EquipmentTableBody">
+                <tbody >
                 <tr>
                     <td>L001</td>
                     <td>2024-12-10</td>
-                    <td>Avilable</td>
-                    <td><img src="assets/field1.jpg" alt="MoniterLog Image" class="img-fluid" width="100"></td>
+                    <td>Available</td>
+                    <td><img src="assets/field1.jpg" alt="Monitor Log Image" class="img-fluid" width="100"></td>
                     <td>
-                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                data-bs-target="#updateMonitoringModal"><i class="fas fa-edit"></i></button>
+                        <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateMonitoringModal"><i class="fas fa-edit"></i></button>
                         <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-
     </div>
 </div>
 
-<!-- Add Equipment Modal -->
+<!-- Add Moniter Modal -->
 <div class="modal fade" id="addMonitoringModal" tabindex="-1" aria-labelledby="addMonitoringModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -84,34 +83,30 @@
             <div class="modal-body">
                 <form id="addMoniterLogForm">
                     <div class="form-group">
-                        <label for="LogId" class="form-label">MoniterLog ID</label>
-                        <input type="text" class="form-control" id="LogId" name="LogId" required
-                               placeholder="Enter MoniterLog ID">
+                        <label for="LogId" class="form-label">Monitor Log ID</label>
+                        <input type="text" class="form-control" id="LogId" name="LogId" required placeholder="Enter Monitor Log ID">
                     </div>
                     <div class="form-group">
                         <label for="MonitoringDate" class="form-label">Monitoring Date</label>
-                        <input type="date" class="form-control" id="MonitoringDate" name="MonitoringDate" required
-                               placeholder="Enter Date Of Birth">
+                        <input type="date" class="form-control" id="MonitoringDate" name="MonitoringDate" required placeholder="Enter Monitoring Date">
                     </div>
                     <div class="form-group">
                         <label for="MonitoringDetail" class="form-label">Monitoring Detail</label>
-                        <input type="text" class="form-control" id="MonitoringDetail" name="MonitoringDetail" required
-                               placeholder="Enter Monitoring Detail">
+                        <input type="text" class="form-control" id="MonitoringDetail" name="MonitoringDetail" required placeholder="Enter Monitoring Detail">
                     </div>
                     <div class="form-group">
                         <label for="MonitoringImage" class="form-label">Monitoring Image</label>
                         <input type="file" class="form-control" id="MonitoringImage" name="MonitoringImage" accept="image/*">
                     </div>
 
-                    <button type="submit" class="btn btn-outline-success w-100">Save Monitoring Details</button>
+                    <button type="button" class="btn btn-outline-success w-100" onclick="addLogs()" >Save Monitoring Details</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- Update Equipment Modal -->
+<!-- Update moniter Modal -->
 <div class="modal fade" id="updateMonitoringModal" tabindex="-1" aria-labelledby="updateMonitoringModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -121,40 +116,41 @@
             </div>
             <div class="modal-body">
                 <form id="updateEquipmentForm">
-
                     <div class="form-group">
-                        <label for="UpdateLogId" class="form-label">MoniterLog ID</label>
-                        <input type="text" class="form-control" id="UpdateLogId" name="UpdateLogId" required
-                               placeholder="Enter MoniterLog ID">
+                        <label for="UpdateLogId" class="form-label">Monitor Log ID</label>
+                        <input type="text" class="form-control" id="UpdateLogId" name="UpdateLogId" required placeholder="Enter Monitor Log ID">
                     </div>
-
                     <div class="form-group">
                         <label for="UpdateMonitoringDate" class="form-label">Monitoring Date</label>
-                        <input type="date" class="form-control" id="UpdateMonitoringDate" name="UpdateMonitoringDate" required
-                               placeholder="Enter Date Of Birth">
+                        <input type="date" class="form-control" id="UpdateMonitoringDate" name="UpdateMonitoringDate" required placeholder="Enter Monitoring Date">
                     </div>
                     <div class="form-group">
                         <label for="UpdateMonitoringDetail" class="form-label">Monitoring Detail</label>
-                        <input type="text" class="form-control" id="UpdateMonitoringDetail" name="UpdateMonitoringDetail" required
-                               placeholder="Enter Monitoring Detail">
+                        <input type="text" class="form-control" id="UpdateMonitoringDetail" name="UpdateMonitoringDetail" required placeholder="Enter Monitoring Detail">
                     </div>
                     <div class="form-group">
                         <label for="UpdateMonitoringImage" class="form-label">Monitoring Image</label>
                         <input type="file" class="form-control" id="UpdateMonitoringImage" name="UpdateMonitoringImage" accept="image/*">
                     </div>
 
-                    <button type="submit" class="btn btn-outline-success w-100">Update Monitoring</button>
+                    <button type="submit" class="btn btn-outline-success w-100" onclick="updateLog()">Update Monitoring</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
 
-
-<!-- Scripts -->
+<!-- Bootstrap JS Bundle -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+<!-- Your custom script -->
 <script src="Js/MonitorLog.js"></script>
 
+<!-- Example of jQuery script -->
+<script>
+
+</script>
 
 </body>
+
 </html>

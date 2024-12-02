@@ -8,7 +8,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet" href="Css/fieldStyleSheet.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 
+    <style>
+        #map {
+            height: 200px;
+            width: 100%;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -55,7 +63,7 @@
                     <th>Actions</th>
                 </tr>
                 </thead>
-                <tbody id="fieldTableBody">
+                <tbody >
                 <tr>
                     <td>F001</td>
                     <td>Field A</td>
@@ -65,8 +73,11 @@
                     <td><img src="assets/field2.jpg" alt="Field Image 2" class="img-fluid" width="100"></td>
                     <td>L001</td>
                     <td>
+
+
                         <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateFieldModal"><i class="fas fa-edit"></i></button>
                         <button class="btn btn-outline-danger btn-sm"><i class="fas fa-trash"></i></button>
+
                     </td>
                 </tr>
                 </tbody>
@@ -94,10 +105,12 @@
                         <label for="fieldName" class="form-label">Field Name</label>
                         <input type="text" class="form-control" id="fieldName" name="fieldName" required placeholder="Enter field name">
                     </div>
-                    <div class="form-group">
-                        <label for="fieldLocation" class="form-label">Field Location</label>
-                        <input type="text" class="form-control" id="fieldLocation" name="fieldLocation" required placeholder="Enter field location">
+                    <div id="map"></div>
+
+                    <div class="mb-1">
+                        <input type="text" class="form-control" id="location" placeholder="Selected Location (Latitude, Longitude)" readonly>
                     </div>
+
                     <div class="form-group">
                         <label for="extentSize" class="form-label">Extent Size (acres)</label>
                         <input type="number" class="form-control" id="extentSize" name="extentSize" required placeholder="Enter size of the field in acres">
@@ -116,7 +129,7 @@
                         <input type="text" class="form-control" id="LogId" name="LogId" required placeholder="Enter Log ID">
                     </div>
 
-                    <button type="submit" class="btn btn-outline-success w-100">Save Field</button>
+                    <button type="button" class="btn btn-outline-success w-100" onclick="addFields()">Save Field</button>
                 </form>
             </div>
         </div>
@@ -167,7 +180,7 @@
                         <input type="text" class="form-control" id="updateLogId" name="updateLogId" required placeholder="Enter log ID">
 
                     </div>
-                    <button type="submit" class="btn btn-outline-success w-100">Update Field</button>
+                    <button type="button" class="btn btn-outline-success w-100"onclick="updateField()">Update Field</button>
                 </form>
             </div>
         </div>
@@ -176,6 +189,8 @@
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> <!-- jQuery -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script src="Js/fieldScript.js"></script>
 
 
