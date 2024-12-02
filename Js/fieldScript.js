@@ -163,16 +163,56 @@ function getAllFields() {
                     $("table tbody").append(row);
                 });
 
+                // Handle edit button click
+                $(".edit-btn").on("click", function() {
+                    let log = $(this).data("field");
+                    // Populate the modal fields with the selected log's data
+                    $("#updateFieldId").val(field.fieldCode);
+                    $("#updateFieldName").val(field.fieldName);
+                    $("#updateExtentSize").val(field.extentSize);
+                    $("#updateLogId").val(field.logId);
+                    // Optionally, if you want to show the image, you can implement it here
+                    // $("#UpdateMonitoringImage").val(log.observedImage);
+                });
+
+                // Handle delete button click
+                $(".delete-btn").on("click", function() {
+                    let fieldCode = $(this).data("id");
+                    if (confirm("Are you sure you want to delete this log?")) {
+                        deleteLog(fieldCode);
+                    }
+                });
+
             } else {
-                $("table tbody").html("<tr><td colspan='8' class='text-center'>No fields available</td></tr>");
+                console.log("No logs found.");
+                $("table tbody").html("<tr><td colspan='7'>No fields available.</td></tr>");
             }
         },
-        error: function (xhr, status, error) {
-            console.error('Error retrieving fields:', error);
-            alert("Error retrieving fields. Please try again.");
+        error: function(xhr, status, error) {
+            console.error("Error fetching field:", error);
+            alert("An error occurred while fetching fields. Please try again.");
         }
     });
+}function deleteLog(fieldId) {
+    let token = localStorage.getItem("token");
 
+    $.ajax({
+        method: "DELETE",
+        url: "http://localhost:8081/api/v1/field/" + fieldId, // Correct URL format
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(data) {
+            console.log("Log deleted successfully");
+            getAllFields(); // Refresh the table after deletion
+        },
+        error: function(xhr, status, error) {
+            console.error("Error deleting log:", error);
+            alert("An error occurred while deleting the log. Please try again.");
+        }
+    });
 }
+
+
 
 
