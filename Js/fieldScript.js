@@ -165,7 +165,7 @@ function getAllFields() {
 
                 // Handle edit button click
                 $(".edit-btn").on("click", function() {
-                    let log = $(this).data("field");
+                    let field = $(this).data("field");
                     // Populate the modal fields with the selected log's data
                     $("#updateFieldId").val(field.fieldCode);
                     $("#updateFieldName").val(field.fieldName);
@@ -213,6 +213,112 @@ function getAllFields() {
     });
 }
 
+let updateMap, updateMarker, updateLatitude, updateLongitude;
 
+function initUpdateMap(lat = 7.8731, lon = 80.7718) { // Default to Sri Lanka
+    // Initialize the map for the Update modal
+    updateMap = L.map('updateMap').setView([lat, lon], 7); // Set initial location to the given latitude and longitude
 
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(updateMap);
+
+    // Add marker at the given location
+    updateMarker = L.marker([lat, lon]).addTo(updateMap);
+
+    // Event listener for map clicks
+    updateMap.on('click', function (e) {
+        const latlng = e.latlng;
+        updateLatitude = latlng.lat.toFixed(6); // Store latitude (6 decimal places)
+        updateLongitude = latlng.lng.toFixed(6); // Store longitude (6 decimal places)
+
+        // Update marker position
+        updateMarker.setLatLng(latlng);
+
+        // Update the location input fields in the form
+        $('#updateFieldLocation').val(`${updateLatitude}, ${updateLongitude}`);
+    });
+}
+
+// Call this function when you open the modal, passing in the current location of the field
+$('#updateFieldModal').on('show.bs.modal', function (e) {
+    let field = $(e.relatedTarget).data('field'); // Get data from the clicked button
+    let currentLat = field.fieldLocation?.x || 7.8731; // Default to Sri Lanka if no location is set
+    let currentLon = field.fieldLocation?.y || 80.7718;
+
+    // Initialize the map and set the marker
+    initUpdateMap(currentLat, currentLon);
+
+    // Set the input fields with the current data
+    $('#updateFieldId').val(field.fieldId);
+    $('#updateFieldName').val(field.fieldName);
+    $('#updateExtentSize').val(field.extentSize);
+    $('#updateLogId').val(field.logId);
+    $('#updateFieldLocation').val(`${currentLat}, ${currentLon}`); // Pre-fill with current location
+});
+function updateField() {
+    let token = localStorage.getItem("token");
+    console.log("Token: ", token);  // Debugging the token
+    if (!token) {
+        alert("You are not authorized. Please log in.");
+        return;
+    }
+
+    // Get the updated values from the form
+    let FieldCode = $("#updateFieldId").val();
+    let FieldName = $("#updateFieldName").val();
+    let ExtentSize = $("#updateExtentSize").val();
+    let LogId = $("#updateLogId").val();
+
+    // Use the updated latitude and longitude (from the form or variables)
+    let updatedLatitude = updateLatitude || $('#updateFieldLocation').val().split(',')[0];
+    let updatedLongitude = updateLongitude || $('#updateFieldLocation').val().split(',')[1];
+    const latitudeFloat = parseInt(updatedLatitude);
+    const longitudeFloat = parseInt(updatedLongitude);
+    // Validate the coordinates
+    if (!updatedLatitude || !updatedLongitude) {
+        alert("Invalid field location coordinates.");
+        return;
+    }
+
+    let formData = new FormData();
+    formData.append("fieldCode", FieldCode);
+    formData.append("fieldName", FieldName);
+    formData.append("fieldLocation[x]", latitudeFloat);
+    formData.append("fieldLocation[y]", longitudeFloat);
+    formData.append("extent_size", ExtentSize);
+    formData.append("logId", LogId);
+
+    // Get the image files from the form (if any)
+    let fieldImage1 = $("#updateFieldImage1")[0].files[0];
+    let fieldImage2 = $("#updateFieldImage2")[0].files[0];
+
+    if (fieldImage1) {
+        formData.append("fieldImageOne", fieldImage1);
+    }
+    if (fieldImage2) {
+        formData.append("fieldImageTwo", fieldImage2);
+    }
+
+    $.ajax({
+        method: "PUT",
+        url: "http://localhost:8081/api/v1/field/" + FieldCode,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function (data) {
+            console.log("Field updated successfully");
+            getAllFields(); // Refresh the list after update
+            $('#updateFieldModal').modal('hide'); // Close the modal
+        },
+        error: function (xhr, status, error) {
+            console.error("Error updating field:", error);
+            alert("An error occurred while updating the field. Please try again.");
+        }
+    });
+}
 

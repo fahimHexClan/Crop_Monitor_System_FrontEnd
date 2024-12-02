@@ -156,11 +156,12 @@
                         <input type="text" class="form-control" id="updateFieldName" name="updateFieldName" required placeholder="Enter field name">
 
                     </div>
-
-                    <div class="mb-3">
-                        <label for="updateFieldLocation" class="form-label">Field Location</label>
-                        <input type="text" class="form-control" id="updateFieldLocation" name="updateFieldLocation" required placeholder="Enter field location">
+                    <div id="updateMap" style="height: 200px;width: 100%;"></div>
+                    <div class="mb-1">
+                        <input type="text" class="form-control" id="updateFieldLocation" placeholder="Selected Location (Latitude, Longitude)" readonly>
                     </div>
+
+
                     <div class="mb-3">
                         <label for="updateExtentSize" class="form-label">Extent Size (acres)</label>
                         <input type="number" class="form-control" id="updateExtentSize" name="updateExtentSize" required placeholder="Enter size of the field in acres">
