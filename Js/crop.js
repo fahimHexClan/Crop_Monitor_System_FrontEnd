@@ -140,7 +140,7 @@ function getAllCrops() {
 
                     console.log(crop); // Log the cropCode to check if it's correct
                     let row = `<tr class="tbody">
-                <td>${crop.code}</td> 
+                <td>${crop.id}</td> 
                 <td>${crop.category}</td>
                 <td>${crop.commonName}</td>
                 <td style="width: 30px;">

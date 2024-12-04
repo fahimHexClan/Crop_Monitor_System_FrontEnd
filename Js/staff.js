@@ -111,5 +111,85 @@ function addStaffs() {
         }
     });
 }
+function getAllStaffs() {
+    let token = localStorage.getItem("token");
 
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
 
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Staff",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function (data) {
+            console.log('API Response:', data);
+
+            if (Array.isArray(data) && data.length > 0) {
+                // Clear the table before appending new rows
+                $("table tbody").empty();
+
+                data.forEach(function (staff) {
+                    // Dynamically create the table row using staff data
+                    let row = `
+                        <tr>
+                            <td>${staff.id || staff.StaffCode}</td>
+                            <td>${staff.firstName || ''}</td>
+                            <td>${staff.lastName || ''}</td>
+                            <td>${staff.addressLine1 || ''}</td>
+                            <td>${staff.addressLine2 || ''}</td>
+                            <td>${staff.addressLine3 || ''}</td>
+                            <td>${staff.addressLine4 || ''}</td>
+                            <td>${staff.addressLine5 || ''}</td>
+                            <td>${staff.contactNo || ''}</td>
+                            <td>${staff.designation || ''}</td>
+                            <td>${staff.dob || ''}</td>
+                            <td>${staff.email || ''}</td>
+                            <td>${staff.gender || ''}</td>
+                            <td>${staff.joinedDate || ''}</td>
+                            <td>${staff.role || ''}</td>
+                            <td>${staff.logId || ''}</td>
+                            <td>
+                                <button class="btn btn-outline-primary btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#updateStaffModal"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-outline-danger btn-sm delete-btn"><i class="fas fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+
+                    // Append the row to the table body
+                    $("table tbody").append(row);
+                });
+
+                // Bind the click event for edit and delete buttons
+                $(".edit-btn").on("click", function () {
+                    let staffId = $(this).closest("tr").find("td:first").text(); // Get StaffId from the first column
+                    // Populate the modal fields with the selected staff's data
+                    let staff = data.find(s => s.StaffId === staffId);
+                    $("#updateStaffId").val(staff.StaffId);
+                    $("#updateStaffName").val(staff.firstName + " " + staff.lastName);
+                    $("#updateStaffDesignation").val(staff.designation);
+                    $("#updateStaffContact").val(staff.contactNo);
+                    $("#updateStaffEmail").val(staff.email);
+                });
+
+                $(".delete-btn").on("click", function () {
+                    let staffId = $(this).closest("tr").find("td:first").text(); // Get StaffId from the first column
+                    if (confirm("Are you sure you want to delete this staff member?")) {
+                        deleteStaff(staffId);
+                    }
+                });
+
+            } else {
+                console.log("No staff found.");
+                $("table tbody").html("<tr><td colspan='7'>No staff available.</td></tr>");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching staff:", error);
+            alert("An error occurred while fetching staff. Please try again.");
+        }
+    });
+}

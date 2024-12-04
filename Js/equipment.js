@@ -1,88 +1,125 @@
 // Sidebar toggle
 document.getElementById('toggleSidebar').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('collapsed');
-});// Add new equipment form submission handler
-document.getElementById('addEquipmentForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    let equipmentId = document.getElementById('EquipmentId').value;
-    let equipmentName = document.getElementById('EquipmentName').value;
-    let equipmentStatus = document.getElementById('EquipmentStatus').value;
-    let equipmentType = document.getElementById('EquipmentType').value;
-    let fieldId = document.getElementById('FieldId').value;
-    let staffId = document.getElementById('StaffId').value;
-
-    let tableBody = document.getElementById('EquipmentTableBody');
-    let newRow = tableBody.insertRow();
-    newRow.innerHTML = `
-        <td>${equipmentId}</td>
-        <td>${equipmentName}</td>
-        <td>${equipmentStatus}</td>
-        <td>${equipmentType}</td>
-        <td>${fieldId}</td>
-        <td>${staffId}</td>
-        <td>
-            <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateEquipmentModal" onclick="populateUpdateForm('${equipmentId}')"><i class="fas fa-edit"></i></button>
-            <button class="btn btn-outline-danger btn-sm" onclick="deleteEquipment(this)"><i class="fas fa-trash"></i></button>
-        </td>
-    `;
-
-    document.getElementById('addEquipmentForm').reset();
-    var addModal = new bootstrap.Modal(document.getElementById('addEquipmentModal'));
-    addModal.hide();
 });
 
-// Populate the update equipment form with existing equipment data
-function populateUpdateForm(equipmentId) {
-    let equipmentData = getEquipmentDataById(equipmentId);
-    document.getElementById('UpdateEquipmentId').value = equipmentData.id;
-    document.getElementById('UpdateEquipmentName').value = equipmentData.name;
-    document.getElementById('UpdateEquipmentStatus').value = equipmentData.status;
-    document.getElementById('UpdateEquipmentType').value = equipmentData.type;
-    document.getElementById('UpdateFieldId').value = equipmentData.fieldId;
-    document.getElementById('UpdateStaffId').value = equipmentData.staffId;
-}
+$(document).ready(function() {
 
-// Simulate fetching equipment data by ID (Replace with real data/API call)
-function getEquipmentDataById(equipmentId) {
-    const equipment = [
-        { id: 'E001', name: 'Dozers', status: 'Available', type: 'Heavy', fieldId: 'F001', staffId: 'S001' },
-        { id: 'E002', name: 'Tractors', status: 'In Use', type: 'Heavy', fieldId: 'F002', staffId: 'S002' },
-        { id: 'E003', name: 'Mowers', status: 'Maintenance', type: 'Light', fieldId: 'F003', staffId: 'S003' }
-    ];
-    return equipment.find(item => item.id === equipmentId);
-}
+    getAllStaffIds();
 
-// Delete an equipment item from the table
-function deleteEquipment(button) {
-    if (confirm("Are you sure you want to delete this equipment?")) {
-        let row = button.closest('tr');
-        row.remove();
+
+});
+function getAllStaffIds() {
+    let token = localStorage.getItem("token");  // Retrieve the token from local storage
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
     }
-}
 
-// Update equipment form submission handler
-document.getElementById('updateEquipmentForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Staff/ids", // Your API to fetch all staff data
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function (data) {
+            console.log('API Response:', data);
 
-    let updatedEquipmentId = document.getElementById('UpdateEquipmentId').value;
-    let updatedEquipmentName = document.getElementById('UpdateEquipmentName').value;
-    let updatedEquipmentStatus = document.getElementById('UpdateEquipmentStatus').value;
-    let updatedEquipmentType = document.getElementById('UpdateEquipmentType').value;
-    let updatedFieldId = document.getElementById('UpdateFieldId').value;
-    let updatedStaffId = document.getElementById('UpdateStaffId').value;
+            let staffSelect = $("#StaffId");
+            staffSelect.empty();  // Clear the existing options
+            staffSelect.append('<option value="" disabled selected>Select Staff ID</option>');
 
-    let tableRows = document.querySelectorAll('#EquipmentTableBody tr');
-    tableRows.forEach(row => {
-        if (row.cells[0].textContent === updatedEquipmentId) {
-            row.cells[1].textContent = updatedEquipmentName;
-            row.cells[2].textContent = updatedEquipmentStatus;
-            row.cells[3].textContent = updatedEquipmentType;
-            row.cells[4].textContent = updatedFieldId;
-            row.cells[5].textContent = updatedStaffId;
+            if (Array.isArray(data) && data.length > 0) {
+                // Assuming data is an array of objects and each object contains the 'StaffId' field
+                data.forEach(function(staff) {
+                    const staffId = staff.StaffId || staff.StaffCode; // Adjust if needed to the correct field
+                    if (staffId) {
+                        staffSelect.append('<option value="' + staffId + '">' + staffId + '</option>');
+                    }
+                });
+            } else {
+                console.warn("No staff IDs available or the data format is incorrect.");
+                staffSelect.append('<option value="" disabled>No Staff Available</option>');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching staff:", error);
+            alert("An error occurred while fetching staff. Please try again.");
         }
     });
+}
+function getAllEquipment() {
+    let token = localStorage.getItem("token");
 
-    var updateModal = new bootstrap.Modal(document.getElementById('updateEquipmentModal'));
-    updateModal.hide();
-});
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Equipment", // API endpoint to fetch equipment data
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(data) {
+            console.log('API Response:', data);
+
+            if (Array.isArray(data) && data.length > 0) {
+                $("table tbody").empty();  // Clear existing table rows
+
+                data.forEach(function(equipment) {
+                    console.log(equipment);
+
+                    let row = `<tr>
+                        <td>${equipment.EquipmentId}</td> 
+                        <td>${equipment.EquipmentName}</td>
+                        <td>${equipment.EquipmentStatus}</td>
+                        <td>${equipment.EquipmentType}</td>
+                        <td>${equipment.FieldId}</td>
+                        <td>${equipment.StaffId}</td>
+                        <td>
+                            <div class="action-btns">
+                                <button class="btn btn-outline-primary btn-sm edit-btn" data-id="${equipment.EquipmentId}" data-bs-toggle="modal" data-bs-target="#updateEquipmentModal">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${equipment.EquipmentId}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>`;
+
+                    $("table tbody").append(row);
+                });
+
+                // Handle edit button click
+                $(".edit-btn").on("click", function() {
+                    let equipmentId = $(this).data("id");
+                    updateEquipment(equipmentId);
+                });
+
+                // Handle delete button click
+                $(".delete-btn").on("click", function() {
+                    let equipmentId = $(this).data("id");
+                    if (confirm("Are you sure you want to delete this equipment?")) {
+                        deleteEquipment(equipmentId);
+                    }
+                });
+            } else {
+                console.log("No equipment found.");
+                $("table tbody").html("<tr><td colspan='7'>No equipment available.</td></tr>");
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error fetching equipment:", error);
+            alert("An error occurred while fetching equipment. Please try again.");
+        }
+    });
+}
+
+// Dummy functions for update and delete (you can implement the actual logic later)
+function updateEquipment(equipmentId) {
+    console.log('Edit equipment with ID:', equipmentId);
+    // You can add the logic to fetch equipment details and populate the update form
+}
+
+function deleteEquipment(equipmentId) {
+    console.log('Delete equipment with ID:', equipmentId);
+    // Implement the delete logic here (e.g., making a DELETE request to the API)
+}
