@@ -2,24 +2,19 @@ let latitude, longitude;
 
 $(document).ready(function () {
     getAllFields();
-    // Initialize map with initial view (Sri Lanka)
     let map = L.map('map').setView([7.8731, 80.7718], 7); // Set initial map location (Sri Lanka)
 
-    // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Marker for the selected location
     let marker;
 
-    // Event listener for map clicks
     map.on('click', function (e) {
         const latlng = e.latlng;
         latitude = latlng.lat.toFixed(6); // Store latitude (6 decimal places)
         longitude = latlng.lng.toFixed(6); // Store longitude (6 decimal places)
 
-        // Update the input field with the selected coordinates (e.g., combining lat, long)
         $('#location').val(`${latitude}, ${longitude}`); // Update the location input
 
         // If a marker already exists, remove it
@@ -27,7 +22,6 @@ $(document).ready(function () {
             map.removeLayer(marker);
         }
 
-        // Add a new marker at the clicked location
         marker = L.marker([latitude, longitude]).addTo(map);
     });
 });
@@ -36,11 +30,9 @@ document.getElementById('toggleSidebar').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
 
-// Inside Js/fieldScript.js
 function addFields() {
     let token = localStorage.getItem("token");
 
-    // Check if token exists
     if (!token) {
         alert("Authorization token is missing. Please log in.");
         return;
@@ -84,7 +76,6 @@ function addFields() {
         formData.append("fieldImageTwo", fieldImage2);
     }
 
-    // Send the form data via AJAX
     $.ajax({
         method: "POST",
         url: "http://localhost:8081/api/v1/field", // Correct URL
@@ -97,8 +88,6 @@ function addFields() {
         success: function (data) {
             console.log("Field added successfully");
             alert("Field added successfully!");
-            // Optionally, refresh the page or update the table here
-            // location.reload(); // Uncomment if you want to reload the page
         },
         error: function (xhr, status, error) {
             console.error("Error adding field:", error);
@@ -110,7 +99,6 @@ function addFields() {
 function getAllFields() {
     let token = localStorage.getItem("token");
 
-    // Ensure token is available
     if (!token) {
         alert("Authorization token is missing. Please log in.");
         return;
@@ -118,12 +106,12 @@ function getAllFields() {
 
     $.ajax({
         method: "GET",
-        url: "http://localhost:8081/api/v1/field", // API URL for fetching all fields
+        url: "http://localhost:8081/api/v1/field",
         headers: {
             "Authorization": "Bearer " + token
         },
         success: function (data) {
-            console.log('API Response:', data); // Log the response for debugging
+            console.log('API Response:', data);
 
             if (Array.isArray(data) && data.length > 0) {
                 // Clear the table before appending new rows
@@ -163,7 +151,6 @@ function getAllFields() {
                     $("table tbody").append(row);
                 });
 
-                // Handle edit button click
                 $(".edit-btn").on("click", function() {
                     let field = $(this).data("field");
                     // Populate the modal fields with the selected log's data
@@ -171,11 +158,9 @@ function getAllFields() {
                     $("#updateFieldName").val(field.fieldName);
                     $("#updateExtentSize").val(field.extentSize);
                     $("#updateLogId").val(field.logId);
-                    // Optionally, if you want to show the image, you can implement it here
-                    // $("#UpdateMonitoringImage").val(log.observedImage);
+
                 });
 
-                // Handle delete button click
                 $(".delete-btn").on("click", function() {
                     let fieldCode = $(this).data("id");
                     if (confirm("Are you sure you want to delete this log?")) {
@@ -217,21 +202,18 @@ let updateMap, updateMarker, updateLatitude, updateLongitude;
 
 function initUpdateMap(lat = 7.8731, lon = 80.7718) { // Default to Sri Lanka
     // Initialize the map for the Update modal
-    updateMap = L.map('updateMap').setView([lat, lon], 7); // Set initial location to the given latitude and longitude
+    updateMap = L.map('updateMap').setView([lat, lon], 7);
 
-    // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(updateMap);
 
-    // Add marker at the given location
     updateMarker = L.marker([lat, lon]).addTo(updateMap);
 
-    // Event listener for map clicks
     updateMap.on('click', function (e) {
         const latlng = e.latlng;
-        updateLatitude = latlng.lat.toFixed(6); // Store latitude (6 decimal places)
-        updateLongitude = latlng.lng.toFixed(6); // Store longitude (6 decimal places)
+        updateLatitude = latlng.lat.toFixed(6);
+        updateLongitude = latlng.lng.toFixed(6);
 
         // Update marker position
         updateMarker.setLatLng(latlng);
@@ -241,16 +223,13 @@ function initUpdateMap(lat = 7.8731, lon = 80.7718) { // Default to Sri Lanka
     });
 }
 
-// Call this function when you open the modal, passing in the current location of the field
 $('#updateFieldModal').on('show.bs.modal', function (e) {
     let field = $(e.relatedTarget).data('field'); // Get data from the clicked button
     let currentLat = field.fieldLocation?.x || 7.8731; // Default to Sri Lanka if no location is set
     let currentLon = field.fieldLocation?.y || 80.7718;
 
-    // Initialize the map and set the marker
     initUpdateMap(currentLat, currentLon);
 
-    // Set the input fields with the current data
     $('#updateFieldId').val(field.fieldId);
     $('#updateFieldName').val(field.fieldName);
     $('#updateExtentSize').val(field.extentSize);
@@ -290,7 +269,6 @@ function updateField() {
     formData.append("extent_size", ExtentSize);
     formData.append("logId", LogId);
 
-    // Get the image files from the form (if any)
     let fieldImage1 = $("#updateFieldImage1")[0].files[0];
     let fieldImage2 = $("#updateFieldImage2")[0].files[0];
 

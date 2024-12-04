@@ -2,151 +2,114 @@
 document.getElementById('toggleSidebar').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
-<!-- Scripts -->
-    // Handle form submission for adding staff
-    document.getElementById('addStaffForm').addEventListener('submit', function(e) {
-    e.preventDefault();
 
-    // Get values from the form
-    let staffId = document.getElementById('StaffId').value;
-    let firstName = document.getElementById('S_FirstName').value;
-    let lastName = document.getElementById('S_LastName').value;
-    let address1 = document.getElementById('Address_1').value;
-    let address2 = document.getElementById('Address_2').value;
-    let address3 = document.getElementById('Address_3').value;
-    let address4 = document.getElementById('Address_4').value;
-    let address5 = document.getElementById('Address_5').value;
-    let contactNumber = document.getElementById('Contact_Number').value;
-    let designation = document.getElementById('Staff_Designation').value;
-    let dob = document.getElementById('Date_Of_Birth').value;
-    let email = document.getElementById('Email_Address').value;
-    let gender = document.getElementById('Gender').value;
-    let joinDate = document.getElementById('Join_Date').value;
-    let staffRole = document.getElementById('Staff_Role').value;
-    let logId = document.getElementById('LogId').value;
-
-    // Add new row to the table
-    let tableBody = document.getElementById('StaffTableBody');
-    let newRow = tableBody.insertRow();
-
-    newRow.innerHTML = `
-            <td>${staffId}</td>
-            <td>${firstName}</td>
-            <td>${lastName}</td>
-            <td>${address1}</td>
-            <td>${address2}</td>
-            <td>${address3}</td>
-            <td>${address4}</td>
-            <td>${address5}</td>
-            <td>${contactNumber}</td>
-            <td>${designation}</td>
-            <td>${dob}</td>
-            <td>${email}</td>
-            <td>${gender}</td>
-            <td>${joinDate}</td>
-            <td>${staffRole}</td>
-            <td>${logId}</td>
-            <td>
-                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateStaffModal" onclick="populateUpdateForm('${staffId}')">
-                    <i class="fas fa-edit"></i>
-                </button>
-                <button class="btn btn-outline-danger btn-sm" onclick="deleteStaff(this)">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </td>
-        `;
-
-    // Clear the form
-    document.getElementById('addStaffForm').reset();
-
-    // Close the modal
-    var addModal = new bootstrap.Modal(document.getElementById('addStaffModal'));
-    addModal.hide();
+$(document).ready(function() {
+    loadLogs(); // Function to load logs
+    getAllStaffs(); // Function to get all staff members
 });
 
-    // Populate update form with selected staff data
-    function populateUpdateForm(staffId) {
-    // Find staff data by ID (replace this with actual data fetching)
-    let staffData = getStaffDataById(staffId);
+// Function to load logs (GET request, not POST)
+function loadLogs() {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
 
-    // Populate the update form with data
-    document.getElementById('updateStaffId').value = staffData.staffId;
-    document.getElementById('updateFirstName').value = staffData.firstName;
-    document.getElementById('updateLastName').value = staffData.lastName;
-    document.getElementById('updateAddress1').value = staffData.address1;
-    document.getElementById('updateAddress2').value = staffData.address2;
-    document.getElementById('updateAddress3').value = staffData.address3;
-    document.getElementById('updateAddress4').value = staffData.address4;
-    document.getElementById('updateAddress5').value = staffData.address5;
-    document.getElementById('updateContactNumber').value = staffData.contactNumber;
-    document.getElementById('updateDesignation').value = staffData.designation;
-    document.getElementById('updateEmail').value = staffData.email;
-    document.getElementById('updateGender').value = staffData.gender;
-    document.getElementById('updateJoinDate').value = staffData.joinDate;
-    document.getElementById('updateStaffRole').value = staffData.staffRole;
-    document.getElementById('updateLogId').value = staffData.logId;
+    $.ajax({
+        method: "GET",  // Corrected to GET
+        url: "http://localhost:8081/api/v1/Monitor/ids",  // Assuming this endpoint is correct for logs
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function (data) {
+            let logSelect = $("#LogId");
+            logSelect.empty();
+            logSelect.append('<option value="" disabled selected>Select Log ID</option>');
+
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(function (logId) {
+                    logSelect.append('<option value="' + logId + '">' + logId + '</option>');
+                });
+            } else {
+                console.warn("No logs available or incorrect data format");
+                logSelect.append('<option value="" disabled>No Logs Available</option>');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error loading logs:", error);
+            alert("An error occurred while loading log data. Please try again.");
+        }
+    });
 }
 
-    // Example function to get staff data by ID
-    function getStaffDataById(staffId) {
-    const staffData = [
-{ staffId: 'S001', firstName: 'John', lastName: 'Daniel',address1:'Badulla',address2:'Haliela',address3:'Ketawala',address4:'kandegedra',address5:'Town', contactNumber: '0742312343', designation: 'Manager', dob: '2004-01-23', email: 'John@gmail.com', gender: 'Male', joinDate: '2024-01-23', staffRole: 'Manager', logId: 'L001' }
-    // Add other staff data here
-    ];
-    return staffData.find(staff => staff.staffId === staffId);
+
+function addStaffs() {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
+
+    // Get form values (make sure to get the values correctly)
+    let StaffId = $("#StaffId").val();
+    let S_FirstName = $("#S_FirstName").val();
+    let S_LastName = $("#S_LastName").val();
+    let Address_1 = $("#Address_1").val();
+    let Address_2 = $("#Address_2").val();
+    let Address_3 = $("#Address_3").val();
+    let Address_4 = $("#Address_4").val();
+    let Address_5 = $("#Address_5").val();
+    let Contact_Number = $("#Contact_Number").val();
+    let Staff_Designation = $("#Staff_Designation").val();
+    let Date_Of_Birth = $("#Date_Of_Birth").val();
+    let emailAddress = $("#Email_Address").val();
+    let Gender = $("#Gender").val();
+    let Join_Date = $("#Join_Date").val();
+    let Staff_Role = $("#Staff_Role").val();
+    let LogId = $("#LogId").val();
+
+    if (!StaffId || !S_FirstName || !S_LastName || !Contact_Number || !Staff_Designation || !Date_Of_Birth || !emailAddress) {
+        alert("Please fill in all required fields.");
+        return;
+    }
+
+    $.ajax({
+        method: "POST",
+        contentType: "application/json",
+        url: "http://localhost:8081/api/v1/Staff",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        async: true,
+        data: JSON.stringify({
+            "staffCode": StaffId,
+            "firstName": S_FirstName,
+            "lastName": S_LastName,
+            "designation": Staff_Designation,
+            "gender": Gender,
+            "joinedDate": Join_Date,
+            "dob": Date_Of_Birth,
+            "addressLine1": Address_1,
+            "addressLine2": Address_2,
+            "addressLine3": Address_3,
+            "addressLine4": Address_4,
+            "addressLine5": Address_5,
+            "contactNo": Contact_Number,
+            "email": emailAddress,
+            "role": Staff_Role,
+            "logId": LogId
+        }),
+        success: function(data) {
+
+            console.log("Staff added successfully");
+            alert("Staff saved successfully.");
+            //getAllStaffs();
+        },
+        error: function(xhr, status, error) {
+            console.log("Error adding field:", error);
+        }
+    });
 }
 
-    // Handle staff delete action
-    function deleteStaff(button) {
-    if (confirm("Are you sure you want to delete this staff?")) {
-    let row = button.closest('tr');
-    row.remove();
-}
-}
 
-    // Handle form submission for updating staff
-    document.getElementById('updateStaffForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Get updated staff data
-    let updatedStaffId = document.getElementById('updateStaffId').value;
-    let updatedFirstName = document.getElementById('updateFirstName').value;
-    let updatedLastName = document.getElementById('updateLastName').value;
-    let updateAddress1 = document.getElementById('updateAddress1').value;
-    let updateAddress2 = document.getElementById('updateAddress2').value;
-    let updateAddress3 = document.getElementById('updateAddress3').value;
-    let updateAddress4 = document.getElementById('updateAddress4').value;
-    let updateAddress5 = document.getElementById('updateAddress5').value;
-    let updatedContactNumber = document.getElementById('updateContactNumber').value;
-    let updatedDesignation = document.getElementById('updateStaffDesignation').value;
-    let updatedEmail = document.getElementById('updateEmail').value;
-    let updatedGender = document.getElementById('updateGender').value;
-    let updatedJoinDate = document.getElementById('updateJoinDate').value;
-    let updatedStaffRole = document.getElementById('updateStaffRole').value;
-    let updatedLogId = document.getElementById('updateLogId').value;
-
-    // Update the table row (find the staff row by ID)
-    let table = document.querySelector('#StaffTableBody');
-    let row = Array.from(table.rows).find(row => row.cells[0].textContent === updatedStaffId);
-
-    if (row) {
-    row.cells[1].textContent = updatedFirstName;
-    row.cells[2].textContent = updatedLastName;
-    row.cells[3].textContent = updateAddress1;
-    row.cells[4].textContent = updateAddress2;
-    row.cells[5].textContent = updateAddress3;
-    row.cells[6].textContent = updateAddress4;
-    row.cells[7].textContent = updateAddress5;
-    row.cells[8].textContent = updatedContactNumber;
-    row.cells[9].textContent = updatedDesignation;
-    row.cells[10].textContent = updatedEmail;
-    row.cells[11].textContent = updatedGender;
-    row.cells[12].textContent = updatedJoinDate;
-    row.cells[13].textContent = updatedStaffRole;
-    row.cells[14].textContent = updatedLogId;
-}
-
-    // Close the modal
-    var updateModal = new bootstrap.Modal(document.getElementById('updateStaffModal'));
-    updateModal.hide();
-});

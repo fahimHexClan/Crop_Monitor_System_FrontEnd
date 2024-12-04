@@ -2,108 +2,257 @@
 document.getElementById('toggleSidebar').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
-// Handle form submission for adding crop
-document.getElementById('addCropForm').addEventListener('submit', function(e) {
-    e.preventDefault();
 
-    // Get values from the form
-    let cropId = document.getElementById('CropId').value;
-    let cropCategory = document.getElementById('CropCategory').value;
-    let commonName = document.getElementById('ScientificName').value; // This seems to be for Common Name
-    let cropImage = document.getElementById('CropImage').files[0]?.name || ''; // Getting the image name
-    let scientificName = document.getElementById('CropScientificName').value;
-    let season = document.getElementById('Season').value;
-    let fieldId = document.getElementById('FieldId').value;
-    let logId = document.getElementById('LogId').value;
+$(document).ready(function() {
+    loadFields();
+    loadLogs();
+    getAllCrops();
 
-    // Add the new crop to the table
-    let tableBody = document.getElementById('CropTableBody');
-    let newRow = tableBody.insertRow();
 
-    newRow.innerHTML = `
-            <td>${cropId}</td>
-            <td>${cropCategory}</td>
-            <td>${commonName}</td>
-            <td><img src="assets/${cropImage}" alt="${commonName} Image" class="img-fluid" width="100"></td>
-            <td>${scientificName}</td>
-            <td>${season}</td>
-            <td>${fieldId}</td>
-            <td>${logId}</td>
-            <td>
-                <button class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateCropModal" onclick="populateUpdateForm('${cropId}')"><i class="fas fa-edit"></i></button>
-                <button class="btn btn-outline-danger btn-sm" onclick="deleteCrop(this)"><i class="fas fa-trash"></i></button>
-            </td>
-        `;
-
-    // Clear the form
-    document.getElementById('addCropForm').reset();
-    // Close the modal
-    var addModal = new bootstrap.Modal(document.getElementById('addCropModal'));
-    addModal.hide();
 });
 
-// Populate the update form with the selected crop data
-function populateUpdateForm(cropId) {
-    // Fetch crop data by cropId (use your own data source, e.g., API call)
-    let cropData = getCropDataById(cropId); // Replace this with your data fetching logic
-
-    // Populate the update modal fields
-    document.getElementById('updateCropId').value = cropData.id;
-    document.getElementById('updateCropCategory').value = cropData.category;
-    document.getElementById('updateCommonName').value = cropData.commonName;
-    document.getElementById('updateScientificName').value = cropData.scientificName;
-    document.getElementById('updateSeason').value = cropData.season;
-    document.getElementById('updateFieldId').value = cropData.fieldId;
-    document.getElementById('updateLogId').value = cropData.logId;
-}
-
-// Example function to fetch crop data (replace this with actual data fetching logic)
-function getCropDataById(cropId) {
-    const crops = [
-        { id: 'C001', category: 'Vegetables', commonName: 'Carrot', scientificName: 'Daucus carota', season: 'Winter', fieldId: 'F001', logId: 'L001' },
-        { id: 'C002', category: 'Fruits', commonName: 'Apple', scientificName: 'Malus domestica', season: 'Spring', fieldId: 'F002', logId: 'L002' },
-        // Add more crops as needed
-    ];
-    return crops.find(crop => crop.id === cropId);
-}
-
-// Handle the delete crop action
-function deleteCrop(button) {
-    // Confirm before deleting
-    if (confirm("Are you sure you want to delete this crop?")) {
-        // Delete the row from the table
-        let row = button.closest('tr');
-        row.remove();
+function loadFields() {
+    let token = localStorage.getItem("token");  // Retrieve the token from local storage
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
     }
-}
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/field/ids",
+        headers: {
+            "Authorization": "Bearer " + token  // Include the token in the header
+        },
+        success: function(data) {
+            let fieldSelect = $("#FieldId");
+            fieldSelect.empty();  // Clear the existing options
+            fieldSelect.append('<option value="" disabled selected>Select Field ID</option>');
 
-// Handle form submission for updating crop
-document.getElementById('updateCropForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // Get the updated values from the form
-    let updatedCropId = document.getElementById('updateCropId').value;
-    let updatedCropCategory = document.getElementById('updateCropCategory').value;
-    let updatedCommonName = document.getElementById('updateCommonName').value;
-    let updatedScientificName = document.getElementById('updateScientificName').value;
-    let updatedSeason = document.getElementById('updateSeason').value;
-    let updatedFieldId = document.getElementById('updateFieldId').value;
-    let updatedLogId = document.getElementById('updateLogId').value;
-
-    // Find the row in the table with the same Crop ID and update its data
-    let tableRows = document.querySelectorAll('#CropTableBody tr');
-    tableRows.forEach(row => {
-        if (row.cells[0].textContent === updatedCropId) {
-            row.cells[1].textContent = updatedCropCategory;
-            row.cells[2].textContent = updatedCommonName;
-            row.cells[4].textContent = updatedScientificName;
-            row.cells[5].textContent = updatedSeason;
-            row.cells[6].textContent = updatedFieldId;
-            row.cells[7].textContent = updatedLogId;
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(function(fieldId) {
+                    fieldSelect.append('<option value="' + fieldId + '">' + fieldId + '</option>');
+                });
+            } else {
+                console.warn("No field IDs available or the data format is incorrect.");
+                fieldSelect.append('<option value="" disabled>No Fields Available</option>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error loading fields:", error);
+            alert("An error occurred while loading field data. Please try again.");
         }
     });
+}
+function loadLogs() {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
 
-    // Close the update modal
-    var updateModal = new bootstrap.Modal(document.getElementById('updateCropModal'));
-    updateModal.hide();
-});
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Monitor/ids",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(data) {
+            let logSelect = $("#LogId");
+            logSelect.empty();
+            logSelect.append('<option value="" disabled selected>Select Log ID</option>');
+
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(function(logId) {
+                    logSelect.append('<option value="' + logId + '">' + logId + '</option>');
+                });
+            } else {
+                console.warn("No logs available or incorrect data format");
+                logSelect.append('<option value="" disabled>No Logs Available</option>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error loading logs:", error);
+            alert("An error occurred while loading log data. Please try again.");
+        }
+    });
+}
+
+
+function addCrops() {
+    let token = localStorage.getItem("token");
+    let CropId = $("#CropId").val();
+    let CommonName = $("#CommonName").val();
+    let CropScientificName = $("#CropScientificName").val();
+    let CropImage = $("#CropImage")[0].files[0];
+    let CropCategory = $("#CropCategory").val();
+    let Season = $("#Season").val();
+    let FieldId = $("#FieldId").val();
+    let LogId = $("#LogId").val();
+
+    let formData = new FormData();
+    formData.append("cropCode", CropId);
+    formData.append("commonName", CommonName);
+    formData.append("scientificName", CropScientificName);
+    formData.append("category", CropCategory);
+    formData.append("cropSeason", Season);
+    formData.append("fieldId", FieldId);
+    formData.append("logId", LogId);
+    if (CropImage) {
+        formData.append("cropImage", CropImage);
+    }
+
+    $.ajax({
+        method: "POST",
+        url: "http://localhost:8081/api/v1/crop",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function(data) {
+            console.log("Crop added successfully");
+            getAllCrops();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error adding crop:", error);
+            alert("An error occurred while adding the crop. Please try again.");
+        }
+    });
+}
+function getAllCrops() {
+    let token = localStorage.getItem("token");
+
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/crop",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(data) {
+            console.log(data);
+            if (Array.isArray(data) && data.length > 0) {
+                $("table tbody").empty();
+                data.forEach(function(crop) {
+
+                    console.log(crop);
+                    let cropImage = crop.cropImage;
+
+                    console.log(crop); // Log the cropCode to check if it's correct
+                    let row = `<tr class="tbody">
+                <td>${crop.code}</td> 
+                <td>${crop.category}</td>
+                <td>${crop.commonName}</td>
+                <td style="width: 30px;">
+                    <img src="data:image/jpeg;base64,${cropImage}" alt="Observed Image" class="img-fluid img-thumbnail" style="width: 30px; height: 30px; border-radius: 30px; margin-right: 50%;" />
+                </td>
+                <td>${crop.scientificName}</td>
+                <td>${crop.season}</td>
+                <td>${crop.fieldId}</td>
+                <td>${crop.logId}</td>
+                <td>
+                    <div class="action-btns">
+                        <button class="btn btn-outline-primary btn-sm edit-btn" data-id="${crop.cropCode}" data-bs-toggle="modal" data-bs-target="#updateCropModal">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${crop.cropCode}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>`;
+                    $("table tbody").append(row);
+                });
+
+                // Handle edit button click
+                $(".edit-btn").on("click", function() {
+                    let cropCode = $(this).data("id");
+                    updateCrops(cropCode);
+                });
+
+                // Handle delete button click
+                $(".delete-btn").on("click", function() {
+                    let cropId = $(this).data("id");
+                    if (confirm("Are you sure you want to delete this crop?")) {
+                        deleteLog(cropId);
+                    }
+                });
+            } else {
+                console.log("No crops found.");
+                $("table tbody").html("<tr><td colspan='9'>No crops available.</td></tr>");
+            }
+        },
+
+        error: function(xhr, status, error) {
+            console.error("Error fetching crops:", error);
+            alert("An error occurred while fetching crops. Please try again.");
+        }
+    });
+}
+
+
+function updateCrops() {
+    let token = localStorage.getItem("token");
+    let CropId = $("#updateCropId").val();
+    let CommonName = $("#updateCommonName").val();
+    let CropScientificName = $("#updateScientificName").val();
+    let CropImage = $("#updateCropImage")[0].files[0];
+    let CropCategory = $("#updateCropCategory").val();
+    let Season = $("#updateSeason").val();
+    let FieldId = $("#updateFieldId").val();
+    let LogId = $("#updateLogId").val();
+
+    let formData = new FormData();
+    formData.append("cropCode", CropId);
+    formData.append("commonName", CommonName);
+    formData.append("scientificName", CropScientificName);
+    if (CropImage) {
+        formData.append("cropImage", CropImage);
+    }
+    formData.append("category", CropCategory);
+    formData.append("cropSeason", Season);
+    formData.append("fieldId", FieldId);
+    formData.append("logId", LogId);
+
+
+    $.ajax({
+        method: "PUT",
+        url: "http://localhost:8081/api/v1/crop/"+CropId,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        contentType: false,
+        processData: false,
+        data: formData,
+        success: function(data) {
+            console.log("Crop updated successfully");
+            alert("Crop updated successfully!");
+            getAllCrops();
+        },
+        error: function(xhr, status, error) {
+            console.error("Error updating crop:", error);
+            alert("An error occurred while updating the crop. Please try again.");
+        }
+    });
+}
+
+// Delete log
+function deleteLog(cropId) {
+    let token = localStorage.getItem("token");
+
+    $.ajax({
+        method: "DELETE",
+        url: "http://localhost:8081/api/v1/crop/" + cropId,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(data) {
+            console.log("Log deleted successfully");
+            getAllCrops(); // Refresh the table after deletion
+        },
+        error: function(xhr, status, error) {
+            console.error("Error deleting log:", error);
+            alert("An error occurred while deleting the log. Please try again.");
+        }
+    });
+}
