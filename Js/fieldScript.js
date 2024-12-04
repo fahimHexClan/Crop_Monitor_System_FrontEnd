@@ -1,7 +1,9 @@
-let latitude, longitude;
+let latitude, longitude,staffId;
 
 $(document).ready(function () {
     getAllFields();
+    loadLogs();
+    getAllStaffIds();
     let map = L.map('map').setView([7.8731, 80.7718], 7); // Set initial map location (Sri Lanka)
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -30,6 +32,76 @@ document.getElementById('toggleSidebar').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
 
+function loadLogs() {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
+
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Monitor/ids",
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(data) {
+            let logSelect = $("#LogId");
+            logSelect.empty();
+            logSelect.append('<option value="" disabled selected>Select Log ID</option>');
+
+            if (Array.isArray(data) && data.length > 0) {
+                data.forEach(function(logId) {
+                    logSelect.append('<option value="' + logId + '">' + logId + '</option>');
+                });
+            } else {
+                console.warn("No logs available or incorrect data format");
+                logSelect.append('<option value="" disabled>No Logs Available</option>');
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error loading logs:", error);
+            alert("An error occurred while loading log data. Please try again.");
+        }
+    });
+}
+function getAllStaffIds() {
+    let token = localStorage.getItem("token");  // Retrieve the token from local storage
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
+
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Staff/ids", // Your API to fetch all staff data
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function (data) {
+            console.log('API Response:', data);
+
+            let staffSelect = $("#StaffId");
+            staffSelect.empty();  // Clear the existing options
+            staffSelect.append('<option value="" disabled selected>Select Staff ID</option>');
+
+            if (Array.isArray(data) && data.length > 0) {
+                // Assuming data is an array of objects and each object contains the 'StaffId' field
+                data.forEach(function(staffId) {
+                    staffSelect.append('<option value="' + staffId + '">' + staffId + '</option>');
+                });
+            } else {
+                console.warn("No staff IDs available or the data format is incorrect.");
+                staffSelect.append('<option value="" disabled>No Staff Available</option>');
+            }
+        },
+        error: function (xhr, status, error) {
+            console.error("Error fetching staff:", error);
+            alert("An error occurred while fetching staff. Please try again.");
+        }
+    });
+}
+
 function addFields() {
     let token = localStorage.getItem("token");
 
@@ -52,13 +124,10 @@ function addFields() {
     let extentSize = $("#extentSize").val();
     let fieldImage1 = $("#fieldImage1")[0].files[0];
     let fieldImage2 = $("#fieldImage2")[0].files[0];
+    let StaffId = $("#StaffId").val();
     let logId = $("#LogId").val();
 
-    // Check for required fields
-    if (!fieldId || !fieldName || !extentSize || !logId) {
-        alert("Please fill in all required fields.");
-        return;
-    }
+
 
     let formData = new FormData();
     formData.append("fieldCode", fieldId);
@@ -66,6 +135,7 @@ function addFields() {
     formData.append("fieldLocation[x]", latitudeFloat);
     formData.append("fieldLocation[y]", longitudeFloat);
     formData.append("extent_size", extentSize);
+    formData.append("Field_Staff", StaffId);
     formData.append("logId", logId);
 
     // Append images if selected
@@ -86,6 +156,7 @@ function addFields() {
         processData: false,
         data: formData,
         success: function (data) {
+            getAllFields()
             console.log("Field added successfully");
             alert("Field added successfully!");
         },
@@ -118,11 +189,13 @@ function getAllFields() {
                 $("table tbody").empty();
 
                 data.forEach(function (field) {
+                    let staffList = field.staff.map(staff => staff.id).join(", ");
                     let fieldCode = field.fieldId || field.fieldCode;
                     let fieldName = field.fieldName;
                     let location = field.fieldLocation ? `${field.fieldLocation.x}, ${field.fieldLocation.y}` : 'Unknown';
                     let extentSize = field.extentSize || field.extent_size;
                     let logId = field.logId || field.logCode;
+                    staffId=staffList
 
                     // Handle base64 image strings correctly
                     let image1Src = field.fieldImage1 || '';
@@ -136,6 +209,8 @@ function getAllFields() {
                         <td><img src="data:image/jpeg;base64,${image1Src}" class="img-fluid img-thumbnail" style="width: 30px; height: 30px; border-radius: 30px; margin-right: 50%;"/></td>
                         <td><img src="data:image/jpeg;base64,${image2Src}" class="img-fluid img-thumbnail" style="width: 30px; height: 30px; border-radius: 30px; margin-right: 50%;"/></td>
                         <td>${logId}</td>
+                        <td>${staffList}</td>
+
                         <td>
                         <div class="action-btns">
                             <button class="btn btn-outline-primary btn-sm edit-btn fas fa-edit" data-id="${fieldCode}" data-field='${JSON.stringify(field)}' data-bs-toggle="modal" data-bs-target="#updateFieldModal">
@@ -157,7 +232,6 @@ function getAllFields() {
                     $("#updateFieldId").val(field.fieldCode);
                     $("#updateFieldName").val(field.fieldName);
                     $("#updateExtentSize").val(field.extentSize);
-                    $("#updateLogId").val(field.logId);
 
                 });
 
@@ -233,7 +307,6 @@ $('#updateFieldModal').on('show.bs.modal', function (e) {
     $('#updateFieldId').val(field.fieldId);
     $('#updateFieldName').val(field.fieldName);
     $('#updateExtentSize').val(field.extentSize);
-    $('#updateLogId').val(field.logId);
     $('#updateFieldLocation').val(`${currentLat}, ${currentLon}`); // Pre-fill with current location
 });
 function updateField() {
@@ -248,7 +321,8 @@ function updateField() {
     let FieldCode = $("#updateFieldId").val();
     let FieldName = $("#updateFieldName").val();
     let ExtentSize = $("#updateExtentSize").val();
-    let LogId = $("#updateLogId").val();
+    let StaffId = $("#StaffId").val();
+
 
     // Use the updated latitude and longitude (from the form or variables)
     let updatedLatitude = updateLatitude || $('#updateFieldLocation').val().split(',')[0];
@@ -267,7 +341,7 @@ function updateField() {
     formData.append("fieldLocation[x]", latitudeFloat);
     formData.append("fieldLocation[y]", longitudeFloat);
     formData.append("extent_size", ExtentSize);
-    formData.append("logId", LogId);
+    formData.append("Field_Staff", staffId);
 
     let fieldImage1 = $("#updateFieldImage1")[0].files[0];
     let fieldImage2 = $("#updateFieldImage2")[0].files[0];

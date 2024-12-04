@@ -163,17 +163,22 @@ function getAllStaffs() {
                     $("table tbody").append(row);
                 });
 
-                // Bind the click event for edit and delete buttons
+                $("#updateStaffButton").on("click", function() {
+                    updateStaff();
+                });
+// Update staff data when the edit button is clicked
                 $(".edit-btn").on("click", function () {
                     let staffId = $(this).closest("tr").find("td:first").text(); // Get StaffId from the first column
-                    // Populate the modal fields with the selected staff's data
-                    let staff = data.find(s => s.StaffId === staffId);
+                    let staff = data.find(s => s.StaffId === staffId); // Find the staff object by ID
+
+                    // Populate modal with selected staff details
                     $("#updateStaffId").val(staff.StaffId);
                     $("#updateStaffName").val(staff.firstName + " " + staff.lastName);
                     $("#updateStaffDesignation").val(staff.designation);
                     $("#updateStaffContact").val(staff.contactNo);
                     $("#updateStaffEmail").val(staff.email);
                 });
+
 
                 $(".delete-btn").on("click", function () {
                     let staffId = $(this).closest("tr").find("td:first").text(); // Get StaffId from the first column
@@ -193,3 +198,80 @@ function getAllStaffs() {
         }
     });
 }
+// Function to update staff details
+function updateStaff() {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
+
+    // Get form values from the update modal
+    let StaffId = $("#updateStaffId").val();
+    let firstName = $("#updateStaffName").val().split(" ")[0]; // Split for first name
+    let lastName = $("#updateStaffName").val().split(" ")[1]; // Split for last name
+    let contactNo = $("#updateStaffContact").val();
+    let email = $("#updateStaffEmail").val();
+    let designation = $("#updateStaffDesignation").val();
+
+    if (!StaffId || !firstName || !lastName || !contactNo || !email || !designation) {
+        alert("Please fill in all required fields.");
+        return;
+    }
+
+    $.ajax({
+        method: "PUT",
+        contentType: "application/json",
+        url: `http://localhost:8081/api/v1/Staff/${StaffId}`,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        async: true,
+        data: JSON.stringify({
+            "firstName": firstName,
+            "lastName": lastName,
+            "contactNo": contactNo,
+            "email": email,
+            "designation": designation
+        }),
+        success: function(data) {
+            console.log("Staff updated successfully", data);
+            alert("Staff updated successfully.");
+            getAllStaffs();  // Reload staff list after update
+        },
+        error: function(xhr, status, error) {
+            console.log("Error updating staff:", error);
+            alert("An error occurred while updating staff.");
+        }
+    });
+}
+
+// Function to delete a staff member
+function deleteStaff(staffId) {
+    let token = localStorage.getItem("token");
+    if (!token) {
+        alert("Authorization token is missing. Please log in.");
+        return;
+    }
+
+    $.ajax({
+        method: "DELETE",
+        url: `http://localhost:8081/api/v1/Staff/${staffId}`,
+        headers: {
+            "Authorization": "Bearer " + token
+        },
+        success: function(data) {
+            console.log("Staff deleted successfully", data);
+            alert("Staff deleted successfully.");
+            getAllStaffs();  // Reload staff list after deletion
+        },
+        error: function(xhr, status, error) {
+            console.log("Error deleting staff:", error);
+            alert("An error occurred while deleting staff.");
+        }
+    });
+}
+
+
+
+

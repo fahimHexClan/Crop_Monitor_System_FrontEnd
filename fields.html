@@ -60,6 +60,7 @@
                     <th>Field Image 1</th>
                     <th>Field Image 2</th>
                     <th>Log ID</th>
+                    <th>Staff ID</th>
                     <th>Actions</th>
                 </tr>
                 </thead>
@@ -72,6 +73,7 @@
                     <td><img src="assets/field1.jpg" alt="Field Image 1" class="img-fluid" width="100"></td>
                     <td><img src="assets/field2.jpg" alt="Field Image 2" class="img-fluid" width="100"></td>
                     <td>L001</td>
+                    <td>S001</td>
                     <td>
 
 
@@ -124,10 +126,27 @@
                         <label for="fieldImage2" class="form-label">Field Image 2</label>
                         <input type="file" class="form-control" id="fieldImage2" name="fieldImage2" accept="image/*">
                     </div>
-                    <div class="form-group">
+                    <!--<div class="form-group">
                         <label for="LogId" class="form-label">Log ID</label>
                         <input type="text" class="form-control" id="LogId" name="LogId" required placeholder="Enter Log ID">
+                    </div>-->
+                    <div class="form-group">
+                        <label for="LogId" class="form-label">Log ID</label>
+                        <select class="form-control" id="LogId" name="LogId" required>
+                            <option value="" disabled selected>Select Log ID</option>
+                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="StaffId" class="form-label">Staff ID</label>
+                        <select class="form-control" id="StaffId" name="StaffId" required>
+                            <option value="" disabled selected>Select Staff ID</option>
+                        </select>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <label for="StaffId" class="form-label">Staff ID</label>
+                        <input type="text" class="form-control" id="StaffId" name="StaffId" required placeholder="Enter Staff ID">
+                    </div>-->
 
                     <button type="button" class="btn btn-outline-success w-100" onclick="addFields()">Save Field</button>
                 </form>
@@ -176,11 +195,7 @@
                         <label for="updateFieldImage2" class="form-label">Field Image 2</label>
                         <input type="file" class="form-control" id="updateFieldImage2" name="updateFieldImage2" accept="image/*">
                     </div>
-                    <div class="mb-3">
-                        <label for="updateLogId" class="form-label">Log ID</label>
-                        <input type="text" class="form-control" id="updateLogId" name="updateLogId" required placeholder="Enter log ID">
 
-                    </div>
                     <button type="button" class="btn btn-outline-success w-100"onclick="updateField()">Update Field</button>
                 </form>
             </div>
