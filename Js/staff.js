@@ -1,3 +1,5 @@
+let logIds;
+
 // Sidebar toggle
 document.getElementById('toggleSidebar').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('collapsed');
@@ -104,7 +106,7 @@ function addStaffs() {
 
             console.log("Staff added successfully");
             alert("Staff saved successfully.");
-            //getAllStaffs();
+            getAllStaffs();
         },
         error: function(xhr, status, error) {
             console.log("Error adding field:", error);
@@ -153,8 +155,8 @@ function getAllStaffs() {
                             <td>${staff.role || ''}</td>
                             <td>${staff.logId || ''}</td>
                             <td>
-                                <button class="btn btn-outline-primary btn-sm edit-btn" data-bs-toggle="modal" data-bs-target="#updateStaffModal"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-outline-danger btn-sm delete-btn"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-outline-primary btn-sm edit-btn" data-id="${staff.id }"  data-bs-toggle="modal" data-bs-target="#updateStaffModal"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${staff.id }"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                     `;
@@ -163,20 +165,41 @@ function getAllStaffs() {
                     $("table tbody").append(row);
                 });
 
-                $("#updateStaffButton").on("click", function() {
-                    updateStaff();
-                });
-// Update staff data when the edit button is clicked
-                $(".edit-btn").on("click", function () {
-                    let staffId = $(this).closest("tr").find("td:first").text(); // Get StaffId from the first column
-                    let staff = data.find(s => s.StaffId === staffId); // Find the staff object by ID
 
-                    // Populate modal with selected staff details
-                    $("#updateStaffId").val(staff.StaffId);
-                    $("#updateStaffName").val(staff.firstName + " " + staff.lastName);
-                    $("#updateStaffDesignation").val(staff.designation);
-                    $("#updateStaffContact").val(staff.contactNo);
-                    $("#updateStaffEmail").val(staff.email);
+                $(".edit-btn").on("click", function () {
+                    let staffid = $(this).data("id");
+                    console.log(staffid)
+                    $.ajax({
+                        method: "GET",
+                        url: "http://localhost:8081/api/v1/Staff/" + staffid,
+                        headers: {
+                            "Authorization": "Bearer " + localStorage.getItem("token")
+                        },
+                        success: function(staff) {
+                            logIds = staff.logId;
+                            $("#updateStaffId").val(staff.id);
+                            $("#updateFirstName").val(staff.firstName);
+                            $("#updateLastName").val(staff.lastName);
+                            $("#updateAddress1").val(staff.addressLine1);
+                            $("#updateAddress2").val(staff.addressLine2);
+                            $("#updateAddress3").val(staff.addressLine3);
+                            $("#updateAddress4").val(staff.addressLine4);
+                            $("#updateAddress5").val(staff.addressLine5);
+                            $("#updateContactNumber").val(staff.contactNo);
+                            $("#updateStaffDesignation").val(staff.designation);
+                            $("#updateDateOfBirth").val(staff.dob);
+                            $("#updateEmail").val(staff.email);
+                            $("#updateGender").val(staff.gender);
+                            $("#updateJoinDate").val(staff.joinedDate);
+                            $("#updateStaffRole").val(staff.role);
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error fetching crop details:", error);
+                            alert("An error occurred while fetching the crop details. Please try again.");
+                        }
+                });
+
                 });
 
 
@@ -199,6 +222,7 @@ function getAllStaffs() {
     });
 }
 // Function to update staff details
+// Function to update staff details
 function updateStaff() {
     let token = localStorage.getItem("token");
     if (!token) {
@@ -208,17 +232,47 @@ function updateStaff() {
 
     // Get form values from the update modal
     let StaffId = $("#updateStaffId").val();
-    let firstName = $("#updateStaffName").val().split(" ")[0]; // Split for first name
-    let lastName = $("#updateStaffName").val().split(" ")[1]; // Split for last name
-    let contactNo = $("#updateStaffContact").val();
-    let email = $("#updateStaffEmail").val();
+    let firstName = $("#updateFirstName").val(); // Split for first name
+    let lastName = $("#updateLastName").val(); // Split for last name
+    let addressLine1 = $("#updateAddress1").val();
+    let addressLine2 = $("#updateAddress2").val();
+    let addressLine3 = $("#updateAddress3").val();
+    let addressLine4 = $("#updateAddress4").val();
+    let addressLine5 = $("#updateAddress5").val();
+    let contactNo = $("#updateContactNumber").val();
     let designation = $("#updateStaffDesignation").val();
-
-    if (!StaffId || !firstName || !lastName || !contactNo || !email || !designation) {
-        alert("Please fill in all required fields.");
+    let dob =$("#updateDateOfBirth").val();
+    let email =$("#updateEmail").val();
+    let gender =$("#updateGender").val();
+    let joinedDate =$("#updateJoinDate").val();
+    let role =    $("#updateStaffRole").val();
+    let LogId=logIds;
+console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine2, addressLine3,addressLine4,addressLine5,contactNo,designation,dob,email,gender,joinedDate,role,LogId,email);
+    if (!StaffId) {
+        alert("Staff ID is missing.");
         return;
     }
 
+
+    let staffData = {
+        "firstName": firstName,
+        "lastName": lastName,
+        "contactNo": contactNo,
+        "email": email,
+        "designation": designation,
+        "addressLine1": addressLine1,
+        "addressLine2": addressLine2,
+        "addressLine3": addressLine3,
+        "addressLine4": addressLine4,
+        "addressLine5": addressLine5,
+        "dob": dob,
+        "gender": gender,
+        "joinedDate": joinedDate,
+        "role": role,
+        "logId":LogId
+    };
+
+    // Send the PUT request to update staff details
     $.ajax({
         method: "PUT",
         contentType: "application/json",
@@ -227,13 +281,7 @@ function updateStaff() {
             "Authorization": "Bearer " + token
         },
         async: true,
-        data: JSON.stringify({
-            "firstName": firstName,
-            "lastName": lastName,
-            "contactNo": contactNo,
-            "email": email,
-            "designation": designation
-        }),
+        data: JSON.stringify(staffData), // Send the updated staff data
         success: function(data) {
             console.log("Staff updated successfully", data);
             alert("Staff updated successfully.");
@@ -245,6 +293,7 @@ function updateStaff() {
         }
     });
 }
+
 
 // Function to delete a staff member
 function deleteStaff(staffId) {
