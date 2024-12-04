@@ -115,39 +115,38 @@
                         <label for="EquipmentStatus" class="form-label"> Equipment Status</label>
                         <select class="form-control" id="EquipmentStatus" name="EquipmentStatus" required>
                             <option value="" disabled selected>Select EquipmentStatus </option>
-                            <option value="Available">Available</option>
-                            <option value="In Use">In Use</option>
-                            <option value="Maintenance">Maintenance</option>
+                            <option value="AVAILABLE">AVAILABLE</option>
+                            <option value="IN_USE">IN_USE</option>
+                            <option value="UNDER_MAINTENANCE">UNDER_MAINTENANCE</option>
+                            <option value="DECOMMISSIONED">DECOMMISSIONED</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="EquipmentType" class="form-label">Equipment Type</label>
                         <select class="form-control" id="EquipmentType" name="EquipmentType" required>
                             <option value="" disabled selected>Select Equipment Type</option>
-                            <option value="Heavy">Heavy</option>
-                            <option value="Light">Light</option>
-                            <option value="Specialized">Specialized</option>
+                            <option value="TRACTOR">TRACTOR</option>
+                            <option value="HARVESTER">HARVESTER</option>
+                            <option value="PLOW">PLOW</option>
+                            <option value="SPRAYER">SPRAYER</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="FieldId" class="form-label">Field ID</label>
                         <select class="form-control" id="FieldId" name="FieldId" required>
                             <option value="" disabled selected>Select Field ID</option>
-                            <option value="F001">F001</option>
-                            <option value="F002">F002</option>
-                            <option value="F003">F003</option>
-                            <option value="F004">F004</option>
-                            <!-- Add other log IDs as needed -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="StaffId" class="form-label">Staff ID</label>
-                        <select class="form-control" id="StaffId" name="StaffId1" required>
-                            <option value="" disabled selected>Select Staff ID</option>
 
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-outline-success w-100">Save Equipment</button>
+
+                    <div class="form-group">
+                        <label for="StaffId" class="form-label">Staff ID</label>
+                        <select class="form-control" id="StaffId" name="StaffId" required>
+                            <option value="" disabled selected>Select Staff ID</option>
+                        </select>
+                    </div>
+
+                    <button type="button" class="btn btn-outline-success w-100"onclick="addEquipment()">Save Equipment</button>
                 </form>
             </div>
         </div>
@@ -189,43 +188,24 @@
                         <label for="UpdateEquipmentStatus" class="form-label">Equipment Status</label>
                         <select class="form-control" id="UpdateEquipmentStatus" name="UpdateEquipmentStatus" required>
                             <option value="" disabled selected>Select Equipment Status</option>
-                            <option value="ACTIVE">ACTIVE</option>
-                            <option value="INACTIVE">INACTIVE</option>
-                            <option value="UNDER_MAINTENANCE">UNDER MAINTENANCE</option>
+                            <option value="AVAILABLE">Available</option>
+                            <option value="DECOMMISSIONED">Decommissioned</option>
+                            <option value="UNDER_MAINTENANCE">Under Maintance</option>
+                            <option value="IN_USE">In Use</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="UpdateEquipmentType" class="form-label">Equipment Type</label>
                         <select class="form-control" id="UpdateEquipmentType" name="UpdateEquipmentType" required>
                             <option value="" disabled selected>Select Equipment Type</option>
-                            <option value="HEAVY">HEAVY</option>
-                            <option value="LIGHT">LIGHT</option>
-                            <option value="HAND_TOOL">HAND TOOL</option>
+                            <option value="SPRAYER">Sprayer</option>
+                            <option value="PLOW">plow</option>
+                            <option value="HARVESTER">Harvester</option>
+                            <option value="TRACTOR">Tractor</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="UpdateFieldId" class="form-label">Field ID</label>
-                        <select class="form-control" id="UpdateFieldId" name="UpdateFieldId" required>
-                            <option value="" disabled selected>Select Field ID</option>
-                            <option value="F001">F001</option>
-                            <option value="F002">F002</option>
-                            <option value="F003">F003</option>
-                            <option value="F004">F004</option>
-                            <!-- Add other field IDs as needed -->
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="UpdateStaffId" class="form-label">Staff ID</label>
-                        <select class="form-control" id="UpdateStaffId" name="UpdateStaffId" required>
-                            <option value="" disabled selected>Select Staff ID</option>
-                            <option value="S001">S001</option>
-                            <option value="S002">S002</option>
-                            <option value="S003">S003</option>
-                            <option value="S004">S004</option>
-                            <!-- Add other staff IDs as needed -->
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-outline-success w-100">Update Equipment</button>
+
+                    <button type="button" class="btn btn-outline-success w-100" onclick="updateEquipment()">Update Equipment</button>
                 </form>
             </div>
         </div>
