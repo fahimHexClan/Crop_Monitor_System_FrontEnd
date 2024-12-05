@@ -1,22 +1,21 @@
 let staffIds;
 
-// Sidebar toggle
-document.getElementById('toggleSidebar').addEventListener('click', function() {
+document.getElementById('toggleSidebar').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     getAllStaffIds();
     getAllVehicles();
 
-    // Event delegation for edit buttons
+
     $(document).on("click", ".edit-btn", function () {
         let vehicleId = $(this).data("id");
         console.log("Editing vehicle ID:", vehicleId);
         fetchVehicleDetails(vehicleId);
     });
 
-    // Event delegation for delete buttons
+
     $(document).on("click", ".delete-btn", function () {
         let vehicleId = $(this).data("id");
         console.log("Deleting vehicle ID:", vehicleId);
@@ -27,50 +26,39 @@ $(document).ready(function() {
 });
 
 function getAllStaffIds() {
-    let token = localStorage.getItem("token");  // Retrieve the token from local storage
+    let token = localStorage.getItem("token");
     if (!token) {
         alert("Authorization token is missing. Please log in.");
         return;
     }
 
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/Staff/ids", // Your API to fetch all staff data
-        headers: {
+        method: "GET", url: "http://localhost:8081/api/v1/Staff/ids", headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function (data) {
+        }, success: function (data) {
             console.log('API Response:', data);
 
-            let staffSelect = $("#StaffId");
-            let updateStaffSelect = $("#UpdateStaffId"); // Assuming you have a separate select for update form
-
-            staffSelect.empty();  // Clear the existing options
+            let staffSelect = $("#DisplayStaffId");
+            staffSelect.empty();
             staffSelect.append('<option value="" disabled selected>Select Staff ID</option>');
 
-            updateStaffSelect.empty();
-            updateStaffSelect.append('<option value="" disabled selected>Select Staff ID</option>');
+            if (Array.isArray(data) && data.length > 0) {
 
-            if (data.code === 200 && Array.isArray(data.data) && data.data.length > 0) {
-                // Assuming data.data is an array of staff IDs
-                data.data.forEach(function(staffId) {
+                data.forEach(function (staffId) {
                     staffSelect.append('<option value="' + staffId + '">' + staffId + '</option>');
-                    updateStaffSelect.append('<option value="' + staffId + '">' + staffId + '</option>');
                 });
             } else {
                 console.warn("No staff IDs available or the data format is incorrect.");
                 staffSelect.append('<option value="" disabled>No Staff Available</option>');
-                updateStaffSelect.append('<option value="" disabled>No Staff Available</option>');
             }
-        },
-        error: function (xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error fetching staff:", error);
             alert("An error occurred while fetching staff. Please try again.");
         }
     });
 }
 
-function addVehicle(){
+function addVehicle() {
     let token = localStorage.getItem("token");
     if (!token) {
         alert("Authorization token is missing. Please log in.");
@@ -91,30 +79,30 @@ function addVehicle(){
     $.ajax({
         method: "POST",
         contentType: "application/json",
-        url: "http://localhost:8081/api/v1/Vehicle/saveVehicle", // Corrected URL
+        url: "http://localhost:8081/api/v1/Vehicle/saveVehicle",
         headers: {
             "Authorization": "Bearer " + token
         },
         data: JSON.stringify({
             "id": VehicleId,
             "category": VehicleCategory,
-            "fuelType": FuelType,       // Corrected
-            "licensePlateNumber": LicensePlateNumber,           // Corrected
-            "remarks": VehicleRemarks,        // Corrected
-            "status": VehicleStatus,         // Corrected
-            "staffId": StaffId         // Corrected
+            "fuelType": FuelType,
+            "licensePlateNumber": LicensePlateNumber,
+            "remarks": VehicleRemarks,
+            "status": VehicleStatus,
+            "staffId": StaffId
         }),
-        success: function(data) {
+        success: function (data) {
             console.log("Vehicle added successfully", data);
             if (data.code === 201) {
                 alert("Vehicle saved successfully.");
                 getAllVehicles();
-                $("#addVehicleForm")[0].reset(); // Reset form fields if applicable
+                $("#addVehicleForm")[0].reset();
             } else {
                 alert("Error: " + data.message);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log("Error adding Vehicle:", error);
             // Extract meaningful error message if available
             let errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "An error occurred while adding Vehicle.";
@@ -126,18 +114,15 @@ function addVehicle(){
 function getAllVehicles() {
     let token = localStorage.getItem("token");
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/Vehicle/get_All_Vehicle", // Corrected API endpoint
-        headers: {
+        method: "GET", url: "http://localhost:8081/api/v1/Vehicle/get_All_Vehicle", headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function(data) {
+        }, success: function (data) {
             console.log('API Response:', data);
 
-            if (data.code === 200 && Array.isArray(data.data) && data.data.length > 0) { // Ensure proper response code
-                $("table tbody").empty();  // Clear existing table rows
+            if (data.code === 200 && Array.isArray(data.data) && data.data.length > 0) {
+                $("table tbody").empty();
 
-                data.data.forEach(function(vehicle) {
+                data.data.forEach(function (vehicle) {
                     let row = `<tr>
                         <td>${vehicle.id}</td>
                         <td>${vehicle.category}</td>
@@ -165,8 +150,7 @@ function getAllVehicles() {
                 console.log("No vehicles found.");
                 $("table tbody").html("<tr><td colspan='8'>No vehicles available.</td></tr>");
             }
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error fetching vehicles:", error);
             alert("An error occurred while fetching vehicles. Please try again.");
         }
@@ -186,7 +170,7 @@ function updateVehicle() {
     let LicensePlateNumber = $("#UpdateLicensePlateNumber").val().trim();
     let VehicleRemarks = $("#UpdateVehicleRemarks").val().trim();
     let VehicleStatus = $("#UpdateVehicleStatus").val().trim();
-    let StaffId = $("#UpdateStaffId").val();
+    let StaffId = $("#DisplayStaffId").val();
 
     console.log(VehicleId, VehicleCategory, FuelType, LicensePlateNumber, VehicleRemarks, VehicleStatus, StaffId);
 
@@ -213,19 +197,19 @@ function updateVehicle() {
             "Authorization": "Bearer " + token
         },
         data: JSON.stringify(VehicleData),
-        success: function(response) {
+        success: function (response) {
             console.log("Vehicle updated successfully", response);
             if (response.code === 201) {
                 alert("Vehicle updated successfully.");
-                getAllVehicles(); // Refresh the vehicle list
-                $("#updateVehicleForm")[0].reset(); // Reset form fields if applicable
+                getAllVehicles();
+                $("#updateVehicleForm")[0].reset();
                 // Close the modal
                 $('#updateVehicleModal').modal('hide');
             } else {
                 alert("Error: " + response.message);
             }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.log("Error updating Vehicle:", error);
             let errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "An error occurred while updating the vehicle.";
             alert(errorMessage);
@@ -241,12 +225,9 @@ function deleteVehicle(vehicleId) {
     }
 
     $.ajax({
-        method: "DELETE",
-        url: `http://localhost:8081/api/v1/Vehicle/deleteVehicle/${vehicleId}`,
-        headers: {
+        method: "DELETE", url: `http://localhost:8081/api/v1/Vehicle/deleteVehicle/${vehicleId}`, headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function(data) {
+        }, success: function (data) {
             console.log("Vehicle deleted successfully", data);
             if (data.code === 200) {
                 alert("Vehicle deleted successfully.");
@@ -257,8 +238,7 @@ function deleteVehicle(vehicleId) {
             } else {
                 alert("Error: " + data.message);
             }
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.log("Error deleting Vehicle:", error);
             let errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "An error occurred while deleting the vehicle.";
             alert(errorMessage);
@@ -269,13 +249,10 @@ function deleteVehicle(vehicleId) {
 function fetchVehicleDetails(vehicleId) {
     let token = localStorage.getItem("token");
     $.ajax({
-        method: "GET",
-        url: `http://localhost:8081/api/v1/Vehicle/Search_Vehicle_By_Id/${vehicleId}`,
-        headers: {
+        method: "GET", url: `http://localhost:8081/api/v1/Vehicle/Search_Vehicle_By_Id/${vehicleId}`, headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function (response) {
-            if(response.code === 200) {
+        }, success: function (response) {
+            if (response.code === 200) {
                 let vehicle = response.data;
 
                 $("#UpdateVehicleId").val(vehicle.id);
@@ -288,8 +265,7 @@ function fetchVehicleDetails(vehicleId) {
             } else {
                 alert("Error: " + response.message);
             }
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error fetching vehicle details:", error);
             alert("An error occurred while fetching the vehicle details. Please try again.");
         }

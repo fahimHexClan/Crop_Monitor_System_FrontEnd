@@ -7,7 +7,7 @@ $(document).ready(function() {
     getAllLogs();
 });
 
-// Add new log entry
+
 function addLogs() {
     let token = localStorage.getItem("token");
     let LogID = $("#LogId").val();
@@ -33,7 +33,7 @@ function addLogs() {
         data: formData,
         success: function(data) {
             console.log("Log added successfully");
-            getAllLogs(); // Refresh the table after adding
+            getAllLogs();
         },
         error: function(xhr, status, error) {
             console.error("Error adding log:", error);
@@ -42,7 +42,7 @@ function addLogs() {
     });
 }
 
-// Get all logs and display them in the table
+
 function getAllLogs() {
     let token = localStorage.getItem("token");
 
@@ -54,7 +54,7 @@ function getAllLogs() {
         },
         success: function(data) {
             if (Array.isArray(data) && data.length > 0) {
-                $("table tbody").empty(); // Clear the table before populating
+                $("table tbody").empty();
                 data.forEach(function(log) {
                     let observedImage = log.observedImage;
                     let row = `<tr class="tbody">
@@ -78,18 +78,16 @@ function getAllLogs() {
                     $("table tbody").append(row);
                 });
 
-                // Handle edit button click
+
                 $(".edit-btn").on("click", function() {
                     let log = $(this).data("log");
-                    // Populate the modal fields with the selected log's data
+
                     $("#UpdateLogId").val(log.id);
                     $("#UpdateMonitoringDate").val(log.logDate);
                     $("#UpdateMonitoringDetail").val(log.logDetails);
-                    // Optionally, if you want to show the image, you can implement it here
-                    // $("#UpdateMonitoringImage").val(log.observedImage);
+
                 });
 
-                // Handle delete button click
                 $(".delete-btn").on("click", function() {
                     let logId = $(this).data("id");
                     if (confirm("Are you sure you want to delete this log?")) {
@@ -109,7 +107,7 @@ function getAllLogs() {
     });
 }
 
-// Update log
+
 function updateLog() {
     let token = localStorage.getItem("token");
     let LogID = $("#UpdateLogId").val();
@@ -135,7 +133,7 @@ function updateLog() {
         data: formData,
         success: function(data) {
             console.log("Log updated successfully");
-            getAllLogs(); // Refresh the table after update
+            getAllLogs();
         },
         error: function(xhr, status, error) {
             console.error("Error updating log:", error);
@@ -144,7 +142,6 @@ function updateLog() {
     });
 }
 
-// Delete log
 function deleteLog(logId) {
     let token = localStorage.getItem("token");
 
@@ -156,7 +153,7 @@ function deleteLog(logId) {
         },
         success: function(data) {
             console.log("Log deleted successfully");
-            getAllLogs(); // Refresh the table after deletion
+            getAllLogs();
         },
         error: function(xhr, status, error) {
             console.error("Error deleting log:", error);

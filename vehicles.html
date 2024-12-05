@@ -210,8 +210,12 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="DisplayStaffId" class="form-label">Staff ID</label>
-                        <input type="text" class="form-control" id="DisplayStaffId" readonly>
+
+
+                        <select class="form-control" id="DisplayStaffId" name="UpdateVehicleStatus" required>
+                            <option value="" disabled selected>Select Staff Id</option>
+
+                        </select>
                     </div>
 
                     <button type="button" class="btn btn-outline-success w-100" onclick="updateVehicle()">Update Vehicle</button>

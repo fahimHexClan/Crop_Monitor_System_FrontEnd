@@ -1,10 +1,9 @@
-// Sidebar toggle
-let fieldIds,logIds;
-document.getElementById('toggleSidebar').addEventListener('click', function() {
+let fieldIds, logIds;
+document.getElementById('toggleSidebar').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     loadFields();
     loadLogs();
     getAllCrops();
@@ -12,37 +11,34 @@ $(document).ready(function() {
 });
 
 function loadFields() {
-    let token = localStorage.getItem("token");  // Retrieve the token from local storage
+    let token = localStorage.getItem("token");
     if (!token) {
         alert("Authorization token is missing. Please log in.");
         return;
     }
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/field/ids",
-        headers: {
-            "Authorization": "Bearer " + token  // Include the token in the header
-        },
-        success: function(data) {
+        method: "GET", url: "http://localhost:8081/api/v1/field/ids", headers: {
+            "Authorization": "Bearer " + token
+        }, success: function (data) {
             let fieldSelect = $("#FieldId");
-            fieldSelect.empty();  // Clear the existing options
+            fieldSelect.empty();
             fieldSelect.append('<option value="" disabled selected>Select Field ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
-                data.forEach(function(fieldId) {
+                data.forEach(function (fieldId) {
                     fieldSelect.append('<option value="' + fieldId + '">' + fieldId + '</option>');
                 });
             } else {
                 console.warn("No field IDs available or the data format is incorrect.");
                 fieldSelect.append('<option value="" disabled>No Fields Available</option>');
             }
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error loading fields:", error);
             alert("An error occurred while loading field data. Please try again.");
         }
     });
 }
+
 function loadLogs() {
     let token = localStorage.getItem("token");
     if (!token) {
@@ -51,26 +47,22 @@ function loadLogs() {
     }
 
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/Monitor/ids",
-        headers: {
+        method: "GET", url: "http://localhost:8081/api/v1/Monitor/ids", headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function(data) {
+        }, success: function (data) {
             let logSelect = $("#LogId");
             logSelect.empty();
             logSelect.append('<option value="" disabled selected>Select Log ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
-                data.forEach(function(logId) {
+                data.forEach(function (logId) {
                     logSelect.append('<option value="' + logId + '">' + logId + '</option>');
                 });
             } else {
                 console.warn("No logs available or incorrect data format");
                 logSelect.append('<option value="" disabled>No Logs Available</option>');
             }
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error loading logs:", error);
             alert("An error occurred while loading log data. Please try again.");
         }
@@ -102,43 +94,34 @@ function addCrops() {
     }
 
     $.ajax({
-        method: "POST",
-        url: "http://localhost:8081/api/v1/crop",
-        headers: {
+        method: "POST", url: "http://localhost:8081/api/v1/crop", headers: {
             "Authorization": "Bearer " + token
-        },
-        contentType: false,
-        processData: false,
-        data: formData,
-        success: function(data) {
+        }, contentType: false, processData: false, data: formData, success: function (data) {
             console.log("Crop added successfully");
             getAllCrops();
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error adding crop:", error);
             alert("An error occurred while adding the crop. Please try again.");
         }
     });
 }
+
 function getAllCrops() {
     let token = localStorage.getItem("token");
 
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/crop",
-        headers: {
+        method: "GET", url: "http://localhost:8081/api/v1/crop", headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function(data) {
+        }, success: function (data) {
             console.log(data);
             if (Array.isArray(data) && data.length > 0) {
                 $("table tbody").empty();
-                data.forEach(function(crop) {
+                data.forEach(function (crop) {
 
                     console.log(crop);
                     let cropImage = crop.cropImage;
 
-                    console.log(crop); // Log the cropCode to check if it's correct
+                    console.log(crop);
                     let row = `<tr class="tbody">
                 <td>${crop.id}</td> 
                 <td>${crop.category}</td>
@@ -165,17 +148,14 @@ function getAllCrops() {
                 });
 
 
-                $(".edit-btn").on("click", function() {
-                    let cropId = $(this).data("id");  // Get the cropId from the data-id attribute
+                $(".edit-btn").on("click", function () {
+                    let cropId = $(this).data("id");
 
-                    // Fetch crop details using the cropId
+
                     $.ajax({
-                        method: "GET",
-                        url: "http://localhost:8081/api/v1/crop/" + cropId,
-                        headers: {
+                        method: "GET", url: "http://localhost:8081/api/v1/crop/" + cropId, headers: {
                             "Authorization": "Bearer " + localStorage.getItem("token")
-                        },
-                        success: function(crop) {
+                        }, success: function (crop) {
                             fieldIds = crop.fieldId;
                             logIds = crop.logId;
 
@@ -185,8 +165,7 @@ function getAllCrops() {
                             $("#updateCommonName").val(crop.commonName);
                             $("#updateScientificName").val(crop.scientificName);
                             $("#updateSeason").val(crop.season);
-                        },
-                        error: function(xhr, status, error) {
+                        }, error: function (xhr, status, error) {
                             console.error("Error fetching crop details:", error);
                             alert("An error occurred while fetching the crop details. Please try again.");
                         }
@@ -194,10 +173,10 @@ function getAllCrops() {
                 });
 
 
-                $(".delete-btn").on("click", function() {
+                $(".delete-btn").on("click", function () {
                     let cropId = $(this).data("id");
                     if (confirm("Are you sure you want to delete this crop?")) {
-                        deletecrop(cropId);  // Use deleteCrop instead of deleteLog
+                        deletecrop(cropId);
                     }
                 });
             } else {
@@ -206,12 +185,13 @@ function getAllCrops() {
             }
         },
 
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
             console.error("Error fetching crops:", error);
             alert("An error occurred while fetching crops. Please try again.");
         }
     });
 }
+
 function updateCrops() {
     let cropId = $("#updateCropId").val();
     let commonName = $("#updateCommonName").val();
@@ -219,21 +199,20 @@ function updateCrops() {
     let season = $("#updateSeason").val();
     let cropCategory = $("#updateCropCategory").val();
 
-    // Use the previously fetched fieldIds and logIds
-    let fieldId = fieldIds;  // fieldIds from the edit button click
-    let logId = logIds;  // logIds from the edit button click
+
+    let fieldId = fieldIds;
+    let logId = logIds;
 
     let formData = new FormData();
 
-    // Ensure these values are being passed
     formData.append("commonName", commonName);
     formData.append("scientificName", scientificName);
     formData.append("category", cropCategory);
     formData.append("cropSeason", season);
-    formData.append("fieldId", fieldId);  // Use fieldId from previous fetch
-    formData.append("logId", logId);  // Use logId from previous fetch
+    formData.append("fieldId", fieldId);
+    formData.append("logId", logId);
 
-    // Append the crop image if available
+
     let cropImage = $("#updateCropImage")[0].files[0];
     if (cropImage) {
         formData.append("cropImage", cropImage);
@@ -242,21 +221,14 @@ function updateCrops() {
     let token = localStorage.getItem("token");
 
     $.ajax({
-        method: "PUT",
-        url: "http://localhost:8081/api/v1/crop/" + cropId,
-        headers: {
+        method: "PUT", url: "http://localhost:8081/api/v1/crop/" + cropId, headers: {
             "Authorization": "Bearer " + token
-        },
-        contentType: false,
-        processData: false,
-        data: formData,
-        success: function(data) {
+        }, contentType: false, processData: false, data: formData, success: function (data) {
             console.log("Crop updated successfully");
             alert("Crop updated successfully!");
             getAllCrops();
             $('#updateCropModal').modal('hide');
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error updating crop:", error);
             alert("An error occurred while updating the crop. Please try again.");
         }
@@ -264,20 +236,15 @@ function updateCrops() {
 }
 
 
-
 function deletecrop(cropId) {
     let token = localStorage.getItem("token");
     $.ajax({
-        method: "DELETE",
-        url: "http://localhost:8081/api/v1/crop/" + cropId,
-        headers: {
+        method: "DELETE", url: "http://localhost:8081/api/v1/crop/" + cropId, headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function(data) {
+        }, success: function (data) {
             console.log("Log deleted successfully");
             getAllCrops();
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error deleting log:", error);
             alert("An error occurred while deleting the log. Please try again.");
         }

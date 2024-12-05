@@ -1,6 +1,5 @@
 /*fahim@gmail.com-123*/
 
-// Add new log entry
 function addLogs() {
     let token = localStorage.getItem("token");
     let signupUserID = $("#signupUserID").val();
@@ -13,7 +12,7 @@ function addLogs() {
     let profileImage = $("#profileImage")[0].files[0];
 
 
-    let formData = new FormData(); /* jasonbodu*/
+    let formData = new FormData();
 
     formData.append("userId", signupUserID);
     formData.append("firstName", signupFirstName);

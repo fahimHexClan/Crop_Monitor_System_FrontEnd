@@ -1,16 +1,14 @@
 let logIds;
 
-// Sidebar toggle
 document.getElementById('toggleSidebar').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
 
 $(document).ready(function() {
-    loadLogs(); // Function to load logs
-    getAllStaffs(); // Function to get all staff members
+    loadLogs();
+    getAllStaffs();
 });
 
-// Function to load logs (GET request, not POST)
 function loadLogs() {
     let token = localStorage.getItem("token");
     if (!token) {
@@ -19,8 +17,8 @@ function loadLogs() {
     }
 
     $.ajax({
-        method: "GET",  // Corrected to GET
-        url: "http://localhost:8081/api/v1/Monitor/ids",  // Assuming this endpoint is correct for logs
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Monitor/ids",
         headers: {
             "Authorization": "Bearer " + token
         },
@@ -53,7 +51,7 @@ function addStaffs() {
         return;
     }
 
-    // Get form values (make sure to get the values correctly)
+
     let StaffId = $("#StaffId").val();
     let S_FirstName = $("#S_FirstName").val();
     let S_LastName = $("#S_LastName").val();
@@ -131,11 +129,10 @@ function getAllStaffs() {
             console.log('API Response:', data);
 
             if (Array.isArray(data) && data.length > 0) {
-                // Clear the table before appending new rows
+
                 $("table tbody").empty();
 
                 data.forEach(function (staff) {
-                    // Dynamically create the table row using staff data
                     let row = `
                         <tr>
                             <td>${staff.id || staff.StaffCode}</td>
@@ -161,7 +158,6 @@ function getAllStaffs() {
                         </tr>
                     `;
 
-                    // Append the row to the table body
                     $("table tbody").append(row);
                 });
 
@@ -204,7 +200,7 @@ function getAllStaffs() {
 
 
                 $(".delete-btn").on("click", function () {
-                    let staffId = $(this).closest("tr").find("td:first").text(); // Get StaffId from the first column
+                    let staffId = $(this).closest("tr").find("td:first").text();
                     if (confirm("Are you sure you want to delete this staff member?")) {
                         deleteStaff(staffId);
                     }
@@ -221,8 +217,7 @@ function getAllStaffs() {
         }
     });
 }
-// Function to update staff details
-// Function to update staff details
+
 function updateStaff() {
     let token = localStorage.getItem("token");
     if (!token) {
@@ -230,10 +225,10 @@ function updateStaff() {
         return;
     }
 
-    // Get form values from the update modal
+
     let StaffId = $("#updateStaffId").val();
-    let firstName = $("#updateFirstName").val(); // Split for first name
-    let lastName = $("#updateLastName").val(); // Split for last name
+    let firstName = $("#updateFirstName").val();
+    let lastName = $("#updateLastName").val();
     let addressLine1 = $("#updateAddress1").val();
     let addressLine2 = $("#updateAddress2").val();
     let addressLine3 = $("#updateAddress3").val();
@@ -272,7 +267,6 @@ console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine
         "logId":LogId
     };
 
-    // Send the PUT request to update staff details
     $.ajax({
         method: "PUT",
         contentType: "application/json",
@@ -281,11 +275,11 @@ console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine
             "Authorization": "Bearer " + token
         },
         async: true,
-        data: JSON.stringify(staffData), // Send the updated staff data
+        data: JSON.stringify(staffData),
         success: function(data) {
             console.log("Staff updated successfully", data);
             alert("Staff updated successfully.");
-            getAllStaffs();  // Reload staff list after update
+            getAllStaffs();
         },
         error: function(xhr, status, error) {
             console.log("Error updating staff:", error);
@@ -295,7 +289,6 @@ console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine
 }
 
 
-// Function to delete a staff member
 function deleteStaff(staffId) {
     let token = localStorage.getItem("token");
     if (!token) {
@@ -312,7 +305,7 @@ function deleteStaff(staffId) {
         success: function(data) {
             console.log("Staff deleted successfully", data);
             alert("Staff deleted successfully.");
-            getAllStaffs();  // Reload staff list after deletion
+            getAllStaffs();
         },
         error: function(xhr, status, error) {
             console.log("Error deleting staff:", error);

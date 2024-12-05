@@ -1,10 +1,10 @@
-let latitude, longitude,staffId;
+let latitude, longitude, staffId;
 
 $(document).ready(function () {
     getAllFields();
     loadLogs();
     getAllStaffIds();
-    let map = L.map('map').setView([7.8731, 80.7718], 7); // Set initial map location (Sri Lanka)
+    let map = L.map('map').setView([7.8731, 80.7718], 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -14,12 +14,11 @@ $(document).ready(function () {
 
     map.on('click', function (e) {
         const latlng = e.latlng;
-        latitude = latlng.lat.toFixed(6); // Store latitude (6 decimal places)
-        longitude = latlng.lng.toFixed(6); // Store longitude (6 decimal places)
+        latitude = latlng.lat.toFixed(6);
+        longitude = latlng.lng.toFixed(6);
 
-        $('#location').val(`${latitude}, ${longitude}`); // Update the location input
+        $('#location').val(`${latitude}, ${longitude}`);
 
-        // If a marker already exists, remove it
         if (marker) {
             map.removeLayer(marker);
         }
@@ -40,62 +39,55 @@ function loadLogs() {
     }
 
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/Monitor/ids",
-        headers: {
+        method: "GET", url: "http://localhost:8081/api/v1/Monitor/ids", headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function(data) {
+        }, success: function (data) {
             let logSelect = $("#LogId");
             logSelect.empty();
             logSelect.append('<option value="" disabled selected>Select Log ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
-                data.forEach(function(logId) {
+                data.forEach(function (logId) {
                     logSelect.append('<option value="' + logId + '">' + logId + '</option>');
                 });
             } else {
                 console.warn("No logs available or incorrect data format");
                 logSelect.append('<option value="" disabled>No Logs Available</option>');
             }
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error loading logs:", error);
             alert("An error occurred while loading log data. Please try again.");
         }
     });
 }
+
 function getAllStaffIds() {
-    let token = localStorage.getItem("token");  // Retrieve the token from local storage
+    let token = localStorage.getItem("token");
     if (!token) {
         alert("Authorization token is missing. Please log in.");
         return;
     }
 
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/Staff/ids", // Your API to fetch all staff data
-        headers: {
+        method: "GET", url: "http://localhost:8081/api/v1/Staff/ids", headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function (data) {
+        }, success: function (data) {
             console.log('API Response:', data);
 
             let staffSelect = $("#StaffId");
-            staffSelect.empty();  // Clear the existing options
+            staffSelect.empty();
             staffSelect.append('<option value="" disabled selected>Select Staff ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
-                // Assuming data is an array of objects and each object contains the 'StaffId' field
-                data.forEach(function(staffId) {
+
+                data.forEach(function (staffId) {
                     staffSelect.append('<option value="' + staffId + '">' + staffId + '</option>');
                 });
             } else {
                 console.warn("No staff IDs available or the data format is incorrect.");
                 staffSelect.append('<option value="" disabled>No Staff Available</option>');
             }
-        },
-        error: function (xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error fetching staff:", error);
             alert("An error occurred while fetching staff. Please try again.");
         }
@@ -110,7 +102,6 @@ function addFields() {
         return;
     }
 
-    // Check if latitude and longitude are selected
     if (!latitude || !longitude) {
         alert("Please select a valid location on the map.");
         return;
@@ -128,7 +119,6 @@ function addFields() {
     let logId = $("#LogId").val();
 
 
-
     let formData = new FormData();
     formData.append("fieldCode", fieldId);
     formData.append("fieldName", fieldName);
@@ -138,7 +128,6 @@ function addFields() {
     formData.append("Field_Staff", StaffId);
     formData.append("logId", logId);
 
-    // Append images if selected
     if (fieldImage1) {
         formData.append("fieldImageOne", fieldImage1);
     }
@@ -147,20 +136,14 @@ function addFields() {
     }
 
     $.ajax({
-        method: "POST",
-        url: "http://localhost:8081/api/v1/field", // Correct URL
+        method: "POST", url: "http://localhost:8081/api/v1/field", // Correct URL
         headers: {
             "Authorization": "Bearer " + token
-        },
-        contentType: false,
-        processData: false,
-        data: formData,
-        success: function (data) {
+        }, contentType: false, processData: false, data: formData, success: function (data) {
             getAllFields()
             console.log("Field added successfully");
             alert("Field added successfully!");
-        },
-        error: function (xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error adding field:", error);
             alert("An error occurred while adding the field. Please try again.");
         }
@@ -176,12 +159,9 @@ function getAllFields() {
     }
 
     $.ajax({
-        method: "GET",
-        url: "http://localhost:8081/api/v1/field",
-        headers: {
+        method: "GET", url: "http://localhost:8081/api/v1/field", headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function (data) {
+        }, success: function (data) {
             console.log('API Response:', data);
 
             if (Array.isArray(data) && data.length > 0) {
@@ -195,9 +175,8 @@ function getAllFields() {
                     let location = field.fieldLocation ? `${field.fieldLocation.x}, ${field.fieldLocation.y}` : 'Unknown';
                     let extentSize = field.extentSize || field.extent_size;
                     let logId = field.logId || field.logCode;
-                    staffId=staffList
+                    staffId = staffList
 
-                    // Handle base64 image strings correctly
                     let image1Src = field.fieldImage1 || '';
                     let image2Src = field.fieldImage2 || '';
 
@@ -226,16 +205,16 @@ function getAllFields() {
                     $("table tbody").append(row);
                 });
 
-                $(".edit-btn").on("click", function() {
+                $(".edit-btn").on("click", function () {
                     let field = $(this).data("field");
-                    // Populate the modal fields with the selected log's data
+
                     $("#updateFieldId").val(field.fieldCode);
                     $("#updateFieldName").val(field.fieldName);
                     $("#updateExtentSize").val(field.extentSize);
 
                 });
 
-                $(".delete-btn").on("click", function() {
+                $(".delete-btn").on("click", function () {
                     let fieldCode = $(this).data("id");
                     if (confirm("Are you sure you want to delete this log?")) {
                         deleteLog(fieldCode);
@@ -246,26 +225,23 @@ function getAllFields() {
                 console.log("No logs found.");
                 $("table tbody").html("<tr><td colspan='7'>No fields available.</td></tr>");
             }
-        },
-        error: function(xhr, status, error) {
+        }, error: function (xhr, status, error) {
             console.error("Error fetching field:", error);
             alert("An error occurred while fetching fields. Please try again.");
         }
     });
-}function deleteLog(fieldId) {
+}
+
+function deleteLog(fieldId) {
     let token = localStorage.getItem("token");
 
     $.ajax({
-        method: "DELETE",
-        url: "http://localhost:8081/api/v1/field/" + fieldId, // Correct URL format
-        headers: {
+        method: "DELETE", url: "http://localhost:8081/api/v1/field/" + fieldId, headers: {
             "Authorization": "Bearer " + token
-        },
-        success: function(data) {
+        }, success: function (data) {
             console.log("Log deleted successfully");
-            getAllFields(); // Refresh the table after deletion
-        },
-        error: function(xhr, status, error) {
+            getAllFields();
+        }, error: function (xhr, status, error) {
             console.error("Error deleting log:", error);
             alert("An error occurred while deleting the log. Please try again.");
         }
@@ -274,8 +250,8 @@ function getAllFields() {
 
 let updateMap, updateMarker, updateLatitude, updateLongitude;
 
-function initUpdateMap(lat = 7.8731, lon = 80.7718) { // Default to Sri Lanka
-    // Initialize the map for the Update modal
+function initUpdateMap(lat = 7.8731, lon = 80.7718) {
+
     updateMap = L.map('updateMap').setView([lat, lon], 7);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -298,8 +274,8 @@ function initUpdateMap(lat = 7.8731, lon = 80.7718) { // Default to Sri Lanka
 }
 
 $('#updateFieldModal').on('show.bs.modal', function (e) {
-    let field = $(e.relatedTarget).data('field'); // Get data from the clicked button
-    let currentLat = field.fieldLocation?.x || 7.8731; // Default to Sri Lanka if no location is set
+    let field = $(e.relatedTarget).data('field');
+    let currentLat = field.fieldLocation?.x || 7.8731;
     let currentLon = field.fieldLocation?.y || 80.7718;
 
     initUpdateMap(currentLat, currentLon);
@@ -307,8 +283,9 @@ $('#updateFieldModal').on('show.bs.modal', function (e) {
     $('#updateFieldId').val(field.fieldId);
     $('#updateFieldName').val(field.fieldName);
     $('#updateExtentSize').val(field.extentSize);
-    $('#updateFieldLocation').val(`${currentLat}, ${currentLon}`); // Pre-fill with current location
+    $('#updateFieldLocation').val(`${currentLat}, ${currentLon}`);
 });
+
 function updateField() {
     let token = localStorage.getItem("token");
     console.log("Token: ", token);  // Debugging the token
@@ -324,12 +301,11 @@ function updateField() {
     let StaffId = $("#StaffId").val();
 
 
-    // Use the updated latitude and longitude (from the form or variables)
     let updatedLatitude = updateLatitude || $('#updateFieldLocation').val().split(',')[0];
     let updatedLongitude = updateLongitude || $('#updateFieldLocation').val().split(',')[1];
     const latitudeFloat = parseInt(updatedLatitude);
     const longitudeFloat = parseInt(updatedLongitude);
-    // Validate the coordinates
+
     if (!updatedLatitude || !updatedLongitude) {
         alert("Invalid field location coordinates.");
         return;
@@ -354,20 +330,13 @@ function updateField() {
     }
 
     $.ajax({
-        method: "PUT",
-        url: "http://localhost:8081/api/v1/field/" + FieldCode,
-        headers: {
+        method: "PUT", url: "http://localhost:8081/api/v1/field/" + FieldCode, headers: {
             "Authorization": "Bearer " + token
-        },
-        contentType: false,
-        processData: false,
-        data: formData,
-        success: function (data) {
+        }, contentType: false, processData: false, data: formData, success: function (data) {
             console.log("Field updated successfully");
-            getAllFields(); // Refresh the list after update
-            $('#updateFieldModal').modal('hide'); // Close the modal
-        },
-        error: function (xhr, status, error) {
+            getAllFields();
+            $('#updateFieldModal').modal('hide');
+        }, error: function (xhr, status, error) {
             console.error("Error updating field:", error);
             alert("An error occurred while updating the field. Please try again.");
         }
