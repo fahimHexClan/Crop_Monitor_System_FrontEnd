@@ -1,14 +1,11 @@
-let fieldIds, staffIds;
 document.getElementById('toggleSidebar').addEventListener('click', function () {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
 
 $(document).ready(function () {
-
-    getAllStaffIds()
-    getAllEquipment()
-    loadFields()
-
+    getAllStaffIds();
+    getAllEquipment();
+    loadFields();
 });
 
 function loadFields() {
@@ -18,22 +15,32 @@ function loadFields() {
         return;
     }
     $.ajax({
-        method: "GET", url: "http://localhost:8081/api/v1/field/ids", headers: {
+        method: "GET",
+        url: "http://localhost:8081/api/v1/field/ids",
+        headers: {
             "Authorization": "Bearer " + token
-        }, success: function (data) {
-            let fieldSelect = $("#FieldId");
-            fieldSelect.empty();
-            fieldSelect.append('<option value="" disabled selected>Select Field ID</option>');
+        },
+        success: function (data) {
+            let fieldSelectAdd = $("#FieldId");
+            let fieldSelectUpdate = $("#updateFieldId");
+            fieldSelectAdd.empty();
+            fieldSelectUpdate.empty();
+            fieldSelectAdd.append('<option value="" disabled selected>Select Field ID</option>');
+            fieldSelectUpdate.append('<option value="" disabled selected>Select Field ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
                 data.forEach(function (fieldId) {
-                    fieldSelect.append('<option value="' + fieldId + '">' + fieldId + '</option>');
+                    let option = `<option value="${fieldId}">${fieldId}</option>`;
+                    fieldSelectAdd.append(option);
+                    fieldSelectUpdate.append(option);
                 });
             } else {
                 console.warn("No field IDs available or the data format is incorrect.");
-                fieldSelect.append('<option value="" disabled>No Fields Available</option>');
+                fieldSelectAdd.append('<option value="" disabled>No Fields Available</option>');
+                fieldSelectUpdate.append('<option value="" disabled>No Fields Available</option>');
             }
-        }, error: function (xhr, status, error) {
+        },
+        error: function (xhr, status, error) {
             console.error("Error loading fields:", error);
             alert("An error occurred while loading field data. Please try again.");
         }
@@ -48,25 +55,36 @@ function getAllStaffIds() {
     }
 
     $.ajax({
-        method: "GET", url: "http://localhost:8081/api/v1/Staff/ids", headers: {
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Staff/ids",
+        headers: {
             "Authorization": "Bearer " + token
-        }, success: function (data) {
+        },
+        success: function (data) {
             console.log('API Response:', data);
 
-            let staffSelect = $("#StaffId");
-            staffSelect.empty();
-            staffSelect.append('<option value="" disabled selected>Select Staff ID</option>');
+            let staffSelectAdd = $("#StaffId");
+            let staffSelectUpdate = $("#updateStaffId");
+
+            staffSelectAdd.empty();
+            staffSelectUpdate.empty();
+
+            staffSelectAdd.append('<option value="" disabled selected>Select Staff ID</option>');
+            staffSelectUpdate.append('<option value="" disabled selected>Select Staff ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
-
                 data.forEach(function (staffId) {
-                    staffSelect.append('<option value="' + staffId + '">' + staffId + '</option>');
+                    let option = `<option value="${staffId}">${staffId}</option>`;
+                    staffSelectAdd.append(option);
+                    staffSelectUpdate.append(option);
                 });
             } else {
                 console.warn("No staff IDs available or the data format is incorrect.");
-                staffSelect.append('<option value="" disabled>No Staff Available</option>');
+                staffSelectAdd.append('<option value="" disabled>No Staff Available</option>');
+                staffSelectUpdate.append('<option value="" disabled>No Staff Available</option>');
             }
-        }, error: function (xhr, status, error) {
+        },
+        error: function (xhr, status, error) {
             console.error("Error fetching staff:", error);
             alert("An error occurred while fetching staff. Please try again.");
         }
@@ -85,7 +103,7 @@ function addEquipment() {
     let EquipmentStatus = $("#EquipmentStatus").val().trim();
     let EquipmentType = $("#EquipmentType").val().trim();
     let FieldId = $("#FieldId").val();
-    let StaffId = $("#StaffId").val(); // Corrected ID
+    let StaffId = $("#StaffId").val();
 
     if (!/^\d+$/.test(EquipmentId)) {
         alert("Equipment ID must be a numeric value.");
@@ -127,14 +145,16 @@ function addEquipment() {
     });
 }
 
-
 function getAllEquipment() {
     let token = localStorage.getItem("token");
 
     $.ajax({
-        method: "GET", url: "http://localhost:8081/api/v1/Equipment/get_All_Equipment", headers: {
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Equipment/get_All_Equipment",
+        headers: {
             "Authorization": "Bearer " + token
-        }, success: function (data) {
+        },
+        success: function (data) {
             console.log('API Response:', data);
 
             if (Array.isArray(data.data) && data.data.length > 0) {
@@ -144,7 +164,7 @@ function getAllEquipment() {
                     console.log(equipment);
 
                     let row = `<tr>
-                        <td>${equipment.id}</td> 
+                        <td>${equipment.id}</td>
                         <td>${equipment.name}</td>
                         <td>${equipment.status}</td>
                         <td>${equipment.type}</td>
@@ -177,15 +197,16 @@ function getAllEquipment() {
                         success: function (response) {
                             if (response.code === 200) {
                                 let equipment = response.data;
-                                fieldIds = equipment.assignedField;
-                                staffIds = equipment.assignedStaff;
 
                                 $("#UpdateEquipmentId").val(equipment.id);
                                 $("#UpdateEquipmentName").val(equipment.name);
                                 $("#UpdateEquipmentStatus").val(equipment.status);
                                 $("#UpdateEquipmentType").val(equipment.type);
-                                $("#FieldId").val(equipment.assignedField);
-                                $("#StaffId").val(equipment.assignedStaff);
+
+                                // Set the selected values for update fields
+                                $("#updateFieldId").val(equipment.assignedField);
+                                $("#updateStaffId").val(equipment.assignedStaff);
+
                             } else {
                                 alert("Error: " + response.message);
                             }
@@ -208,18 +229,18 @@ function getAllEquipment() {
                 console.log("No equipment found.");
                 $("table tbody").html("<tr><td colspan='7'>No equipment available.</td></tr>");
             }
-        }, error: function (xhr, status, error) {
+        },
+        error: function (xhr, status, error) {
             console.error("Error fetching equipment:", error);
             alert("An error occurred while fetching equipment. Please try again.");
         }
     });
 }
 
-
-function updateEquipment(equipmentId) {
+function updateEquipment() {
     let token = localStorage.getItem("token");
     if (!token) {
-        alert("Authorization token is missing. Please log in.");
+        alert("You are not authorized. Please log in.");
         return;
     }
 
@@ -227,8 +248,8 @@ function updateEquipment(equipmentId) {
     let EquipmentName = $("#UpdateEquipmentName").val().trim();
     let Status = $("#UpdateEquipmentStatus").val().trim();
     let Type = $("#UpdateEquipmentType").val().trim();
-    let FieldId = $("#FieldId").val();
-    let StaffId = $("#StaffId").val();
+    let FieldId = $("#updateFieldId").val();
+    let StaffId = $("#updateStaffId").val();
 
     console.log(EquipmentId, EquipmentName, Status, Type, FieldId, StaffId);
 
@@ -243,7 +264,7 @@ function updateEquipment(equipmentId) {
         "status": Status,
         "type": Type,
         "assignedField": FieldId,
-        "assignedStaff": StaffId,
+        "assignedStaff": StaffId
     };
 
     $.ajax({
@@ -284,9 +305,12 @@ function deleteEquipment(equipmentId) {
     }
 
     $.ajax({
-        method: "DELETE", url: `http://localhost:8081/api/v1/Equipment/deleteEquipment/${equipmentId}`, headers: {
+        method: "DELETE",
+        url: `http://localhost:8081/api/v1/Equipment/deleteEquipment/${equipmentId}`,
+        headers: {
             "Authorization": "Bearer " + token
-        }, success: function (data) {
+        },
+        success: function (data) {
             console.log("Equipment deleted successfully", data);
             if (data.code === 200) {
                 alert("Equipment deleted successfully.");
@@ -296,11 +320,11 @@ function deleteEquipment(equipmentId) {
             } else {
                 alert("Error: " + data.message);
             }
-        }, error: function (xhr, status, error) {
+        },
+        error: function (xhr, status, error) {
             console.log("Error deleting Equipment:", error);
             let errorMessage = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : "An error occurred while deleting equipment.";
             alert(errorMessage);
         }
     });
 }
-

@@ -33,30 +33,46 @@ function getAllStaffIds() {
     }
 
     $.ajax({
-        method: "GET", url: "http://localhost:8081/api/v1/Staff/ids", headers: {
+        method: "GET",
+        url: "http://localhost:8081/api/v1/Staff/ids",
+        headers: {
             "Authorization": "Bearer " + token
-        }, success: function (data) {
+        },
+        success: function (data) {
             console.log('API Response:', data);
 
-            let staffSelect = $("#DisplayStaffId");
-            staffSelect.empty();
-            staffSelect.append('<option value="" disabled selected>Select Staff ID</option>');
+            // Select both dropdowns
+            let staffSelectAdd = $("#StaffId");        // For Add Vehicle Modal
+            let staffSelectUpdate = $("#DisplayStaffId"); // For Update Vehicle Modal
+
+            // Clear existing options
+            staffSelectAdd.empty();
+            staffSelectUpdate.empty();
+
+            // Add default option to each dropdown
+            staffSelectAdd.append('<option value="" disabled selected>Select Staff ID</option>');
+            staffSelectUpdate.append('<option value="" disabled selected>Select Staff ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
-
                 data.forEach(function (staffId) {
-                    staffSelect.append('<option value="' + staffId + '">' + staffId + '</option>');
+                    let option = `<option value="${staffId}">${staffId}</option>`;
+                    // Append the same staff ID to both dropdowns
+                    staffSelectAdd.append(option);
+                    staffSelectUpdate.append(option);
                 });
             } else {
                 console.warn("No staff IDs available or the data format is incorrect.");
-                staffSelect.append('<option value="" disabled>No Staff Available</option>');
+                staffSelectAdd.append('<option value="" disabled>No Staff Available</option>');
+                staffSelectUpdate.append('<option value="" disabled>No Staff Available</option>');
             }
-        }, error: function (xhr, status, error) {
+        },
+        error: function (xhr, status, error) {
             console.error("Error fetching staff:", error);
             alert("An error occurred while fetching staff. Please try again.");
         }
     });
 }
+
 
 function addVehicle() {
     let token = localStorage.getItem("token");
