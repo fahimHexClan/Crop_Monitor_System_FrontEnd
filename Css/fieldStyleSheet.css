@@ -6,7 +6,7 @@ body {
     margin: 0;
     min-height: 100vh;
     color: #f4f4f4;
-    padding-bottom: 100px; /* To avoid overlap with footer */
+    padding-bottom: 100px;
     overflow-x: hidden;
 
 }
@@ -113,34 +113,34 @@ body::before {
 }
 
 .header-title {
-    font-size: 3rem;  /* Larger size for emphasis */
-    font-weight: 600;  /* Slightly lighter weight for a more sophisticated look */
+    font-size: 3rem;
+    font-weight: 600;
     color: #ffffff;
     text-align: center;
-    margin-bottom: 20px;  /* Increased margin to add space between the title and subtitle */
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);  /* Soft shadow effect for added depth */
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 
 }
 
 .header-subtitle {
-    font-size: 1.2rem;  /* Slightly larger font size for readability */
-    color: #dfe6e9 !important;  /* Lighter color to complement the title */
+    font-size: 1.2rem;
+    color: #dfe6e9 !important;
     text-align: center;
-    margin-bottom: 40px;  /* Slightly larger margin to provide separation */
-    line-height: 1.5;  /* Improved line spacing for better readability */
-    font-weight: 400;  /* Lighter weight for the subtitle */
-    opacity: 0.8;  /* Reduced opacity for a subtle, elegant effect */
-    transition: opacity 0.3s ease;  /* Smooth transition for opacity changes */
+    margin-bottom: 40px;
+    line-height: 1.5;
+    font-weight: 400;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
 }
 
 .header-title:hover {
-    color: #66bb6a;  /* Hover effect to change the title color */
-    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);  /* Darker shadow on hover for depth */
+    color: #66bb6a;
+    text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.8);
 }
 
 .header-subtitle:hover {
-    opacity: 1;  /* Full opacity on hover for emphasis */
-    color: #ffffff;  /* Change subtitle color on hover */
+    opacity: 1;
+    color: #ffffff;
 }
 .table-container {
     max-width: 100%;
@@ -173,7 +173,7 @@ body::before {
     color:  black;
 }
 .table tbody tr:hover {
-    background-color: #e0f7fa;  /* Light hover effect */
+    background-color: #e0f7fa;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -184,14 +184,14 @@ body::before {
     background-color: #e0f7fa;
 }
 .modal-dialog {
-    position: fixed;         /* Fixes the modal's position relative to the viewport */
+    position: fixed;
     top: 20%;
-    left: 45%;               /* Center the modal horizontally */
-    transform: translate(-50%, -50%);  /* Adjust for exact centering */
-    max-height: 70vh;/* Limits the modal height to 80% of the viewport height */
+    left: 45%;
+    transform: translate(-50%, -50%);
+    max-height: 70vh;
     width: 80%;
-    overflow-y: auto;        /* Allows scrolling inside the modal if needed */
-    overflow-y: hidden;      /* Disable horizontal scrolling */
+    overflow-y: auto;
+    overflow-y: hidden;
     margin: 0;
 
 }
@@ -200,9 +200,9 @@ body::before {
     border-radius: 10px;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
     color: #333;
-    background-color: #ffffff;  /* Light background for readability */
-    color: #333;  /* Dark text for contrast */
-    transition: all 0.3s ease-in-out;  /* Smooth transitions */
+    background-color: #ffffff;
+    color: #333;
+    transition: all 0.3s ease-in-out;
 }
 
 .modal-header {
@@ -212,8 +212,8 @@ body::before {
     font-size: 1.25rem;
     font-weight: bold;
     border-radius: 10px 10px 0 0;
-    border-bottom: none;  /* Remove bottom border */
-    text-align: center;    /* Centers the header content */
+    border-bottom: none;
+    text-align: center;
 }
 .modal-title {
     font-size: 1.6rem;
@@ -225,12 +225,11 @@ body::before {
     max-height: 65vh;
     overflow-y: auto;
     display: grid;
-    grid-template-columns: 1fr; /* One column for form */
+    grid-template-columns: 1fr;
     gap: 15px;
     overflow-x: hidden;
 }
 
-/* Close Button in Header */
 .btn-close {
     color: #fff;
     opacity: 1;
@@ -238,51 +237,50 @@ body::before {
 }
 
 .form-control {
-    border: 1px solid #d1d8e0;  /* Subtle border color */
+    border: 1px solid #d1d8e0;
     padding: 12px 15px;
     border-radius: 8px;
     margin-bottom: 20px;
-    background-color: #fafafa;  /* Soft background */
+    background-color: #fafafa;
     color: #333;
     transition: border-color 0.3s ease-in-out;
 
 }
 .form-control:focus {
-    border-color: #007bff;  /* Focus state color */
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);  /* Green glow for focus */
-    outline: none;  /* Remove outline */
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    outline: none;
 }
 
 .form-control::placeholder {
-    color: #bbb;  /* Lighter placeholder text */
-    opacity: 1;  /* Ensure the placeholder text is readable */
+    color: #bbb;
+    opacity: 1;
 }
-/* Add/Update Buttons */
-/* Add/Update Button Styling */
+
 .btn-outline-primary {
-    background-color: #007bff;  /* Green for primary actions */
+    background-color: #007bff;
     color: #fff;
     border: 2px solid #4caf50;
     border-radius: 25px;
 }
 .btn-outline-primary:hover {
-    background-color:  #007bff;  /* Darker green for hover */
+    background-color:  #007bff;
 
 }
 .btn-outline-danger {
-    background-color: #f44336;  /* Red for delete actions */
+    background-color: #f44336;
     color: #fff;
     border: 2px solid #f44336;
     border-radius: 25px;
 }
 
 .btn-outline-danger:hover {
-    background-color: #d32f2f;  /* Darker red on hover */
+    background-color: #d32f2f;
 
 }
 
 
-/* Primary Button (Save / Update) */
+
 .btn-outline-primary {
     background-color:  #007bff;
     color: #fff;
@@ -295,7 +293,7 @@ body::before {
     border: 2px solid #388e3c;
 }
 
-/* Danger Button (Delete) */
+
 .btn-outline-danger {
     color: #ffffff;
     border: 2px solid #f44336;
@@ -304,7 +302,7 @@ body::before {
 }
 
 .btn-outline-danger:hover {
-    background-color: #d32f2f; /* Darker red for hover */
+    background-color: #d32f2f;
     color: white;
     border: 2px solid #d32f2f;
 }
@@ -322,7 +320,7 @@ body::before {
 }
 
 .btn-success:hover {
-    background-color:#19588f;  /* Darker green on hover */
+    background-color:#19588f;
     color: #fff;
     border: 2px solid #388e3c;
 }
@@ -383,19 +381,19 @@ body::before {
     letter-spacing: 0.5px;
 }
 
-/* Hover Effects for Modal Actions */
+
 .modal-footer .btn {
     transition: all 0.3s ease-in-out;
 }
 
 .modal-footer .btn:hover {
-    transform: translateY(-2px);  /* Lift effect */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);  /* Lift shadow */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 
 .modal {
-    z-index: 1055 !important; /* Ensure it’s above other elements */
+    z-index: 1055 !important;
 }
 
 .form-container {
@@ -409,7 +407,7 @@ body::before {
     color: #333;
     margin-bottom: 8px;
 }
-/* Table Styling (For better alignment and clarity) */
+
 .table th,
 .table td {
     padding: 15px;
@@ -418,23 +416,19 @@ body::before {
     border-bottom: 1px solid #dee2e6;
 }
 
-/* Table Header */
 .table thead th {
     background-color: #19588f;
     color: white;
     text-transform: uppercase;
 }
 
-/* Table Row Hover Effect */
 .table tbody tr:hover {
-    background-color: #f5f5f5;  /* Light gray hover effect */
+    background-color: #f5f5f5;
 }
-/* Container Padding for Better Layout */
 .container {
     padding: 30px;
 }
 
-/* General Text Styling for Professional Look */
 h2, .header-subtitle {
     text-align: center;
     color: #333;

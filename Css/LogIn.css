@@ -17,13 +17,13 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.2); /* Reduced opacity for a more subtle effect */
+    background: rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
 .container {
-    max-width: 450px; /* Increase to match the signup page width */
-    padding: 50px; /* Increase padding to add height */
+    max-width: 450px;
+    padding: 50px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 16px;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
@@ -36,14 +36,14 @@ body::before {
 
 .auth-title {
     font-weight: bold;
-    font-size: 2.5rem; /* Increased font size for better visual balance */
-    margin-bottom: 40px; /* Increase to add more spacing between title and form */
+    font-size: 2.5rem;
+    margin-bottom: 40px;
     color: #fff;
 }
 
 .form-group {
     text-align: left;
-    margin-bottom: 30px; /* Increase margin to add more vertical space between fields */
+    margin-bottom: 30px;
 }
 
 .form-label {
@@ -64,7 +64,7 @@ body::before {
     width: 100%;
     border: 2px solid #66bb6a;
     border-radius: 10px;
-    padding: 10px; /* Slightly increase padding for better height */
+    padding: 10px;
     transition: all 0.3s ease;
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
@@ -84,8 +84,8 @@ body::before {
     width: 100%;
     background: linear-gradient(to right, #66bb6a, #43a047);
     border: none;
-    padding: 15px; /* Increased padding to add button height */
-    font-size: 1.2rem; /* Adjusted to match signup button size */
+    padding: 15px;
+    font-size: 1.2rem;
     color: #fff;
     border-radius: 30px;
     transition: background-color 0.3s ease, transform 0.2s ease;
@@ -100,7 +100,7 @@ body::before {
     color: #fff;
     text-decoration: none;
     font-size: 1rem;
-    margin-top: 25px; /* Increase margin to give more space below the button */
+    margin-top: 25px;
     display: inline-block;
     transition: color 0.3s;
 }

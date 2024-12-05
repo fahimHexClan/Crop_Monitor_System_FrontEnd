@@ -96,7 +96,7 @@ body {
 
 .header-subtitle {
     font-size: 1.2rem;
-    color: #dfe6e9; /* Light gray for subheading */
+    color: #dfe6e9;
     text-align: center;
     margin-top: 10px;
 }
@@ -109,7 +109,7 @@ body {
     margin-bottom: 30px;
     position: relative;
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.4);
-}/* Ensuring the background image covers the entire header section */
+}
 .header-image::after {
     content: '';
     position: absolute;
@@ -117,7 +117,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.2); /* Dark overlay for better text visibility */
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 15px;
     z-index: 1;
 }
@@ -136,19 +136,17 @@ body {
     text-align: center;
     font-size: 2.8rem;
     font-weight: bold;
-    text-transform: uppercase; /* Makes the text all caps */
-    letter-spacing: 3px; /* Adds spacing between letters */
-    background-image: linear-gradient(45deg, #66bb6a, #2c3e50); /* Gradient background */
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    background-image: linear-gradient(45deg, #66bb6a, #2c3e50);
     background-clip: text;
-    -webkit-background-clip: text; /* For Webkit browsers like Chrome */
-    animation: fadeIn 2s ease-in-out; /* Animation for fade-in effect */
+    -webkit-background-clip: text;
+    animation: fadeIn 2s ease-in-out;
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), 0px 0px 25px rgba(0, 0, 0, 0.4);
 }
 
 .widget {
-    /*
-    background: url('../Asserts/images/crop.jpg') no-repeat center center;
-    */
+
     background: rgba(255, 255, 255, 0.1);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
@@ -160,16 +158,14 @@ body {
     min-width: 250px;
     position: relative;
 }
-/* Widget Titles */
 .widget h4 {
     font-size: 1.4rem;
-    color: #66bb6a; /* Green for emphasis */
+    color: #66bb6a;
     margin-bottom: 10px;
 }
-/* Widget Content (Text) */
 .widget p {
     font-size: 1.1rem;
-    color: #f4f4f4; /* Light color for content */
+    color: #f4f4f4;
 }
 
 .widget img {
@@ -199,10 +195,10 @@ body {
     margin-bottom: 10px;
 }
 .widget:hover h4 {
-    color: #f4f4f4; /* Golden color on hover */
+    color: #f4f4f4;
 }
 .widget:hover p {
-    color: #f4f4f4; /* Light text remains the same on hover */
+    color: #f4f4f4;
 }
 
 .chart-container {
@@ -223,10 +219,9 @@ body {
     justify-content: center;
     flex-direction: column;
 }
-/* Chart Titles */
 .card-body h5 {
     font-size: 1.5rem;
-    color: #66bb6a; /* Consistent green color */
+    color: #66bb6a;
 }
 .footer {
     background-color: #1a233a;
