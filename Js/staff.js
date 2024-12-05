@@ -1,5 +1,3 @@
-let logIds;
-
 document.getElementById('toggleSidebar').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('collapsed');
 });
@@ -24,16 +22,21 @@ function loadLogs() {
         },
         success: function (data) {
             let logSelect = $("#LogId");
+            let logSelectUpdate = $("#updateLogId"); // For updating staff
             logSelect.empty();
+            logSelectUpdate.empty();
             logSelect.append('<option value="" disabled selected>Select Log ID</option>');
+            logSelectUpdate.append('<option value="" disabled selected>Select Log ID</option>');
 
             if (Array.isArray(data) && data.length > 0) {
                 data.forEach(function (logId) {
                     logSelect.append('<option value="' + logId + '">' + logId + '</option>');
+                    logSelectUpdate.append('<option value="' + logId + '">' + logId + '</option>');
                 });
             } else {
                 console.warn("No logs available or incorrect data format");
                 logSelect.append('<option value="" disabled>No Logs Available</option>');
+                logSelectUpdate.append('<option value="" disabled>No Logs Available</option>');
             }
         },
         error: function (xhr, status, error) {
@@ -43,14 +46,12 @@ function loadLogs() {
     });
 }
 
-
 function addStaffs() {
     let token = localStorage.getItem("token");
     if (!token) {
         alert("Authorization token is missing. Please log in.");
         return;
     }
-
 
     let StaffId = $("#StaffId").val();
     let S_FirstName = $("#S_FirstName").val();
@@ -101,19 +102,20 @@ function addStaffs() {
             "logId": LogId
         }),
         success: function(data) {
-
             console.log("Staff added successfully");
             alert("Staff saved successfully.");
             getAllStaffs();
+            $("#addStaffForm")[0].reset();
         },
         error: function(xhr, status, error) {
-            console.log("Error adding field:", error);
+            console.log("Error adding staff:", error);
+            alert("An error occurred while adding staff. Please try again.");
         }
     });
 }
+
 function getAllStaffs() {
     let token = localStorage.getItem("token");
-
     if (!token) {
         alert("Authorization token is missing. Please log in.");
         return;
@@ -129,7 +131,6 @@ function getAllStaffs() {
             console.log('API Response:', data);
 
             if (Array.isArray(data) && data.length > 0) {
-
                 $("table tbody").empty();
 
                 data.forEach(function (staff) {
@@ -152,8 +153,8 @@ function getAllStaffs() {
                             <td>${staff.role || ''}</td>
                             <td>${staff.logId || ''}</td>
                             <td>
-                                <button class="btn btn-outline-primary btn-sm edit-btn" data-id="${staff.id }"  data-bs-toggle="modal" data-bs-target="#updateStaffModal"><i class="fas fa-edit"></i></button>
-                                <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${staff.id }"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-outline-primary btn-sm edit-btn" data-id="${staff.id}" data-bs-toggle="modal" data-bs-target="#updateStaffModal"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-outline-danger btn-sm delete-btn" data-id="${staff.id}"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                     `;
@@ -161,7 +162,7 @@ function getAllStaffs() {
                     $("table tbody").append(row);
                 });
 
-
+                // Edit button
                 $(".edit-btn").on("click", function () {
                     let staffid = $(this).data("id");
                     console.log(staffid)
@@ -172,7 +173,6 @@ function getAllStaffs() {
                             "Authorization": "Bearer " + localStorage.getItem("token")
                         },
                         success: function(staff) {
-                            logIds = staff.logId;
                             $("#updateStaffId").val(staff.id);
                             $("#updateFirstName").val(staff.firstName);
                             $("#updateLastName").val(staff.lastName);
@@ -188,19 +188,18 @@ function getAllStaffs() {
                             $("#updateGender").val(staff.gender);
                             $("#updateJoinDate").val(staff.joinedDate);
                             $("#updateStaffRole").val(staff.role);
-
+                            $("#updateLogId").val(staff.logId); // Set the staff's logId
                         },
                         error: function(xhr, status, error) {
-                            console.error("Error fetching crop details:", error);
-                            alert("An error occurred while fetching the crop details. Please try again.");
+                            console.error("Error fetching staff details:", error);
+                            alert("An error occurred while fetching staff details. Please try again.");
                         }
+                    });
                 });
 
-                });
-
-
+                // Delete button
                 $(".delete-btn").on("click", function () {
-                    let staffId = $(this).closest("tr").find("td:first").text();
+                    let staffId = $(this).data("id");
                     if (confirm("Are you sure you want to delete this staff member?")) {
                         deleteStaff(staffId);
                     }
@@ -208,7 +207,7 @@ function getAllStaffs() {
 
             } else {
                 console.log("No staff found.");
-                $("table tbody").html("<tr><td colspan='7'>No staff available.</td></tr>");
+                $("table tbody").html("<tr><td colspan='17'>No staff available.</td></tr>");
             }
         },
         error: function(xhr, status, error) {
@@ -225,7 +224,6 @@ function updateStaff() {
         return;
     }
 
-
     let StaffId = $("#updateStaffId").val();
     let firstName = $("#updateFirstName").val();
     let lastName = $("#updateLastName").val();
@@ -236,18 +234,19 @@ function updateStaff() {
     let addressLine5 = $("#updateAddress5").val();
     let contactNo = $("#updateContactNumber").val();
     let designation = $("#updateStaffDesignation").val();
-    let dob =$("#updateDateOfBirth").val();
-    let email =$("#updateEmail").val();
-    let gender =$("#updateGender").val();
-    let joinedDate =$("#updateJoinDate").val();
-    let role =    $("#updateStaffRole").val();
-    let LogId=logIds;
-console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine2, addressLine3,addressLine4,addressLine5,contactNo,designation,dob,email,gender,joinedDate,role,LogId,email);
+    let dob = $("#updateDateOfBirth").val();
+    let email = $("#updateEmail").val();
+    let gender = $("#updateGender").val();
+    let joinedDate = $("#updateJoinDate").val();
+    let role = $("#updateStaffRole").val();
+    let LogId = $("#updateLogId").val(); // Now directly read from #updateLogId
+
+    console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine2, addressLine3,addressLine4,addressLine5,contactNo,designation,dob,email,gender,joinedDate,role,LogId,email);
+
     if (!StaffId) {
         alert("Staff ID is missing.");
         return;
     }
-
 
     let staffData = {
         "firstName": firstName,
@@ -264,7 +263,7 @@ console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine
         "gender": gender,
         "joinedDate": joinedDate,
         "role": role,
-        "logId":LogId
+        "logId": LogId
     };
 
     $.ajax({
@@ -287,7 +286,6 @@ console.log("Staff ID:", StaffId, firstName, lastName, addressLine1, addressLine
         }
     });
 }
-
 
 function deleteStaff(staffId) {
     let token = localStorage.getItem("token");
@@ -313,7 +311,3 @@ function deleteStaff(staffId) {
         }
     });
 }
-
-
-
-
