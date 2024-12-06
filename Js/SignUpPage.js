@@ -42,7 +42,7 @@ function addLogs() {
                 title: 'Account Created',
                 text: 'Your account has been created successfully!',
                 showConfirmButton: false,
-                timer: 2000
+                timer: 600
             }).then(() => {
                 window.location.reload();
             });
