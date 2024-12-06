@@ -37,12 +37,24 @@ function addLogs() {
         data: formData,
         success: function(data) {
             console.log("Log added successfully");
-            alert("Account created successfully!");
-            window.location.reload();
+            Swal.fire({
+                icon: 'success',
+                title: 'Account Created',
+                text: 'Your account has been created successfully!',
+                showConfirmButton: false,
+                timer: 2000
+            }).then(() => {
+                window.location.reload();
+            });
         },
         error: function(xhr, status, error) {
             console.error("Error adding log:", error);
-            alert("An error occurred while creating the account. Please try again.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Creation Failed',
+                text: 'We encountered an issue while creating your account. Please try again.',
+                showConfirmButton: true
+            });
         }
     });
 
